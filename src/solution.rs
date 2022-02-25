@@ -60,4 +60,16 @@ impl Solution {
       }))
     }
   }
+
+  fn complex_number_multiply(num1: String, num2: String) -> String {
+    let &complex1 = &num1[..num1.len() - 1].split_once('+').unwrap();
+    let &complex2 = &num2[..num2.len() - 1].split_once('+').unwrap();
+    let (real1, imag1): (i32, i32) = (complex1.0.parse().unwrap(), complex1.1.parse().unwrap());
+    let (real2, imag2): (i32, i32) = (complex2.0.parse().unwrap(), complex2.1.parse().unwrap());
+    format!(
+      "{}+{}i",
+      real1 * real2 - imag1 * imag2,
+      real1 * imag2 + imag1 * real2
+    )
+  }
 }
