@@ -61,6 +61,23 @@ impl Solution {
     }
   }
 
+  /**
+   * 7. 整数转换
+   */
+  fn reverse_int(x: i32) -> i32 {
+    let mut x = x;
+    let mut res = 0;
+    while x != 0 {
+      if res < i32::MIN / 10 || res > i32::MAX / 10 {
+        return 0;
+      }
+      let mut digit = x % 10;
+      x /= 10;
+      res = res * 10 + digit;
+    }
+    res
+  }
+
   fn complex_number_multiply(num1: String, num2: String) -> String {
     let &complex1 = &num1[..num1.len() - 1].split_once('+').unwrap();
     let &complex2 = &num2[..num2.len() - 1].split_once('+').unwrap();
