@@ -8,6 +8,35 @@ impl ListNode {
   pub fn new(val: i32) -> Self {
     ListNode { next: None, val }
   }
+
+  pub fn get_last_node(&mut self) -> &mut Self {
+    if let Some(ref mut box_node) = self.next {
+      box_node.get_last_node()
+    } else {
+      self
+    }
+  }
+
+  pub fn append(&mut self, val: i32) {
+    let new_node = ListNode::new(val);
+    self.get_last_node().next = Some(Box::new(new_node));
+  }
+}
+
+pub fn generate_list_node(nums: Vec<i32>) -> Option<Box<ListNode>> {
+  let n = nums.len();
+  if n <= 0 {
+    return None;
+  } else {
+    let mut head = ListNode {
+      val: nums[0],
+      next: None,
+    };
+    for i in 1..n {
+      head.append(nums[i]);
+    }
+    Some(Box::new(head))
+  }
 }
 
 /**
@@ -75,6 +104,27 @@ pub fn reverse_int(x: i32) -> i32 {
     res = res * 10 + digit;
   }
   res
+}
+
+/**
+ * 504.七进制数
+ */
+pub fn convert_to_base7(num: i32) -> String {
+  let mut num = num;
+  if num == 0 {
+    return String::from("0");
+  }
+  let negative = num < 0;
+  num = i32::abs(num);
+  let mut digits = String::from("");
+  while num > 0 {
+    digits += &(num % 7).to_string();
+    num /= 7;
+  }
+  if negative {
+    digits += &"-".to_string();
+  }
+  digits.chars().rev().collect()
 }
 
 /**
