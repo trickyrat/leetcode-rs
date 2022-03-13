@@ -3,15 +3,6 @@ use solution::*;
 
 fn main() {
     println!("Hello, world!");
-
-    let mut head = ListNode::new(1);
-    head.append(2);
-    head.append(3);
-    head.append(4);
-    println!("list:{:?}", head);
-
-    let root = generate_list_node(vec![1, 2, 3, 4]);
-    println!("root:{:?}", root);
 }
 
 #[test]
