@@ -61,3 +61,10 @@ fn test_complex_number_multiply() {
         String::from("0+-2i")
     );
 }
+
+#[test]
+fn test_pivot_index() {
+    assert_eq!(pivot_index(vec! {2, 3, -1, 8, 4}), 3);
+    assert_eq!(pivot_index(vec! {1,-1,4}), 2);
+    assert_eq!(pivot_index(vec! {2,5}), -1);
+}

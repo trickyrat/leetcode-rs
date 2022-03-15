@@ -141,3 +141,18 @@ pub fn complex_number_multiply(num1: String, num2: String) -> String {
     real1 * imag2 + imag1 * real2
   )
 }
+
+/**
+ * 1991.寻找数组的中间位置
+ */
+pub fn pivot_index(nums: Vec<i32>) -> i32 {
+  let total: i32 = nums.iter().sum();
+  let mut sum: i32 = 0;
+  for i in 0..nums.len() {
+    if 2 * sum + nums[i] == total {
+      return i as i32;
+    }
+    sum += nums[i];
+  }
+  -1
+}
