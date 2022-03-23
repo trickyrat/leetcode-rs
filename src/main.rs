@@ -45,6 +45,18 @@ fn test_reverse_int() {
 }
 
 #[test]
+fn test_find_diagonal_order() {
+    assert_eq!(
+        find_diagonal_order(vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]]),
+        vec![1, 2, 4, 7, 5, 3, 6, 8, 9]
+    );
+    assert_eq!(
+        find_diagonal_order(vec![vec![1, 2], vec![3, 4]]),
+        vec![1, 2, 3, 4]
+    );
+}
+
+#[test]
 fn test_convert_to_base7() {
     assert_eq!(convert_to_base7(100), "202");
     assert_eq!(convert_to_base7(-7), "-10");
