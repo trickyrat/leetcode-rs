@@ -107,6 +107,19 @@ pub fn reverse_int(x: i32) -> i32 {
 }
 
 /**
+ * 172.阶乘后的零
+ */
+pub fn trailing_zeroes(n: i32) -> i32 {
+  let mut ans = 0;
+  let mut n = n;
+  while n != 0 {
+    n /= 5;
+    ans += n;
+  }
+  ans
+}
+
+/**
  * 498.对角线遍历
  */
 pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {

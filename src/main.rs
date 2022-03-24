@@ -43,6 +43,12 @@ fn test_reverse_int() {
     assert_eq!(reverse_int(2147483647), 0);
     assert_eq!(reverse_int(-2147483648), 0);
 }
+#[test]
+fn test_trailing_zeroes() {
+    assert_eq!(trailing_zeroes(3), 0);
+    assert_eq!(trailing_zeroes(5), 1);
+    assert_eq!(trailing_zeroes(0), 0);
+}
 
 #[test]
 fn test_find_diagonal_order() {
