@@ -192,6 +192,36 @@ pub fn complex_number_multiply(num1: String, num2: String) -> String {
 }
 
 /**
+ * 682.棒球比赛
+ */
+pub fn cal_points(ops: Vec<String>) -> i32 {
+  ops
+    .iter()
+    .map(|x| x.as_str())
+    .fold((vec![0; ops.len()], 0), |(mut cache, i), op| match op {
+      "C" => {
+        cache[i - 1] = 0;
+        (cache, i - 1)
+      }
+      "D" => {
+        cache[i] = cache[i - 1] * 2;
+        (cache, i + 1)
+      }
+      "+" => {
+        cache[i] = cache[i - 1] + cache[i - 2];
+        (cache, i + 1)
+      }
+      _ => {
+        cache[i] = op.parse().unwrap();
+        (cache, i + 1)
+      }
+    })
+    .0
+    .iter()
+    .sum()
+}
+
+/**
  * 1991.寻找数组的中间位置
  */
 pub fn pivot_index(nums: Vec<i32>) -> i32 {

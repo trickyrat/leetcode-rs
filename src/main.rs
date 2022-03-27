@@ -81,6 +81,34 @@ fn test_complex_number_multiply() {
 }
 
 #[test]
+fn test_cal_points() {
+    assert_eq!(
+        cal_points(vec![
+            String::from("5"),
+            String::from("2"),
+            String::from("C"),
+            String::from("D"),
+            String::from("+")
+        ]),
+        30
+    );
+    assert_eq!(
+        cal_points(vec![
+            String::from("5"),
+            String::from("-2"),
+            String::from("4"),
+            String::from("C"),
+            String::from("D"),
+            String::from("9"),
+            String::from("+"),
+            String::from("+")
+        ]),
+        27
+    );
+    assert_eq!(cal_points(vec![String::from("1")]), 1);
+}
+
+#[test]
 fn test_pivot_index() {
     assert_eq!(pivot_index(vec! {2, 3, -1, 8, 4}), 3);
     assert_eq!(pivot_index(vec! {1,-1,4}), 2);
