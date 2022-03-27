@@ -222,6 +222,14 @@ pub fn cal_points(ops: Vec<String>) -> i32 {
 }
 
 /**
+ * 693.交替位二进制数
+ */
+pub fn has_alternating_bits(n: i32) -> bool {
+  let a = n ^ (n >> 1);
+  a & (a + 1) == 0
+}
+
+/**
  * 1991.寻找数组的中间位置
  */
 pub fn pivot_index(nums: Vec<i32>) -> i32 {

@@ -109,6 +109,13 @@ fn test_cal_points() {
 }
 
 #[test]
+fn test_has_alternating_bits() {
+    assert_eq!(has_alternating_bits(5), true);
+    assert_eq!(has_alternating_bits(7), false);
+    assert_eq!(has_alternating_bits(11), false);
+}
+
+#[test]
 fn test_pivot_index() {
     assert_eq!(pivot_index(vec! {2, 3, -1, 8, 4}), 3);
     assert_eq!(pivot_index(vec! {1,-1,4}), 2);
