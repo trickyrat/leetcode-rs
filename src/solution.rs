@@ -126,25 +126,25 @@ pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {
   if mat.len() == 0 {
     return Vec::new();
   }
-  let N = mat.len();
-  let M = mat[0].len();
+  let n = mat.len();
+  let m = mat[0].len();
   let mut row: i32 = 0;
   let mut col: i32 = 0;
   let mut direction = 1;
-  let mut res: Vec<i32> = vec![0; N * M];
+  let mut res: Vec<i32> = vec![0; n * m];
   let mut r = 0;
-  while row < N as i32 && col < M as i32 {
+  while row < n as i32 && col < m as i32 {
     res[r] = mat[row as usize][col as usize];
     r += 1;
     let new_row = if direction == 1 { row - 1 } else { row + 1 };
     let new_col = if direction == 1 { col + 1 } else { col - 1 };
-    if new_row < 0 || new_row == N as i32 || new_col < 0 || new_col == M as i32 {
+    if new_row < 0 || new_row == n as i32 || new_col < 0 || new_col == m as i32 {
       if direction == 1 {
-        row += if col == M as i32 - 1 { 1 } else { 0 };
-        col += if col < M as i32 - 1 { 1 } else { 0 };
+        row += if col == m as i32 - 1 { 1 } else { 0 };
+        col += if col < m as i32 - 1 { 1 } else { 0 };
       } else {
-        col += if row == N as i32 - 1 { 1 } else { 0 };
-        row += if row < N as i32 - 1 { 1 } else { 0 };
+        col += if row == n as i32 - 1 { 1 } else { 0 };
+        row += if row < n as i32 - 1 { 1 } else { 0 };
       }
       direction = 1 - direction;
     } else {
