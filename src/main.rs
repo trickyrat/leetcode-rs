@@ -126,6 +126,13 @@ fn test_self_dividing_numbers() {
 }
 
 #[test]
+fn test_next_greatest_letter() {
+    assert_eq!(next_greatest_letter(vec!['c', 'f', 'j'], 'a'), 'c');
+    assert_eq!(next_greatest_letter(vec!['c', 'f', 'j'], 'c'), 'f');
+    assert_eq!(next_greatest_letter(vec!['c', 'f', 'j'], 'd'), 'f');
+}
+
+#[test]
 fn test_pivot_index() {
     assert_eq!(pivot_index(vec! {2, 3, -1, 8, 4}), 3);
     assert_eq!(pivot_index(vec! {1,-1,4}), 2);

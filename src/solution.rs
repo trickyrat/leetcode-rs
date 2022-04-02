@@ -241,7 +241,7 @@ pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
   }
   ans
 }
-pub fn is_self_dividing(num: i32) -> bool {
+fn is_self_dividing(num: i32) -> bool {
   let mut tmp = num;
   while tmp > 0 {
     let digit = tmp % 10;
@@ -251,6 +251,27 @@ pub fn is_self_dividing(num: i32) -> bool {
     tmp /= 10;
   }
   true
+}
+
+/**
+ * 744.寻找比目标字母大的最小字母
+ */
+pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
+  let len = letters.len();
+  if target >= letters[len - 1] {
+    return letters[0];
+  }
+  let mut low = 0;
+  let mut high = len - 1;
+  while low < high {
+    let mid = (high - low) / 2 + low;
+    if letters[mid] > target {
+      high = mid;
+    } else {
+      low = mid + 1;
+    }
+  }
+  return letters[low];
 }
 
 /**
