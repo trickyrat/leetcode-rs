@@ -230,6 +230,30 @@ pub fn has_alternating_bits(n: i32) -> bool {
 }
 
 /**
+ * 728.自除数
+ */
+pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
+  let mut ans = Vec::new();
+  for i in left..=right {
+    if is_self_dividing(i) {
+      ans.push(i);
+    }
+  }
+  ans
+}
+pub fn is_self_dividing(num: i32) -> bool {
+  let mut tmp = num;
+  while tmp > 0 {
+    let digit = tmp % 10;
+    if digit == 0 || num % digit != 0 {
+      return false;
+    }
+    tmp /= 10;
+  }
+  true
+}
+
+/**
  * 1991.寻找数组的中间位置
  */
 pub fn pivot_index(nums: Vec<i32>) -> i32 {

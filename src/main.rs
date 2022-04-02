@@ -43,6 +43,7 @@ fn test_reverse_int() {
     assert_eq!(reverse_int(2147483647), 0);
     assert_eq!(reverse_int(-2147483648), 0);
 }
+
 #[test]
 fn test_trailing_zeroes() {
     assert_eq!(trailing_zeroes(3), 0);
@@ -113,6 +114,15 @@ fn test_has_alternating_bits() {
     assert_eq!(has_alternating_bits(5), true);
     assert_eq!(has_alternating_bits(7), false);
     assert_eq!(has_alternating_bits(11), false);
+}
+
+#[test]
+fn test_self_dividing_numbers() {
+    assert_eq!(
+        self_dividing_numbers(1, 22),
+        vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 15, 22]
+    );
+    assert_eq!(self_dividing_numbers(47, 85), vec![48, 55, 66, 77]);
 }
 
 #[test]
