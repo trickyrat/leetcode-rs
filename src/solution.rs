@@ -1,3 +1,6 @@
+use std::collections::HashMap;
+use std::collections::HashSet;
+
 #[derive(PartialEq, Eq, Clone, Debug)]
 pub struct ListNode {
   pub val: i32,
@@ -43,8 +46,7 @@ pub fn generate_list_node(nums: Vec<i32>) -> Option<Box<ListNode>> {
  * 1. Two Sum
  */
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
-  let mut hashmap: std::collections::HashMap<i32, usize> =
-    std::collections::HashMap::with_capacity(nums.len());
+  let mut hashmap: HashMap<i32, usize> = HashMap::with_capacity(nums.len());
   for i in 0..nums.len() {
     if let Some(k) = hashmap.get(&(target - nums[i])) {
       if *k != i {
@@ -272,6 +274,27 @@ pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
     }
   }
   return letters[low];
+}
+
+/**
+ * 804. 唯一摩尔斯密码词
+ */
+pub fn unique_morse_representations(words: Vec<String>) -> i32 {
+  let morse = vec![
+    ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--",
+    "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..",
+  ];
+  words
+    .iter()
+    .fold(HashSet::new(), |mut unique, word| {
+      let mut s = String::new();
+      word
+        .bytes()
+        .for_each(|ch| s = format!("{}{}", s, morse[(ch - 'a' as u8) as usize]));
+      unique.insert(s);
+      unique
+    })
+    .len() as i32
 }
 
 /**

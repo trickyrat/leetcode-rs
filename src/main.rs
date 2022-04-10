@@ -133,6 +133,20 @@ fn test_next_greatest_letter() {
 }
 
 #[test]
+fn test_unique_morse_representations() {
+    assert_eq!(
+        unique_morse_representations(vec![
+            String::from("gin"),
+            String::from("zen"),
+            String::from("gig"),
+            String::from("msg"),
+        ]),
+        2
+    );
+    assert_eq!(unique_morse_representations(vec![String::from("a"),]), 1);
+}
+
+#[test]
 fn test_pivot_index() {
     assert_eq!(pivot_index(vec! {2, 3, -1, 8, 4}), 3);
     assert_eq!(pivot_index(vec! {1,-1,4}), 2);
