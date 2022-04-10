@@ -52,6 +52,12 @@ fn test_trailing_zeroes() {
 }
 
 #[test]
+fn test_count_numbers_with_unique_digits() {
+    assert_eq!(count_numbers_with_unique_digits(2), 91);
+    assert_eq!(count_numbers_with_unique_digits(0), 1);
+}
+
+#[test]
 fn test_find_diagonal_order() {
     assert_eq!(
         find_diagonal_order(vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]]),

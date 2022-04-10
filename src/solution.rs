@@ -122,6 +122,25 @@ pub fn trailing_zeroes(n: i32) -> i32 {
 }
 
 /**
+ * 357. 统计各位数字都不同的数字个数
+ */
+pub fn count_numbers_with_unique_digits(n: i32) -> i32 {
+  if n == 0 {
+    return 1;
+  }
+  if n == 1 {
+    return 10;
+  }
+  let mut res = 10;
+  let mut cur = 9;
+  for i in 0..n - 1 {
+    cur *= 9 - i;
+    res += cur;
+  }
+  res
+}
+
+/**
  * 498.对角线遍历
  */
 pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {
