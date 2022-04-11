@@ -296,6 +296,13 @@ pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
 }
 
 /**
+ * 762.二进制表示中质数个计算置位
+ */
+pub fn count_prime_set_bits(left: i32, right: i32) -> i32 {
+  (left..=right).fold(0, |ret, i| ret + (665772 >> i.count_ones() & 1))
+}
+
+/**
  * 804. 唯一摩尔斯密码词
  */
 pub fn unique_morse_representations(words: Vec<String>) -> i32 {
@@ -314,6 +321,24 @@ pub fn unique_morse_representations(words: Vec<String>) -> i32 {
       unique
     })
     .len() as i32
+}
+
+/**
+ * 806. 写字符串需要的行数
+ */
+pub fn number_of_lines(widths: Vec<i32>, s: String) -> Vec<i32> {
+  let max_wdith = 100;
+  let mut lines = 1;
+  let mut width = 0;
+  for c in s.chars() {
+    let need = widths[(c as u8 - b'a') as usize];
+    width += need;
+    if width > max_wdith {
+      width = need;
+      lines += 1;
+    }
+  }
+  vec![lines, width]
 }
 
 /**

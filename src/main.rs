@@ -153,6 +153,30 @@ fn test_unique_morse_representations() {
 }
 
 #[test]
+fn test_number_of_lines() {
+    assert_eq!(
+        number_of_lines(
+            vec![
+                10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+                10, 10, 10, 10, 10
+            ],
+            String::from("abcdefghijklmnopqrstuvwxyz")
+        ),
+        vec![3, 60]
+    );
+    assert_eq!(
+        number_of_lines(
+            vec![
+                4, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+                10, 10, 10, 10, 10
+            ],
+            String::from("bbbcccdddaaa")
+        ),
+        vec![2, 4]
+    );
+}
+
+#[test]
 fn test_pivot_index() {
     assert_eq!(pivot_index(vec! {2, 3, -1, 8, 4}), 3);
     assert_eq!(pivot_index(vec! {1,-1,4}), 2);
