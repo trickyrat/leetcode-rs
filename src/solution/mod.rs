@@ -1,30 +1,9 @@
+pub mod datastructures;
+
+use datastructures::list_node::*;
+
 use std::collections::HashMap;
 use std::collections::HashSet;
-
-#[derive(PartialEq, Eq, Clone, Debug)]
-pub struct ListNode {
-  pub val: i32,
-  pub next: Option<Box<ListNode>>,
-}
-impl ListNode {
-  #[inline]
-  pub fn new(val: i32) -> Self {
-    ListNode { next: None, val }
-  }
-
-  pub fn get_last_node(&mut self) -> &mut Self {
-    if let Some(ref mut box_node) = self.next {
-      box_node.get_last_node()
-    } else {
-      self
-    }
-  }
-
-  pub fn append(&mut self, val: i32) {
-    let new_node = ListNode::new(val);
-    self.get_last_node().next = Some(Box::new(new_node));
-  }
-}
 
 pub fn generate_list_node(nums: Vec<i32>) -> Option<Box<ListNode>> {
   let n = nums.len();
@@ -56,6 +35,12 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     hashmap.insert(nums[i], i);
   }
   panic!("???")
+}
+#[test]
+fn test_two_sum() {
+  assert_eq!(two_sum(vec![2, 7, 11, 15], 9), vec![0, 1]);
+  assert_eq!(two_sum(vec![3, 2, 4], 6), vec![1, 2]);
+  assert_eq!(two_sum(vec![3, 3], 6), vec![0, 1]);
 }
 
 /**
@@ -91,6 +76,28 @@ fn carried(
     }))
   }
 }
+
+#[test]
+fn test_add_two_numbers() {
+  assert_eq!(
+    add_two_numbers(
+      generate_list_node(vec![2, 4, 3]),
+      generate_list_node(vec![5, 6, 4])
+    ),
+    generate_list_node(vec![7, 0, 8])
+  );
+  assert_eq!(
+    add_two_numbers(generate_list_node(vec![0]), generate_list_node(vec![0])),
+    generate_list_node(vec![0])
+  );
+  assert_eq!(
+    add_two_numbers(
+      generate_list_node(vec![9, 9, 9, 9, 9, 9, 9]),
+      generate_list_node(vec![9, 9, 9, 9])
+    ),
+    generate_list_node(vec![8, 9, 9, 9, 0, 0, 0, 1])
+  );
+}
 /**
  * 7. 整数转换
  */
@@ -108,6 +115,16 @@ pub fn reverse_int(x: i32) -> i32 {
   res
 }
 
+#[test]
+fn test_reverse_int() {
+  assert_eq!(reverse_int(123), 321);
+  assert_eq!(reverse_int(-123), -321);
+  assert_eq!(reverse_int(120), 21);
+  assert_eq!(reverse_int(100), 1);
+  assert_eq!(reverse_int(2147483647), 0);
+  assert_eq!(reverse_int(-2147483648), 0);
+}
+
 /**
  * 172.阶乘后的零
  */
@@ -119,6 +136,12 @@ pub fn trailing_zeroes(n: i32) -> i32 {
     ans += n;
   }
   ans
+}
+#[test]
+fn test_trailing_zeroes() {
+  assert_eq!(trailing_zeroes(3), 0);
+  assert_eq!(trailing_zeroes(5), 1);
+  assert_eq!(trailing_zeroes(0), 0);
 }
 
 /**
@@ -138,6 +161,12 @@ pub fn count_numbers_with_unique_digits(n: i32) -> i32 {
     res += cur;
   }
   res
+}
+
+#[test]
+fn test_count_numbers_with_unique_digits() {
+  assert_eq!(count_numbers_with_unique_digits(2), 91);
+  assert_eq!(count_numbers_with_unique_digits(0), 1);
 }
 
 /**
@@ -176,6 +205,18 @@ pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {
   res
 }
 
+#[test]
+fn test_find_diagonal_order() {
+  assert_eq!(
+    find_diagonal_order(vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]]),
+    vec![1, 2, 4, 7, 5, 3, 6, 8, 9]
+  );
+  assert_eq!(
+    find_diagonal_order(vec![vec![1, 2], vec![3, 4]]),
+    vec![1, 2, 3, 4]
+  );
+}
+
 /**
  * 504.七进制数
  */
@@ -197,6 +238,12 @@ pub fn convert_to_base7(num: i32) -> String {
   digits.chars().rev().collect()
 }
 
+#[test]
+fn test_convert_to_base7() {
+  assert_eq!(convert_to_base7(100), "202");
+  assert_eq!(convert_to_base7(-7), "-10");
+}
+
 /**
  * 537. 复数乘法
  */
@@ -210,6 +257,18 @@ pub fn complex_number_multiply(num1: String, num2: String) -> String {
     real1 * real2 - imag1 * imag2,
     real1 * imag2 + imag1 * real2
   )
+}
+
+#[test]
+fn test_complex_number_multiply() {
+  assert_eq!(
+    complex_number_multiply(String::from("1+1i"), String::from("1+1i")),
+    String::from("0+2i")
+  );
+  assert_eq!(
+    complex_number_multiply(String::from("1+-1i"), String::from("1+-1i")),
+    String::from("0+-2i")
+  );
 }
 
 /**
@@ -242,12 +301,47 @@ pub fn cal_points(ops: Vec<String>) -> i32 {
     .sum()
 }
 
+#[test]
+fn test_cal_points() {
+  assert_eq!(
+    cal_points(vec![
+      String::from("5"),
+      String::from("2"),
+      String::from("C"),
+      String::from("D"),
+      String::from("+")
+    ]),
+    30
+  );
+  assert_eq!(
+    cal_points(vec![
+      String::from("5"),
+      String::from("-2"),
+      String::from("4"),
+      String::from("C"),
+      String::from("D"),
+      String::from("9"),
+      String::from("+"),
+      String::from("+")
+    ]),
+    27
+  );
+  assert_eq!(cal_points(vec![String::from("1")]), 1);
+}
+
 /**
  * 693.交替位二进制数
  */
 pub fn has_alternating_bits(n: i32) -> bool {
   let a = n ^ (n >> 1);
   a & (a + 1) == 0
+}
+
+#[test]
+fn test_has_alternating_bits() {
+  assert_eq!(has_alternating_bits(5), true);
+  assert_eq!(has_alternating_bits(7), false);
+  assert_eq!(has_alternating_bits(11), false);
 }
 
 /**
@@ -273,6 +367,15 @@ fn is_self_dividing(num: i32) -> bool {
   }
   true
 }
+#[test]
+fn test_self_dividing_numbers() {
+  assert_eq!(
+    self_dividing_numbers(1, 22),
+    vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 15, 22]
+  );
+  assert_eq!(self_dividing_numbers(47, 85), vec![48, 55, 66, 77]);
+}
+
 
 /**
  * 744.寻找比目标字母大的最小字母
@@ -295,11 +398,24 @@ pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
   return letters[low];
 }
 
+#[test]
+fn test_next_greatest_letter() {
+  assert_eq!(next_greatest_letter(vec!['c', 'f', 'j'], 'a'), 'c');
+  assert_eq!(next_greatest_letter(vec!['c', 'f', 'j'], 'c'), 'f');
+  assert_eq!(next_greatest_letter(vec!['c', 'f', 'j'], 'd'), 'f');
+}
+
 /**
  * 762.二进制表示中质数个计算置位
  */
 pub fn count_prime_set_bits(left: i32, right: i32) -> i32 {
   (left..=right).fold(0, |ret, i| ret + (665772 >> i.count_ones() & 1))
+}
+
+#[test]
+fn test_count_prime_set_bits() {
+  assert_eq!(count_prime_set_bits(6, 10), 4);
+  assert_eq!(count_prime_set_bits(10, 15), 5);
 }
 
 /**
@@ -323,6 +439,20 @@ pub fn unique_morse_representations(words: Vec<String>) -> i32 {
     .len() as i32
 }
 
+#[test]
+fn test_unique_morse_representations() {
+  assert_eq!(
+    unique_morse_representations(vec![
+      String::from("gin"),
+      String::from("zen"),
+      String::from("gig"),
+      String::from("msg"),
+    ]),
+    2
+  );
+  assert_eq!(unique_morse_representations(vec![String::from("a"),]), 1);
+}
+
 /**
  * 806. 写字符串需要的行数
  */
@@ -340,6 +470,29 @@ pub fn number_of_lines(widths: Vec<i32>, s: String) -> Vec<i32> {
   }
   vec![lines, width]
 }
+#[test]
+fn test_number_of_lines() {
+  assert_eq!(
+    number_of_lines(
+      vec![
+        10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        10, 10, 10
+      ],
+      String::from("abcdefghijklmnopqrstuvwxyz")
+    ),
+    vec![3, 60]
+  );
+  assert_eq!(
+    number_of_lines(
+      vec![
+        4, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        10, 10, 10
+      ],
+      String::from("bbbcccdddaaa")
+    ),
+    vec![2, 4]
+  );
+}
 
 /**
  * 1991.寻找数组的中间位置
@@ -354,4 +507,10 @@ pub fn pivot_index(nums: Vec<i32>) -> i32 {
     sum += nums[i];
   }
   -1
+}
+#[test]
+fn test_pivot_index() {
+  assert_eq!(pivot_index(vec! {2, 3, -1, 8, 4}), 3);
+  assert_eq!(pivot_index(vec! {1,-1,4}), 2);
+  assert_eq!(pivot_index(vec! {2,5}), -1);
 }
