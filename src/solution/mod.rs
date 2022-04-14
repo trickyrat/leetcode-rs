@@ -495,6 +495,20 @@ fn test_number_of_lines() {
 }
 
 /**
+ * 1672. 最富有客户的资产总量
+ */
+pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
+  accounts.iter().map(|x| x.iter().sum()).max().unwrap()
+}
+
+#[test]
+fn test_maximum_wealth() {
+  assert_eq!(maximum_wealth(vec![vec![1, 2, 3], vec![3, 2, 1]]), 6);
+  assert_eq!(maximum_wealth(vec![vec![1, 5], vec![7, 3], vec![3, 5]]), 10);
+  assert_eq!(maximum_wealth(vec![vec![2, 8, 7], vec![7, 1, 3], vec![1, 9, 5]]), 17);
+}
+
+/**
  * 1991.寻找数组的中间位置
  */
 pub fn pivot_index(nums: Vec<i32>) -> i32 {
