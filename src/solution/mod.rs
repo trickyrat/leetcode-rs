@@ -36,6 +36,7 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
   }
   panic!("???")
 }
+
 #[test]
 fn test_two_sum() {
   assert_eq!(two_sum(vec![2, 7, 11, 15], 9), vec![0, 1]);
@@ -52,6 +53,7 @@ pub fn add_two_numbers(
 ) -> Option<Box<ListNode>> {
   carried(l1, l2, 0)
 }
+
 fn carried(
   l1: Option<Box<ListNode>>,
   l2: Option<Box<ListNode>>,
@@ -82,7 +84,7 @@ fn test_add_two_numbers() {
   assert_eq!(
     add_two_numbers(
       generate_list_node(vec![2, 4, 3]),
-      generate_list_node(vec![5, 6, 4])
+      generate_list_node(vec![5, 6, 4]),
     ),
     generate_list_node(vec![7, 0, 8])
   );
@@ -93,11 +95,12 @@ fn test_add_two_numbers() {
   assert_eq!(
     add_two_numbers(
       generate_list_node(vec![9, 9, 9, 9, 9, 9, 9]),
-      generate_list_node(vec![9, 9, 9, 9])
+      generate_list_node(vec![9, 9, 9, 9]),
     ),
     generate_list_node(vec![8, 9, 9, 9, 0, 0, 0, 1])
   );
 }
+
 /**
  * 7. 整数转换
  */
@@ -126,6 +129,27 @@ fn test_reverse_int() {
 }
 
 /**
+ * 27.移除元素
+ */
+pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
+  let mut left = 0;
+  let n = nums.len();
+  for right in 0..n {
+    if nums[right] != val {
+      nums[left] = nums[right];
+      left += 1;
+    }
+  }
+  left as i32
+}
+
+#[test]
+fn test_remove_element() {
+  assert_eq!(remove_element(&mut vec![3, 2, 2, 3], 3), 2);
+  assert_eq!(remove_element(&mut vec![0, 1, 2, 2, 3, 0, 4, 2], 2), 5);
+}
+
+/**
  * 172.阶乘后的零
  */
 pub fn trailing_zeroes(n: i32) -> i32 {
@@ -137,6 +161,7 @@ pub fn trailing_zeroes(n: i32) -> i32 {
   }
   ans
 }
+
 #[test]
 fn test_trailing_zeroes() {
   assert_eq!(trailing_zeroes(3), 0);
@@ -309,7 +334,7 @@ fn test_cal_points() {
       String::from("2"),
       String::from("C"),
       String::from("D"),
-      String::from("+")
+      String::from("+"),
     ]),
     30
   );
@@ -322,7 +347,7 @@ fn test_cal_points() {
       String::from("D"),
       String::from("9"),
       String::from("+"),
-      String::from("+")
+      String::from("+"),
     ]),
     27
   );
@@ -356,6 +381,7 @@ pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
   }
   ans
 }
+
 fn is_self_dividing(num: i32) -> bool {
   let mut tmp = num;
   while tmp > 0 {
@@ -367,6 +393,7 @@ fn is_self_dividing(num: i32) -> bool {
   }
   true
 }
+
 #[test]
 fn test_self_dividing_numbers() {
   assert_eq!(
@@ -375,7 +402,6 @@ fn test_self_dividing_numbers() {
   );
   assert_eq!(self_dividing_numbers(47, 85), vec![48, 55, 66, 77]);
 }
-
 
 /**
  * 744.寻找比目标字母大的最小字母
@@ -450,7 +476,7 @@ fn test_unique_morse_representations() {
     ]),
     2
   );
-  assert_eq!(unique_morse_representations(vec![String::from("a"),]), 1);
+  assert_eq!(unique_morse_representations(vec![String::from("a")]), 1);
 }
 
 /**
@@ -470,15 +496,16 @@ pub fn number_of_lines(widths: Vec<i32>, s: String) -> Vec<i32> {
   }
   vec![lines, width]
 }
+
 #[test]
 fn test_number_of_lines() {
   assert_eq!(
     number_of_lines(
       vec![
         10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-        10, 10, 10
+        10, 10, 10,
       ],
-      String::from("abcdefghijklmnopqrstuvwxyz")
+      String::from("abcdefghijklmnopqrstuvwxyz"),
     ),
     vec![3, 60]
   );
@@ -486,9 +513,9 @@ fn test_number_of_lines() {
     number_of_lines(
       vec![
         4, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-        10, 10, 10
+        10, 10, 10,
       ],
-      String::from("bbbcccdddaaa")
+      String::from("bbbcccdddaaa"),
     ),
     vec![2, 4]
   );
@@ -505,7 +532,10 @@ pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
 fn test_maximum_wealth() {
   assert_eq!(maximum_wealth(vec![vec![1, 2, 3], vec![3, 2, 1]]), 6);
   assert_eq!(maximum_wealth(vec![vec![1, 5], vec![7, 3], vec![3, 5]]), 10);
-  assert_eq!(maximum_wealth(vec![vec![2, 8, 7], vec![7, 1, 3], vec![1, 9, 5]]), 17);
+  assert_eq!(
+    maximum_wealth(vec![vec![2, 8, 7], vec![7, 1, 3], vec![1, 9, 5]]),
+    17
+  );
 }
 
 /**
@@ -522,9 +552,10 @@ pub fn pivot_index(nums: Vec<i32>) -> i32 {
   }
   -1
 }
+
 #[test]
 fn test_pivot_index() {
   assert_eq!(pivot_index(vec! {2, 3, -1, 8, 4}), 3);
-  assert_eq!(pivot_index(vec! {1,-1,4}), 2);
-  assert_eq!(pivot_index(vec! {2,5}), -1);
+  assert_eq!(pivot_index(vec! {1, -1, 4}), 2);
+  assert_eq!(pivot_index(vec! {2, 5}), -1);
 }
