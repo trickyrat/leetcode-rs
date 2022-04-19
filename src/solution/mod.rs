@@ -194,7 +194,9 @@ fn test_count_numbers_with_unique_digits() {
   assert_eq!(count_numbers_with_unique_digits(0), 1);
 }
 
-// 386. 字典序排数
+/**
+ * 386. 字典序排数
+ */
 pub fn lexical_order(n: i32) -> Vec<i32> {
   let mut ret: Vec<i32> = Vec::with_capacity(n as usize);
   let mut num = 1;
@@ -543,6 +545,28 @@ fn test_number_of_lines() {
     ),
     vec![2, 4]
   );
+}
+
+/**
+ * 821. 字符的最短距离
+ */
+pub fn shortest_to_char(s: String, c:char) -> Vec<i32> {
+  let cmp = |initial: &mut i32, ch: char| {
+    if ch == c {
+      *initial = 0;
+    } else {
+      *initial += 1;
+    }
+    Some(*initial)
+  };
+  let mut a: Vec<_> = s.chars().rev().scan(s.len() as i32, cmp).collect();
+  s.chars().scan(s.len() as i32, cmp).zip(a.drain(..).rev()).map(|e|e.0.min(e.1)).collect()
+}
+
+#[test]
+fn test_shortest_to_char() {
+  assert_eq!(shortest_to_char(String::from("loveleetcode"), 'e'), vec![3, 2, 1, 0, 1, 0, 0, 1, 2, 2, 1, 0]);
+  assert_eq!(shortest_to_char(String::from("aaab"), 'b'), vec![3, 2, 1, 0]);
 }
 
 /**
