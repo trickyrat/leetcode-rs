@@ -550,7 +550,7 @@ fn test_number_of_lines() {
 /**
  * 821. 字符的最短距离
  */
-pub fn shortest_to_char(s: String, c:char) -> Vec<i32> {
+pub fn shortest_to_char(s: String, c: char) -> Vec<i32> {
   let cmp = |initial: &mut i32, ch: char| {
     if ch == c {
       *initial = 0;
@@ -560,7 +560,7 @@ pub fn shortest_to_char(s: String, c:char) -> Vec<i32> {
     Some(*initial)
   };
   let mut a: Vec<_> = s.chars().rev().scan(s.len() as i32, cmp).collect();
-  s.chars().scan(s.len() as i32, cmp).zip(a.drain(..).rev()).map(|e|e.0.min(e.1)).collect()
+  s.chars().scan(s.len() as i32, cmp).zip(a.drain(..).rev()).map(|e| e.0.min(e.1)).collect()
 }
 
 #[test]
@@ -568,6 +568,52 @@ fn test_shortest_to_char() {
   assert_eq!(shortest_to_char(String::from("loveleetcode"), 'e'), vec![3, 2, 1, 0, 1, 0, 0, 1, 2, 2, 1, 0]);
   assert_eq!(shortest_to_char(String::from("aaab"), 'b'), vec![3, 2, 1, 0]);
 }
+
+/**
+ *  883. 三维形体投影面积
+ */
+pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
+  let max_row = grid.iter().map(|rows| rows.iter().max().unwrap()).sum::<i32>();
+  let max_col = (0..grid.len()).map(|i| grid.iter().map(|col| col[i]).max().unwrap()).sum::<i32>();
+  grid.iter().map(|r| r.iter().filter(|c| **c != 0).count() as i32).sum::<i32>() + max_row + max_col
+}
+
+#[test]
+fn test_projection_area() {
+  assert_eq!(projection_area(vec![vec![1, 2], vec![3, 4]]), 17);
+  assert_eq!(projection_area(vec![vec![2]]), 5);
+  assert_eq!(projection_area(vec![vec![1, 0], vec![0, 2]]), 8);
+}
+
+/**
+ * 905. 按奇偶排序数组
+ */
+pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
+  let (mut left, mut right) = (0, nums.len() - 1);
+  while left < right {
+    while left < right && nums[left] % 2 == 0 {
+      left += 1;
+    }
+
+    while left < right && nums[right] % 2 == 1 {
+      right -= 1;
+    }
+
+    if left < right {
+      nums.swap(left, right);
+      left += 1;
+      right -= 1;
+    }
+  }
+  nums
+}
+
+#[test]
+fn test_sort_array_by_parity() {
+  assert_eq!(sort_array_by_parity(vec![3, 1, 2, 4]), vec![4, 2, 1, 3]);
+  assert_eq!(sort_array_by_parity(vec![0]), vec![0]);
+}
+
 
 /**
  * 1672. 最富有客户的资产总量
