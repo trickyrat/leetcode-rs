@@ -633,6 +633,23 @@ fn test_maximum_wealth() {
 }
 
 /**
+ * 1823. Find the Winner of the Circular Game
+ */
+pub fn find_the_winner(n: i32, k: i32) -> i32 {
+  let mut winner = 1;
+  for i in 2..=n {
+    winner = (winner + k - 1) % i + 1;
+  }
+  winner
+}
+
+#[test]
+fn test_find_the_winner() {
+  assert_eq!(find_the_winner(5, 2), 3);
+  assert_eq!(find_the_winner(6, 5), 1);
+}
+
+/**
  * 1991.寻找数组的中间位置
  */
 pub fn pivot_index(nums: Vec<i32>) -> i32 {
