@@ -614,6 +614,29 @@ fn test_sort_array_by_parity() {
   assert_eq!(sort_array_by_parity(vec![0]), vec![0]);
 }
 
+// 942. DI String Match
+pub fn di_string_match(s: String) -> Vec<i32> {
+  let n = s.len();
+  let mut lo = 0;
+  let mut hi = n as i32;
+  let mut res: Vec<i32> = vec![0; n + 1];
+  s.chars().enumerate().for_each(|(i, c)| if c == 'I' {
+    res[i] = lo;
+    lo += 1
+  } else {
+    res[i] = hi;
+    hi -= 1
+  });
+  res[n] = lo;
+  res
+}
+
+#[test]
+fn test_di_string_match() {
+  assert_eq!(di_string_match(String::from("IDID")), vec![0, 4, 1, 3, 2]);
+  assert_eq!(di_string_match(String::from("III")), vec![0, 1, 2, 3]);
+  assert_eq!(di_string_match(String::from("DDI")), vec![3, 2, 0, 1]);
+}
 
 /**
  * 1672. 最富有客户的资产总量
