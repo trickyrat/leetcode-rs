@@ -638,6 +638,27 @@ fn test_di_string_match() {
   assert_eq!(di_string_match(String::from("DDI")), vec![3, 2, 0, 1]);
 }
 
+pub fn min_deletion_size(strs: Vec<String>) -> i32 {
+  let strs_arr = strs.iter().map(|s|s.chars().collect::<Vec<char>>()).collect::<Vec<_>>();
+  let mut ans = 0;
+  for j in 0..strs[0].len() {
+    for i in 1..strs.len() {
+      if strs_arr[i-1][j] > strs_arr[i][j] {
+        ans += 1;
+        break;
+      }
+    }
+  }
+  ans
+}
+
+#[test]
+fn test_min_deletion_size() {
+  assert_eq!(min_deletion_size(vec!["cba".to_string(), "daf".to_string(), "ghi".to_string()]), 1);
+  assert_eq!(min_deletion_size(vec!["a".to_string(), "b".to_string()]), 0);
+  assert_eq!(min_deletion_size(vec!["zyx".to_string(), "wvu".to_string(), "tsr".to_string()]), 3);
+}
+
 /**
  * 1672. 最富有客户的资产总量
  */
