@@ -638,6 +638,32 @@ fn test_di_string_match() {
   assert_eq!(di_string_match(String::from("DDI")), vec![3, 2, 0, 1]);
 }
 
+/*
+1403. Minimum Subsequence in Non-Increasing Order
+*/
+pub fn min_subsquence(mut nums: Vec<i32>) -> Vec<i32> {
+  let total: i32 = nums.iter().sum();
+  nums.sort_by(|a, b| b.cmp(a));
+  let mut curr = 0;
+  let mut ans: Vec<i32> = Vec::new();
+  for num in nums {
+    curr += num;
+    ans.push(num);
+    if total - curr < curr {
+      break;
+    }
+  }
+  ans
+}
+
+#[test]
+fn test_min_subsequence() {
+  assert_eq!(min_subsquence(vec![4, 3, 10, 9, 8]), vec![10, 9]);
+  assert_eq!(min_subsquence(vec![4, 4, 7, 6, 7]), vec![7, 7, 6]);
+  assert_eq!(min_subsquence(vec![6]), vec![6]);
+}
+
+
 pub fn min_deletion_size(strs: Vec<String>) -> i32 {
   let strs_arr = strs.iter().map(|s|s.chars().collect::<Vec<char>>()).collect::<Vec<_>>();
   let mut ans = 0;
