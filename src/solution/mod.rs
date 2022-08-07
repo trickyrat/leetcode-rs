@@ -2,7 +2,7 @@ pub mod datastructures;
 
 use datastructures::list_node::*;
 
-use std::collections::HashMap;
+use std::collections::{HashMap};
 use std::collections::HashSet;
 
 pub fn generate_list_node(nums: Vec<i32>) -> Option<Box<ListNode>> {
@@ -320,6 +320,44 @@ fn test_complex_number_multiply() {
         complex_number_multiply(String::from("1+-1i"), String::from("1+-1i")),
         String::from("0+-2i")
     );
+}
+
+/**
+ * 636. Exclusive Time of Functions
+ */
+pub fn exclusive_time(n: i32, logs: Vec<String>) -> Vec<i32> {
+    let mut stack: Vec<Vec<i32>> = Vec::new();
+    let mut res: Vec<i32> = vec![0; n as usize];
+    let start_command = "start";
+    for log in logs {
+        let data: Vec<&str> = log.as_str().split(':').collect();
+        let index = data[0].parse::<i32>().unwrap();
+        let timestamp = data[2].parse::<i32>().unwrap();
+        if data[1] == start_command {
+            if !stack.is_empty() {
+                let top = stack.last().unwrap();
+                res[top[0] as usize] += timestamp - top[1];
+            }
+            stack.push(vec![index, timestamp]);
+        } else {
+            let pair = stack.pop().unwrap();
+            res[pair[0] as usize] += timestamp - pair[1] + 1;
+            if !stack.is_empty() {
+                let last = stack.len() - 1;
+                stack[last][1] = timestamp + 1;
+            }
+        }
+    }
+    res
+}
+
+#[test]
+fn test_exclusive_time() {
+    assert_eq!(vec![3, 4], exclusive_time(2, vec!["0:start:0", "1:start:2", "1:end:5", "0:end:6"].iter().map(|&x| x.to_string()).collect()));
+    assert_eq!(vec![8], exclusive_time(1, vec!["0:start:0", "0:start:2", "0:end:5", "0:start:6", "0:end:6", "0:end:7"].iter().map(|&x| x.to_string()).collect()));
+    assert_eq!(vec![7, 1], exclusive_time(2, vec![ "0:start:0", "0:start:2", "0:end:5", "1:start:6", "1:end:6", "0:end:7"].iter().map(|&x| x.to_string()).collect()));
+    assert_eq!(vec![8, 1], exclusive_time(2, vec!["0:start:0", "0:start:2", "0:end:5", "1:start:7", "1:end:7", "0:end:8"].iter().map(|&x| x.to_string()).collect()));
+    assert_eq!(vec![1], exclusive_time(1, vec!["0:start:0", "0:end:0"].iter().map(|&x| x.to_string()).collect()));
 }
 
 /**
@@ -641,7 +679,7 @@ fn test_di_string_match() {
 /*
 1403. Minimum Subsequence in Non-Increasing Order
 */
-pub fn min_subsquence(mut nums: Vec<i32>) -> Vec<i32> {
+pub fn min_subsequence(mut nums: Vec<i32>) -> Vec<i32> {
     let total: i32 = nums.iter().sum();
     nums.sort_by(|a, b| b.cmp(a));
     let mut curr = 0;
@@ -658,9 +696,9 @@ pub fn min_subsquence(mut nums: Vec<i32>) -> Vec<i32> {
 
 #[test]
 fn test_min_subsequence() {
-    assert_eq!(min_subsquence(vec![4, 3, 10, 9, 8]), vec![10, 9]);
-    assert_eq!(min_subsquence(vec![4, 4, 7, 6, 7]), vec![7, 7, 6]);
-    assert_eq!(min_subsquence(vec![6]), vec![6]);
+    assert_eq!(min_subsequence(vec![4, 3, 10, 9, 8]), vec![10, 9]);
+    assert_eq!(min_subsequence(vec![4, 4, 7, 6, 7]), vec![7, 7, 6]);
+    assert_eq!(min_subsequence(vec![6]), vec![6]);
 }
 
 /*
