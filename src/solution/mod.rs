@@ -652,7 +652,9 @@ fn test_sort_array_by_parity() {
     assert_eq!(sort_array_by_parity(vec![0]), vec![0]);
 }
 
-// 942. DI String Match
+/**
+ * 942. DI String Match
+ */
 pub fn di_string_match(s: String) -> Vec<i32> {
     let n = s.len();
     let mut lo = 0;
@@ -676,9 +678,33 @@ fn test_di_string_match() {
     assert_eq!(di_string_match(String::from("DDI")), vec![3, 2, 0, 1]);
 }
 
-/*
-1403. Minimum Subsequence in Non-Increasing Order
-*/
+/**
+ * 944. Delete Columns to Make Sorted
+ */
+pub fn min_deletion_size(strs: Vec<String>) -> i32 {
+    let strs_arr = strs.iter().map(|s| s.chars().collect::<Vec<char>>()).collect::<Vec<_>>();
+    let mut ans = 0;
+    for j in 0..strs[0].len() {
+        for i in 1..strs.len() {
+            if strs_arr[i - 1][j] > strs_arr[i][j] {
+                ans += 1;
+                break;
+            }
+        }
+    }
+    ans
+}
+
+#[test]
+fn test_min_deletion_size() {
+    assert_eq!(min_deletion_size(vec!["cba".to_string(), "daf".to_string(), "ghi".to_string()]), 1);
+    assert_eq!(min_deletion_size(vec!["a".to_string(), "b".to_string()]), 0);
+    assert_eq!(min_deletion_size(vec!["zyx".to_string(), "wvu".to_string(), "tsr".to_string()]), 3);
+}
+
+/**
+ * 1403. Minimum Subsequence in Non-Increasing Order
+ */
 pub fn min_subsequence(mut nums: Vec<i32>) -> Vec<i32> {
     let total: i32 = nums.iter().sum();
     nums.sort_by(|a, b| b.cmp(a));
@@ -701,9 +727,9 @@ fn test_min_subsequence() {
     assert_eq!(min_subsequence(vec![6]), vec![6]);
 }
 
-/*
-1408. String Matching in an Array
-*/
+/**
+ * 1408. String Matching in an Array
+ */
 pub fn string_matching(words: Vec<String>) -> Vec<String> {
     let mut res: Vec<String> = vec![];
     for i in 0..words.len() {
@@ -732,26 +758,23 @@ fn test_string_matching() {
     assert_eq!(string_matching(words3), expected3);
 }
 
-
-pub fn min_deletion_size(strs: Vec<String>) -> i32 {
-    let strs_arr = strs.iter().map(|s| s.chars().collect::<Vec<char>>()).collect::<Vec<_>>();
-    let mut ans = 0;
-    for j in 0..strs[0].len() {
-        for i in 1..strs.len() {
-            if strs_arr[i - 1][j] > strs_arr[i][j] {
-                ans += 1;
-                break;
-            }
+/**
+ * 1450. Number of Students Doing Homework at a Given Time
+ */
+pub fn busy_student(start_time: Vec<i32>, end_time: Vec<i32>, query_time: i32) -> i32 {
+    let mut res = 0;
+    for i in 0..start_time.len() {
+        if start_time[i] <= query_time && query_time <= end_time[i] {
+            res += 1;
         }
     }
-    ans
+    res
 }
 
 #[test]
-fn test_min_deletion_size() {
-    assert_eq!(min_deletion_size(vec!["cba".to_string(), "daf".to_string(), "ghi".to_string()]), 1);
-    assert_eq!(min_deletion_size(vec!["a".to_string(), "b".to_string()]), 0);
-    assert_eq!(min_deletion_size(vec!["zyx".to_string(), "wvu".to_string(), "tsr".to_string()]), 3);
+fn test_busy_student() {
+    assert_eq!(busy_student(vec![1,2,3], vec![3,2,7], 4), 1);
+    assert_eq!(busy_student(vec![4], vec![4], 4), 1);
 }
 
 /**
