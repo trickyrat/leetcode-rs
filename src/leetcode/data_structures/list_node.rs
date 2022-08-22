@@ -22,4 +22,14 @@ impl ListNode {
     let new_node = ListNode::new(val);
     self.get_last_node().next = Some(Box::new(new_node));
   }
+
+  pub fn to_string(&self) -> String {
+    let dummy = self;
+    let mut res: Vec<String> = Vec::new();
+    while dummy.next != None {
+      let val = dummy.next.unwrap().val.to_string();
+      res.push(val);
+    }
+    res.join("->")
+  }
 }
