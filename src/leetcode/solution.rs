@@ -542,6 +542,15 @@ impl Solution {
     }
 
     /**
+     * 1460. Make Two Arrays Equal by Reversing Sub-arrays
+     */
+    pub fn can_be_equal(&self, mut target: Vec<i32>, mut arr: Vec<i32>) -> bool {
+        target.sort();
+        arr.sort();
+        target == arr
+    }
+
+    /**
      * 1672. 最富有客户的资产总量
      */
     pub fn maximum_wealth(&self, accounts: Vec<Vec<i32>>) -> i32 {
@@ -1015,6 +1024,17 @@ mod tests {
             solution.is_prefix_of_word("i am tired".to_string(), "you".to_string()),
             -1
         );
+    }
+
+    #[test]
+    fn test_can_be_equal() {
+        let solution = Solution::new();
+        assert_eq!(
+            solution.can_be_equal(vec![1, 2, 3, 4], vec![2, 1, 3, 4]),
+            true
+        );
+        assert_eq!(solution.can_be_equal(vec![7], vec![7]), true);
+        assert_eq!(solution.can_be_equal(vec![3, 7, 9], vec![3, 7, 11]), false);
     }
 
     #[test]
