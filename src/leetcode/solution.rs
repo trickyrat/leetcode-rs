@@ -247,7 +247,32 @@ impl Solution {
     }
 
     /**
-     * 682.棒球比赛
+     * 658. Find K Closest Elements
+     */
+    pub fn find_closest_elements(&self, arr: Vec<i32>, k: i32, x: i32) -> Vec<i32> {
+        let mut right =  match arr.binary_search(&x) {
+            Ok(i) => i as i32,
+            Err(i) => i as i32,
+        };
+        let n = arr.len() as i32;
+        let mut left = right as i32 - 1;
+        let mut k = k;
+        while k > 0 {
+            if left < 0 {
+                right += 1;
+            } else if right >= n || x - arr[left as usize] <= arr[right as usize] - x {
+                left -= 1;
+            } else {
+                right += 1;
+            }
+            k -= 1;
+        }
+        let (left, right) = ((left + 1) as usize, right as usize);
+        arr[left..right].to_vec()
+    }
+
+    /**
+     * 682. Baseball Game
      */
     pub fn cal_points(&self, ops: Vec<String>) -> i32 {
         ops.iter()
@@ -724,7 +749,7 @@ mod tests {
                 vec!["0:start:0", "1:start:2", "1:end:5", "0:end:6"]
                     .iter()
                     .map(|&x| x.to_string())
-                    .collect()
+                    .collect(),
             )
         );
         assert_eq!(
@@ -737,11 +762,11 @@ mod tests {
                     "0:end:5",
                     "0:start:6",
                     "0:end:6",
-                    "0:end:7"
+                    "0:end:7",
                 ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect()
+                    .iter()
+                    .map(|&x| x.to_string())
+                    .collect(),
             )
         );
         assert_eq!(
@@ -754,11 +779,11 @@ mod tests {
                     "0:end:5",
                     "1:start:6",
                     "1:end:6",
-                    "0:end:7"
+                    "0:end:7",
                 ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect()
+                    .iter()
+                    .map(|&x| x.to_string())
+                    .collect(),
             )
         );
         assert_eq!(
@@ -771,11 +796,11 @@ mod tests {
                     "0:end:5",
                     "1:start:7",
                     "1:end:7",
-                    "0:end:8"
+                    "0:end:8",
                 ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect()
+                    .iter()
+                    .map(|&x| x.to_string())
+                    .collect(),
             )
         );
         assert_eq!(
@@ -785,9 +810,16 @@ mod tests {
                 vec!["0:start:0", "0:end:0"]
                     .iter()
                     .map(|&x| x.to_string())
-                    .collect()
+                    .collect(),
             )
         );
+    }
+
+    #[test]
+    fn test_find_closest_elements() {
+        let solution = Solution::new();
+        assert_eq!(solution.find_closest_elements(vec![1, 2, 3, 4, 5], 4, 3), vec![1, 2, 3, 4]);
+        assert_eq!(solution.find_closest_elements(vec![1, 2, 3, 4, 5], 4, -1), vec![1, 2, 3, 4]);
     }
 
     #[test]
@@ -950,7 +982,7 @@ mod tests {
             solution.min_deletion_size(vec![
                 "cba".to_string(),
                 "daf".to_string(),
-                "ghi".to_string()
+                "ghi".to_string(),
             ]),
             1
         );
@@ -962,7 +994,7 @@ mod tests {
             solution.min_deletion_size(vec![
                 "zyx".to_string(),
                 "wvu".to_string(),
-                "tsr".to_string()
+                "tsr".to_string(),
             ]),
             3
         );
@@ -1016,7 +1048,7 @@ mod tests {
         assert_eq!(
             solution.is_prefix_of_word(
                 "this problem is an easy problem".to_string(),
-                "pro".to_string()
+                "pro".to_string(),
             ),
             2
         );
