@@ -250,7 +250,7 @@ impl Solution {
      * 658. Find K Closest Elements
      */
     pub fn find_closest_elements(&self, arr: Vec<i32>, k: i32, x: i32) -> Vec<i32> {
-        let mut right =  match arr.binary_search(&x) {
+        let mut right = match arr.binary_search(&x) {
             Ok(i) => i as i32,
             Err(i) => i as i32,
         };
@@ -573,6 +573,28 @@ impl Solution {
         target.sort();
         arr.sort();
         target == arr
+    }
+
+    /**
+     * 1464. Maximum Product of Two Elements in an Array
+     */
+    pub fn max_product(&self, nums: Vec<i32>) -> i32 {
+        let mut a = nums[0];
+        let mut b = nums[1];
+        if a < b {
+            let temp = a;
+            a = b;
+            b = temp;
+        }
+        for i in 2..nums.len() {
+            if a < nums[i] {
+                b = a;
+                a = nums[i];
+            } else if nums[i] > b {
+                b = nums[i];
+            }
+        }
+        (a - 1) * (b - 1)
     }
 
     /**
@@ -1067,6 +1089,14 @@ mod tests {
         );
         assert_eq!(solution.can_be_equal(vec![7], vec![7]), true);
         assert_eq!(solution.can_be_equal(vec![3, 7, 9], vec![3, 7, 11]), false);
+    }
+
+    #[test]
+    fn test_max_product() {
+        let solution = Solution::new();
+        assert_eq!(solution.max_product(vec![3, 4, 5, 2]), 12);
+        assert_eq!(solution.max_product(vec![1, 5, 4, 5]), 16);
+        assert_eq!(solution.max_product(vec![3, 7]), 12);
     }
 
     #[test]
