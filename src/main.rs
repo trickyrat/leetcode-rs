@@ -1,3 +1,3 @@
-mod solution;
+mod leetcode;
 
 fn main() { println!("Hello, world!"); }
