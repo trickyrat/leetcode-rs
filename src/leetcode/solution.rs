@@ -37,34 +37,33 @@ impl Solution {
         l1: Option<Box<ListNode>>,
         l2: Option<Box<ListNode>>,
     ) -> Option<Box<ListNode>> {
-        self.carried(l1, l2, 0)
+        fn carried(
+            l1: Option<Box<ListNode>>,
+            l2: Option<Box<ListNode>>,
+            mut carry: i32,
+        ) -> Option<Box<ListNode>> {
+            if l1.is_none() && l2.is_none() && carry == 0 {
+                None
+            } else {
+                Some(Box::new(ListNode {
+                    next: carried(
+                        l1.and_then(|x| {
+                            carry += x.val;
+                            x.next
+                        }),
+                        l2.and_then(|x| {
+                            carry += x.val;
+                            x.next
+                        }),
+                        carry / 10,
+                    ),
+                    val: carry % 10,
+                }))
+            }
+        }
+        carried(l1, l2, 0)
     }
 
-    fn carried(
-        &self,
-        l1: Option<Box<ListNode>>,
-        l2: Option<Box<ListNode>>,
-        mut carry: i32,
-    ) -> Option<Box<ListNode>> {
-        if l1.is_none() && l2.is_none() && carry == 0 {
-            None
-        } else {
-            Some(Box::new(ListNode {
-                next: self.carried(
-                    l1.and_then(|x| {
-                        carry += x.val;
-                        x.next
-                    }),
-                    l2.and_then(|x| {
-                        carry += x.val;
-                        x.next
-                    }),
-                    carry / 10,
-                ),
-                val: carry % 10,
-            }))
-        }
-    }
     /**
      * 7. Convert Integer
      */
@@ -290,10 +289,10 @@ impl Solution {
             max((index - level_min[&depth] + 1) as i32,
                 max(
                     dfs(&node.as_ref().unwrap().borrow().left, depth + 1, index * 2, level_min),
-                    dfs(&node.as_ref().unwrap().borrow().right, depth + 1, index * 2 + 1, level_min)
+                    dfs(&node.as_ref().unwrap().borrow().right, depth + 1, index * 2 + 1, level_min),
                 ))
         }
-        dfs(&root,  1, 1, &mut level_min)
+        dfs(&root, 1, 1, &mut level_min)
     }
 
     /**
@@ -338,24 +337,24 @@ impl Solution {
      */
     pub fn self_dividing_numbers(&self, left: i32, right: i32) -> Vec<i32> {
         let mut ans = Vec::new();
+        fn is_self_dividing(num: i32) -> bool {
+            let mut tmp = num;
+            while tmp > 0 {
+                let digit = tmp % 10;
+                if digit == 0 || num % digit != 0 {
+                    return false;
+                }
+                tmp /= 10;
+            }
+            true
+        }
+
         for i in left..=right {
-            if self.is_self_dividing(i) {
+            if is_self_dividing(i) {
                 ans.push(i);
             }
         }
         ans
-    }
-
-    fn is_self_dividing(&self, num: i32) -> bool {
-        let mut tmp = num;
-        while tmp > 0 {
-            let digit = tmp % 10;
-            if digit == 0 || num % digit != 0 {
-                return false;
-            }
-            tmp /= 10;
-        }
-        true
     }
 
     /**
@@ -380,10 +379,40 @@ impl Solution {
     }
 
     /**
-     * 762.二进制表示中质数个计算置位
+     * 762. Prime Number of Set Bits in Binary Representation
      */
     pub fn count_prime_set_bits(&self, left: i32, right: i32) -> i32 {
         (left..=right).fold(0, |ret, i| ret + (665772 >> i.count_ones() & 1))
+    }
+
+    /**
+     * 793. Preimage Size of Factorial Zeroes Function
+     */
+    pub fn preimage_size_fzf(&self, k: i32) -> i32 {
+        fn zeta(mut n: i32) -> i32 {
+            let mut res = 0;
+            while n != 0 {
+                n /= 5;
+                res += n;
+            }
+            res
+        }
+
+        fn nx(n: i32) -> i32 {
+            let mut right: i64 = 5 * (n as i64);
+            let mut left: i64 = 0;
+            while left <= right {
+                let mid = left + (right - left) / 2;
+                if zeta(mid as i32) < n {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+            return (right + 1) as i32;
+        }
+
+        nx(k + 1) - nx(k)
     }
 
     /**
@@ -929,6 +958,14 @@ mod tests {
         let solution = Solution::new();
         assert_eq!(solution.count_prime_set_bits(6, 10), 4);
         assert_eq!(solution.count_prime_set_bits(10, 15), 5);
+    }
+
+    #[test]
+    fn test_preimage_size_fzf() {
+        let solution = Solution::new();
+        assert_eq!(solution.preimage_size_fzf(0), 5);
+        assert_eq!(solution.preimage_size_fzf(5), 0);
+        assert_eq!(solution.preimage_size_fzf(3), 5);
     }
 
     #[test]
