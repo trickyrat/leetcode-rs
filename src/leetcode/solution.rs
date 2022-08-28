@@ -1,6 +1,10 @@
+use std::cell::RefCell;
+use std::cmp::max;
 use crate::leetcode::data_structures::ListNode;
 use std::collections::HashMap;
 use std::collections::HashSet;
+use std::rc::Rc;
+use crate::leetcode::TreeNode;
 
 struct Solution {}
 
@@ -269,6 +273,27 @@ impl Solution {
         }
         let (left, right) = ((left + 1) as usize, right as usize);
         arr[left..right].to_vec()
+    }
+
+    /**
+     * 662. Maximum Width of Binary Tree
+     */
+    pub fn width_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
+        let mut level_min: HashMap<usize, usize> = HashMap::new();
+        fn dfs(node: &Option<Rc<RefCell<TreeNode>>>, depth: usize, index: usize, level_min: &mut HashMap<usize, usize>) -> i32 {
+            if node.is_none() {
+                return 0;
+            }
+            if !level_min.contains_key(&depth) {
+                level_min.insert(depth, index);
+            }
+            max((index - level_min[&depth] + 1) as i32,
+                max(
+                    dfs(&node.as_ref().unwrap().borrow().left, depth + 1, index * 2, level_min),
+                    dfs(&node.as_ref().unwrap().borrow().right, depth + 1, index * 2 + 1, level_min)
+                ))
+        }
+        dfs(&root,  1, 1, &mut level_min)
     }
 
     /**
