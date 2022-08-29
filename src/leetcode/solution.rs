@@ -652,6 +652,19 @@ impl Solution {
     }
 
     /**
+     * 1470. Shuffle the Array
+     */
+    pub fn shuffle(&self, nums: Vec<i32>, n: i32) -> Vec<i32> {
+        let mut res: Vec<i32> = vec![0; (n * 2) as usize];
+        let n = n as usize;
+        for i in 0..n{
+            res[2 * i] = nums[i];
+            res[2 * i  + 1] = nums[n + i];
+        }
+        res
+    }
+
+    /**
      * 1672. 最富有客户的资产总量
      */
     pub fn maximum_wealth(&self, accounts: Vec<Vec<i32>>) -> i32 {
@@ -1159,6 +1172,14 @@ mod tests {
         assert_eq!(solution.max_product(vec![3, 4, 5, 2]), 12);
         assert_eq!(solution.max_product(vec![1, 5, 4, 5]), 16);
         assert_eq!(solution.max_product(vec![3, 7]), 12);
+    }
+
+    #[test]
+    fn test_shuffle() {
+        let solution = Solution::new();
+        assert_eq!(vec![2, 3, 5, 4, 1, 7], solution.shuffle(vec![2, 5, 1, 3, 4, 7], 3));
+        assert_eq!(vec![1, 4, 2, 3, 3, 2, 4, 1], solution.shuffle(vec![1, 2, 3, 4, 4, 3, 2, 1], 4));
+        assert_eq!(vec![1, 2, 1, 2], solution.shuffle(vec![1, 1, 2, 2], 2));
     }
 
     #[test]
