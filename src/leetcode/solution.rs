@@ -1,10 +1,10 @@
+use crate::leetcode::data_structures::ListNode;
+use crate::leetcode::TreeNode;
 use std::cell::RefCell;
 use std::cmp::max;
-use crate::leetcode::data_structures::ListNode;
 use std::collections::HashMap;
 use std::collections::HashSet;
 use std::rc::Rc;
-use crate::leetcode::TreeNode;
 
 struct Solution {}
 
@@ -279,18 +279,35 @@ impl Solution {
      */
     pub fn width_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
         let mut level_min: HashMap<usize, usize> = HashMap::new();
-        fn dfs(node: &Option<Rc<RefCell<TreeNode>>>, depth: usize, index: usize, level_min: &mut HashMap<usize, usize>) -> i32 {
+        fn dfs(
+            node: &Option<Rc<RefCell<TreeNode>>>,
+            depth: usize,
+            index: usize,
+            level_min: &mut HashMap<usize, usize>,
+        ) -> i32 {
             if node.is_none() {
                 return 0;
             }
             if !level_min.contains_key(&depth) {
                 level_min.insert(depth, index);
             }
-            max((index - level_min[&depth] + 1) as i32,
+            max(
+                (index - level_min[&depth] + 1) as i32,
                 max(
-                    dfs(&node.as_ref().unwrap().borrow().left, depth + 1, index * 2, level_min),
-                    dfs(&node.as_ref().unwrap().borrow().right, depth + 1, index * 2 + 1, level_min),
-                ))
+                    dfs(
+                        &node.as_ref().unwrap().borrow().left,
+                        depth + 1,
+                        index * 2,
+                        level_min,
+                    ),
+                    dfs(
+                        &node.as_ref().unwrap().borrow().right,
+                        depth + 1,
+                        index * 2 + 1,
+                        level_min,
+                    ),
+                ),
+            )
         }
         dfs(&root, 1, 1, &mut level_min)
     }
@@ -536,9 +553,7 @@ impl Solution {
         res
     }
 
-    /**
-     * 944. Delete Columns to Make Sorted
-     */
+    /// 944. Delete Columns to Make Sorted
     pub fn min_deletion_size(&self, strs: Vec<String>) -> i32 {
         let strs_arr = strs
             .iter()
@@ -554,6 +569,36 @@ impl Solution {
             }
         }
         ans
+    }
+
+    /// 998. Maximum Binary Tree II
+    pub fn insert_into_max_tree(
+        root: Option<Rc<RefCell<TreeNode>>>,
+        val: i32,
+    ) -> Option<Rc<RefCell<TreeNode>>> {
+        let (mut parent, mut curr) = (Rc::new(RefCell::new(TreeNode::new(val))), root.clone());
+        if root.is_some() && val > root.as_ref().unwrap().borrow().val {
+            parent.borrow_mut().left = root;
+            return Some(parent);
+        }
+        while curr.as_ref().unwrap().borrow().right.is_some()
+            && curr
+                .as_ref()
+                .unwrap()
+                .borrow()
+                .right
+                .as_ref()
+                .unwrap()
+                .borrow()
+                .val
+                > val
+        {
+            let right = curr.as_ref().unwrap().borrow().right.clone();
+            curr = right;
+        }
+        parent.borrow_mut().left = curr.as_ref().unwrap().borrow().right.clone();
+        curr.as_ref().unwrap().borrow_mut().right = Some(parent.clone());
+        root
     }
 
     /**
@@ -657,9 +702,9 @@ impl Solution {
     pub fn shuffle(&self, nums: Vec<i32>, n: i32) -> Vec<i32> {
         let mut res: Vec<i32> = vec![0; (n * 2) as usize];
         let n = n as usize;
-        for i in 0..n{
+        for i in 0..n {
             res[2 * i] = nums[i];
-            res[2 * i  + 1] = nums[n + i];
+            res[2 * i + 1] = nums[n + i];
         }
         res
     }
@@ -853,9 +898,9 @@ mod tests {
                     "0:end:6",
                     "0:end:7",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
         assert_eq!(
@@ -870,9 +915,9 @@ mod tests {
                     "1:end:6",
                     "0:end:7",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
         assert_eq!(
@@ -887,9 +932,9 @@ mod tests {
                     "1:end:7",
                     "0:end:8",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
         assert_eq!(
@@ -907,8 +952,14 @@ mod tests {
     #[test]
     fn test_find_closest_elements() {
         let solution = Solution::new();
-        assert_eq!(solution.find_closest_elements(vec![1, 2, 3, 4, 5], 4, 3), vec![1, 2, 3, 4]);
-        assert_eq!(solution.find_closest_elements(vec![1, 2, 3, 4, 5], 4, -1), vec![1, 2, 3, 4]);
+        assert_eq!(
+            solution.find_closest_elements(vec![1, 2, 3, 4, 5], 4, 3),
+            vec![1, 2, 3, 4]
+        );
+        assert_eq!(
+            solution.find_closest_elements(vec![1, 2, 3, 4, 5], 4, -1),
+            vec![1, 2, 3, 4]
+        );
     }
 
     #[test]
@@ -1177,8 +1228,14 @@ mod tests {
     #[test]
     fn test_shuffle() {
         let solution = Solution::new();
-        assert_eq!(vec![2, 3, 5, 4, 1, 7], solution.shuffle(vec![2, 5, 1, 3, 4, 7], 3));
-        assert_eq!(vec![1, 4, 2, 3, 3, 2, 4, 1], solution.shuffle(vec![1, 2, 3, 4, 4, 3, 2, 1], 4));
+        assert_eq!(
+            vec![2, 3, 5, 4, 1, 7],
+            solution.shuffle(vec![2, 5, 1, 3, 4, 7], 3)
+        );
+        assert_eq!(
+            vec![1, 4, 2, 3, 3, 2, 4, 1],
+            solution.shuffle(vec![1, 2, 3, 4, 4, 3, 2, 1], 4)
+        );
         assert_eq!(vec![1, 2, 1, 2], solution.shuffle(vec![1, 1, 2, 2], 2));
     }
 
