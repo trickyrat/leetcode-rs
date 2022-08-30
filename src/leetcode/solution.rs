@@ -582,16 +582,7 @@ impl Solution {
             return Some(parent);
         }
         while curr.as_ref().unwrap().borrow().right.is_some()
-            && curr
-                .as_ref()
-                .unwrap()
-                .borrow()
-                .right
-                .as_ref()
-                .unwrap()
-                .borrow()
-                .val
-                > val
+            && curr.as_ref().unwrap().borrow().right.as_ref().unwrap().borrow().val > val
         {
             let right = curr.as_ref().unwrap().borrow().right.clone();
             curr = right;
@@ -898,9 +889,9 @@ mod tests {
                     "0:end:6",
                     "0:end:7",
                 ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
+                    .iter()
+                    .map(|&x| x.to_string())
+                    .collect(),
             )
         );
         assert_eq!(
@@ -915,9 +906,9 @@ mod tests {
                     "1:end:6",
                     "0:end:7",
                 ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
+                    .iter()
+                    .map(|&x| x.to_string())
+                    .collect(),
             )
         );
         assert_eq!(
@@ -932,9 +923,9 @@ mod tests {
                     "1:end:7",
                     "0:end:8",
                 ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
+                    .iter()
+                    .map(|&x| x.to_string())
+                    .collect(),
             )
         );
         assert_eq!(
