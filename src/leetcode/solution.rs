@@ -2,9 +2,10 @@ use crate::leetcode::data_structures::ListNode;
 use crate::leetcode::TreeNode;
 use std::cell::RefCell;
 use std::cmp::max;
-use std::collections::HashMap;
+use std::collections::{HashMap, VecDeque};
 use std::collections::HashSet;
 use std::rc::Rc;
+use rand::distributions::uniform::SampleBorrow;
 
 struct Solution {}
 
@@ -569,6 +570,21 @@ impl Solution {
             }
         }
         ans
+    }
+
+    /// 946. Validate Stack Sequences
+    pub fn validate_stack_sequences(&self, pushed: Vec<i32>, popped: Vec<i32>) -> bool {
+        let mut stack: VecDeque<i32> = VecDeque::new();
+        let n = pushed.len();
+        let mut j: usize = 0;
+        for i in 0..n {
+            stack.push_back(pushed[i]);
+            while !stack.is_empty() && stack.back().cloned().unwrap() == popped[j] {
+                stack.pop_back();
+                j += 1;
+            }
+        }
+        stack.is_empty()
     }
 
     /// 998. Maximum Binary Tree II
