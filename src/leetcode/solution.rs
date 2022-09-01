@@ -1,11 +1,11 @@
 use crate::leetcode::data_structures::ListNode;
 use crate::leetcode::TreeNode;
+use rand::distributions::uniform::SampleBorrow;
 use std::cell::RefCell;
 use std::cmp::max;
-use std::collections::{HashMap, VecDeque};
 use std::collections::HashSet;
+use std::collections::{HashMap, VecDeque};
 use std::rc::Rc;
-use rand::distributions::uniform::SampleBorrow;
 
 struct Solution {}
 
@@ -598,7 +598,16 @@ impl Solution {
             return Some(parent);
         }
         while curr.as_ref().unwrap().borrow().right.is_some()
-            && curr.as_ref().unwrap().borrow().right.as_ref().unwrap().borrow().val > val
+            && curr
+                .as_ref()
+                .unwrap()
+                .borrow()
+                .right
+                .as_ref()
+                .unwrap()
+                .borrow()
+                .val
+                > val
         {
             let right = curr.as_ref().unwrap().borrow().right.clone();
             curr = right;
@@ -712,6 +721,24 @@ impl Solution {
         for i in 0..n {
             res[2 * i] = nums[i];
             res[2 * i + 1] = nums[n + i];
+        }
+        res
+    }
+
+    /// 1475. Final Prices With a Special Discount in a Shop
+    pub fn final_prices(&self, prices: Vec<i32>) -> Vec<i32> {
+        let n = prices.len();
+        let mut res: Vec<i32> = vec![0; n];
+        let mut stack: Vec<i32> = vec![];
+        for i in (0..n).rev() {
+            while !stack.is_empty() && stack[stack.len() - 1] > prices[i] {
+                stack.pop();
+            }
+            res[i] = match stack.is_empty() {
+                true => prices[i],
+                false => prices[i] - stack[stack.len() - 1],
+            };
+            stack.push(prices[i]);
         }
         res
     }
@@ -905,9 +932,9 @@ mod tests {
                     "0:end:6",
                     "0:end:7",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
         assert_eq!(
@@ -922,9 +949,9 @@ mod tests {
                     "1:end:6",
                     "0:end:7",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
         assert_eq!(
@@ -939,9 +966,9 @@ mod tests {
                     "1:end:7",
                     "0:end:8",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
         assert_eq!(
@@ -1244,6 +1271,20 @@ mod tests {
             solution.shuffle(vec![1, 2, 3, 4, 4, 3, 2, 1], 4)
         );
         assert_eq!(vec![1, 2, 1, 2], solution.shuffle(vec![1, 1, 2, 2], 2));
+    }
+
+    #[test]
+    fn test_final_prices() {
+        let solution = Solution::new();
+        assert_eq!(
+            vec![4, 2, 4, 2, 3],
+            solution.final_prices(vec![8, 4, 6, 2, 3])
+        );
+        assert_eq!(
+            vec![1, 2, 3, 4, 5],
+            solution.final_prices(vec![1, 2, 3, 4, 5])
+        );
+        assert_eq!(vec![9, 0, 1, 6], solution.final_prices(vec![10, 1, 1, 6]));
     }
 
     #[test]
