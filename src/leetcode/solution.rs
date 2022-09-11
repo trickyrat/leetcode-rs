@@ -7,9 +7,7 @@ use std::collections::{HashMap, VecDeque};
 use std::rc::Rc;
 
 
-/**
- * 1. Two Sum
- */
+/// 1. Two Sum
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     let mut hashmap: HashMap<i32, usize> = HashMap::with_capacity(nums.len());
     for i in 0..nums.len() {
@@ -23,9 +21,7 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     panic!("???")
 }
 
-/**
- * 2. Add Two Numbers
- */
+/// 2. Add Two Numbers
 pub fn add_two_numbers(
     l1: Option<Box<ListNode>>,
     l2: Option<Box<ListNode>>,
@@ -57,9 +53,7 @@ pub fn add_two_numbers(
     carried(l1, l2, 0)
 }
 
-/**
- * 7. Convert Integer
- */
+/// 7. Convert Integer
 pub fn reverse_int(x: i32) -> i32 {
     let mut x = x;
     let mut res = 0;
@@ -74,9 +68,7 @@ pub fn reverse_int(x: i32) -> i32 {
     res
 }
 
-/**
- * 27.移除元素
- */
+/// 27. Remove Element
 pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
     let mut left = 0;
     let n = nums.len();
@@ -89,9 +81,7 @@ pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
     left as i32
 }
 
-/**
- * 172.阶乘后的零
- */
+/// 172. Factorial Trailing Zeroes
 pub fn trailing_zeroes(n: i32) -> i32 {
     let mut ans = 0;
     let mut n = n;
@@ -102,9 +92,7 @@ pub fn trailing_zeroes(n: i32) -> i32 {
     ans
 }
 
-/**
- * 357. 统计各位数字都不同的数字个数
- */
+/// 357. Count Numbers with Unique Digits
 pub fn count_numbers_with_unique_digits(n: i32) -> i32 {
     if n == 0 {
         return 1;
@@ -121,9 +109,7 @@ pub fn count_numbers_with_unique_digits(n: i32) -> i32 {
     res
 }
 
-/**
- * 386. 字典序排数
- */
+/// 386. Lexicographical Numbers
 pub fn lexical_order(n: i32) -> Vec<i32> {
     let mut ret: Vec<i32> = Vec::with_capacity(n as usize);
     let mut num = 1;
@@ -141,9 +127,7 @@ pub fn lexical_order(n: i32) -> Vec<i32> {
     ret
 }
 
-/**
- * 498.对角线遍历
- */
+/// 498. Diagonal Traverse
 pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {
     if mat.len() == 0 {
         return Vec::new();
@@ -177,9 +161,7 @@ pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {
     res
 }
 
-/**
- * 504.七进制数
- */
+/// 504. Base 7
 pub fn convert_to_base7(num: i32) -> String {
     let mut num = num;
     if num == 0 {
@@ -198,9 +180,7 @@ pub fn convert_to_base7(num: i32) -> String {
     digits.chars().rev().collect()
 }
 
-/**
- * 537. 复数乘法
- */
+/// 537. Complex Number Multiplication
 pub fn complex_number_multiply(num1: String, num2: String) -> String {
     let &complex1 = &num1[..num1.len() - 1].split_once('+').unwrap();
     let &complex2 = &num2[..num2.len() - 1].split_once('+').unwrap();
@@ -213,9 +193,7 @@ pub fn complex_number_multiply(num1: String, num2: String) -> String {
     )
 }
 
-/**
- * 636. Exclusive Time of Functions
- */
+/// 636. Exclusive Time of Functions
 pub fn exclusive_time(n: i32, logs: Vec<String>) -> Vec<i32> {
     let mut stack: Vec<Vec<i32>> = Vec::new();
     let mut res: Vec<i32> = vec![0; n as usize];
@@ -242,7 +220,7 @@ pub fn exclusive_time(n: i32, logs: Vec<String>) -> Vec<i32> {
     res
 }
 
-// 646. Maximum Length of Pair Chain
+/// 646. Maximum Length of Pair Chain
 pub fn find_longest_chain(mut pairs: Vec<Vec<i32>>) -> i32 {
     pairs.sort_by(|a, b| a[1].cmp(&b[1]));
     let mut curr = i32::MIN;
@@ -256,9 +234,7 @@ pub fn find_longest_chain(mut pairs: Vec<Vec<i32>>) -> i32 {
     res
 }
 
-/**
- * 658. Find K Closest Elements
- */
+/// 658. Find K Closest Elements
 pub fn find_closest_elements(arr: Vec<i32>, k: i32, x: i32) -> Vec<i32> {
     let mut right = match arr.binary_search(&x) {
         Ok(i) => i as i32,
@@ -281,9 +257,7 @@ pub fn find_closest_elements(arr: Vec<i32>, k: i32, x: i32) -> Vec<i32> {
     arr[left..right].to_vec()
 }
 
-/**
- * 662. Maximum Width of Binary Tree
- */
+/// 662. Maximum Width of Binary Tree
 pub fn width_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     let mut level_min: HashMap<usize, usize> = HashMap::new();
     fn dfs(
@@ -319,9 +293,7 @@ pub fn width_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     dfs(&root, 1, 1, &mut level_min)
 }
 
-/**
- * 682. Baseball Game
- */
+/// 682. Baseball Game
 pub fn cal_points(ops: Vec<String>) -> i32 {
     ops.iter()
         .map(|x| x.as_str())
@@ -348,17 +320,26 @@ pub fn cal_points(ops: Vec<String>) -> i32 {
         .sum()
 }
 
-/**
- * 693.交替位二进制数
- */
+/// 693. Binary Number with Alternating bits
 pub fn has_alternating_bits(n: i32) -> bool {
     let a = n ^ (n >> 1);
     a & (a + 1) == 0
 }
 
-/**
- * 728.自除数
- */
+/// 724. Find Pivot Index
+pub fn pivot_index(nums: Vec<i32>) -> i32 {
+    let total: i32 = nums.iter().sum();
+    let mut sum: i32 = 0;
+    for i in 0..nums.len() {
+        if 2 * sum + nums[i] == total {
+            return i as i32;
+        }
+        sum += nums[i];
+    }
+    -1
+}
+
+/// 728. Self Dividing Numbers
 pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
     let mut ans = Vec::new();
     fn is_self_dividing(num: i32) -> bool {
@@ -381,9 +362,7 @@ pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
     ans
 }
 
-/**
- * 744.寻找比目标字母大的最小字母
- */
+/// 744. Find Smallest Letter Greater Than Target
 pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
     let len = letters.len();
     if target >= letters[len - 1] {
@@ -402,16 +381,12 @@ pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
     return letters[low];
 }
 
-/**
- * 762. Prime Number of Set Bits in Binary Representation
- */
+/// 762. Prime Number of Set Bits in Binary Representation
 pub fn count_prime_set_bits(left: i32, right: i32) -> i32 {
     (left..=right).fold(0, |ret, i| ret + (665772 >> i.count_ones() & 1))
 }
 
-/**
- * 793. Preimage Size of Factorial Zeroes Function
- */
+/// 793. Preimage Size of Factorial Zeroes Function
 pub fn preimage_size_fzf(k: i32) -> i32 {
     fn zeta(mut n: i32) -> i32 {
         let mut res = 0;
@@ -439,9 +414,7 @@ pub fn preimage_size_fzf(k: i32) -> i32 {
     nx(k + 1) - nx(k)
 }
 
-/**
- * 804. 唯一摩尔斯密码词
- */
+/// 804. Unique Morse Code Words
 pub fn unique_morse_representations(words: Vec<String>) -> i32 {
     let morse = vec![
         ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..",
@@ -460,9 +433,7 @@ pub fn unique_morse_representations(words: Vec<String>) -> i32 {
         .len() as i32
 }
 
-/**
- * 806. 写字符串需要的行数
- */
+/// 806. Number of Lines To Write String
 pub fn number_of_lines(widths: Vec<i32>, s: String) -> Vec<i32> {
     let max_wdith = 100;
     let mut lines = 1;
@@ -478,9 +449,7 @@ pub fn number_of_lines(widths: Vec<i32>, s: String) -> Vec<i32> {
     vec![lines, width]
 }
 
-/**
- * 821. 字符的最短距离
- */
+/// 821. Shortest Distance to a Character
 pub fn shortest_to_char(s: String, c: char) -> Vec<i32> {
     let cmp = |initial: &mut i32, ch: char| {
         if ch == c {
@@ -498,9 +467,7 @@ pub fn shortest_to_char(s: String, c: char) -> Vec<i32> {
         .collect()
 }
 
-/**
- *  883. 三维形体投影面积
- */
+///  883. Projection Area of 3D Shapes
 pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
     let max_row = grid
         .iter()
@@ -516,9 +483,7 @@ pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
         + max_col
 }
 
-/**
- * 905. 按奇偶排序数组
- */
+/// 905. Sort Array By Parity
 pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
     let (mut left, mut right) = (0, nums.len() - 1);
     while left < right {
@@ -539,9 +504,7 @@ pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
     nums
 }
 
-/**
- * 942. DI String Match
- */
+/// 942. DI String Match
 pub fn di_string_match(s: String) -> Vec<i32> {
     let n = s.len();
     let mut lo = 0;
@@ -623,9 +586,7 @@ pub fn insert_into_max_tree(
     root
 }
 
-/**
- * 1403. Minimum Subsequence in Non-Increasing Order
- */
+/// 1403. Minimum Subsequence in Non-Increasing Order
 pub fn min_subsequence(mut nums: Vec<i32>) -> Vec<i32> {
     let total: i32 = nums.iter().sum();
     nums.sort_by(|a, b| b.cmp(a));
@@ -641,9 +602,7 @@ pub fn min_subsequence(mut nums: Vec<i32>) -> Vec<i32> {
     ans
 }
 
-/**
- * 1408. String Matching in an Array
- */
+/// 1408. String Matching in an Array
 pub fn string_matching(words: Vec<String>) -> Vec<String> {
     let mut res: Vec<String> = vec![];
     for i in 0..words.len() {
@@ -659,9 +618,7 @@ pub fn string_matching(words: Vec<String>) -> Vec<String> {
     res
 }
 
-/**
- * 1450. Number of Students Doing Homework at a Given Time
- */
+/// 1450. Number of Students Doing Homework at a Given Time
 pub fn busy_student(start_time: Vec<i32>, end_time: Vec<i32>, query_time: i32) -> i32 {
     let mut res = 0;
     for i in 0..start_time.len() {
@@ -672,9 +629,7 @@ pub fn busy_student(start_time: Vec<i32>, end_time: Vec<i32>, query_time: i32) -
     res
 }
 
-/**
- * 1455. Check If a Word Occurs As a Prefix of Any Word in a Sentence
- */
+/// 1455. Check If a Word Occurs As a Prefix of Any Word in a Sentence
 pub fn is_prefix_of_word(sentence: String, search_word: String) -> i32 {
     let words = sentence.as_str().split_ascii_whitespace();
     let mut index = 1;
@@ -687,18 +642,14 @@ pub fn is_prefix_of_word(sentence: String, search_word: String) -> i32 {
     -1
 }
 
-/**
- * 1460. Make Two Arrays Equal by Reversing Sub-arrays
- */
+/// 1460. Make Two Arrays Equal by Reversing Sub-arrays
 pub fn can_be_equal(mut target: Vec<i32>, mut arr: Vec<i32>) -> bool {
     target.sort();
     arr.sort();
     target == arr
 }
 
-/**
- * 1464. Maximum Product of Two Elements in an Array
- */
+/// 1464. Maximum Product of Two Elements in an Array
 pub fn max_product(nums: Vec<i32>) -> i32 {
     let mut a = nums[0];
     let mut b = nums[1];
@@ -718,9 +669,7 @@ pub fn max_product(nums: Vec<i32>) -> i32 {
     (a - 1) * (b - 1)
 }
 
-/**
- * 1470. Shuffle the Array
- */
+/// 1470. Shuffle the Array
 pub fn shuffle(nums: Vec<i32>, n: i32) -> Vec<i32> {
     let mut res: Vec<i32> = vec![0; (n * 2) as usize];
     let n = n as usize;
@@ -749,16 +698,12 @@ pub fn final_prices(prices: Vec<i32>) -> Vec<i32> {
     res
 }
 
-/**
- * 1672. 最富有客户的资产总量
- */
+/// 1672. Richest Customer Wealth
 pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
     accounts.iter().map(|x| x.iter().sum()).max().unwrap()
 }
 
-/**
- * 1823. Find the Winner of the Circular Game
- */
+/// 1823. Find the Winner of the Circular Game
 pub fn find_the_winner(n: i32, k: i32) -> i32 {
     let mut winner = 1;
     for i in 2..=n {
@@ -767,10 +712,8 @@ pub fn find_the_winner(n: i32, k: i32) -> i32 {
     winner
 }
 
-/**
- * 1991.寻找数组的中间位置
- */
-pub fn pivot_index(nums: Vec<i32>) -> i32 {
+/// 1991. Find the Middle Index in Array
+pub fn find_middle_index(nums: Vec<i32>) -> i32 {
     let total: i32 = nums.iter().sum();
     let mut sum: i32 = 0;
     for i in 0..nums.len() {
@@ -1031,6 +974,15 @@ mod tests {
     }
 
     #[test]
+    fn test_pivot_index() {
+        assert_eq!(
+            self_dividing_numbers(1, 22),
+            vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 15, 22]
+        );
+        assert_eq!(self_dividing_numbers(47, 85), vec![48, 55, 66, 77]);
+    }
+
+    #[test]
     fn test_self_dividing_numbers() {
         assert_eq!(
             self_dividing_numbers(1, 22),
@@ -1288,9 +1240,9 @@ mod tests {
     }
 
     #[test]
-    fn test_pivot_index() {
-        assert_eq!(pivot_index(vec! {2, 3, -1, 8, 4}), 3);
-        assert_eq!(pivot_index(vec! {1, -1, 4}), 2);
-        assert_eq!(pivot_index(vec! {2, 5}), -1);
+    fn test_find_middle_index() {
+        assert_eq!(find_middle_index(vec! {2, 3, -1, 8, 4}), 3);
+        assert_eq!(find_middle_index(vec! {1, -1, 4}), 2);
+        assert_eq!(find_middle_index(vec! {2, 5}), -1);
     }
 }
