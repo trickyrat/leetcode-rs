@@ -467,6 +467,27 @@ pub fn shortest_to_char(s: String, c: char) -> Vec<i32> {
         .collect()
 }
 
+/// 828. Count Unique Characters of All Substrings of a Given String
+pub fn unique_letter_string(s: String) -> i32 {
+    let mut index: HashMap<char, Vec<i32>> = HashMap::new();
+    for i in 0..s.len() {
+        let c = s.as_bytes()[i] as char;
+        if !index.contains_key(&c) {
+            index.insert(c, vec![-1]);
+        }
+        index.get_mut(&c).unwrap().push(i as i32);
+    }
+    let mut res = 0;
+    for pair in index.iter() {
+        let mut arr = pair.1.clone();
+        arr.push(s.len() as i32);
+        for i in 1..arr.len() - 1 {
+            res += (arr[i] - arr[i - 1]) * (arr[i + 1] - arr[i]);
+        }
+    }
+    res
+}
+
 ///  883. Projection Area of 3D Shapes
 pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
     let max_row = grid
@@ -1093,6 +1114,13 @@ mod tests {
             shortest_to_char(String::from("aaab"), 'b'),
             vec![3, 2, 1, 0]
         );
+    }
+
+    #[test]
+    fn test_unique_letter_string() {
+        assert_eq!(unique_letter_string("ABC".to_string()), 10);
+        assert_eq!(unique_letter_string("ABA".to_string()), 8);
+        assert_eq!(unique_letter_string("LEETCODE".to_string()), 92);
     }
 
     #[test]
