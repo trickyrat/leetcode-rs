@@ -698,6 +698,37 @@ pub fn final_prices(prices: Vec<i32>) -> Vec<i32> {
     res
 }
 
+/// 1582. Special Positions in a Binary Matrix
+pub fn num_special(mut mat: Vec<Vec<i32>>) -> i32 {
+    let m = mat.len();
+    let n = mat[0].len();
+    for i in 0..m {
+        let mut count = 0;
+        for j in 0..n {
+            if mat[i][j] == 1 {
+                count += 1;
+            }
+        }
+        if i == 0 {
+            count -= 1;
+        }
+        if count > 0 {
+            for j in 0..n {
+                if mat[i][j] == 1 {
+                    mat[0][j] += count;
+                }
+            }
+        }
+    }
+    let mut sum = 0;
+    for num in mat[0].to_vec() {
+        if num == 1 {
+            sum += 1;
+        }
+    }
+    sum
+}
+
 /// 1672. Richest Customer Wealth
 pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
     accounts.iter().map(|x| x.iter().sum()).max().unwrap()
@@ -1215,6 +1246,12 @@ mod tests {
             final_prices(vec![1, 2, 3, 4, 5])
         );
         assert_eq!(vec![9, 0, 1, 6], final_prices(vec![10, 1, 1, 6]));
+    }
+
+    #[test]
+    fn test_num_special() {
+        assert_eq!(num_special(vec![vec![1, 0, 0], vec![0, 0, 1], vec![1, 0, 0]]), 1);
+        assert_eq!(num_special(vec![vec![1, 0, 0], vec![0, 1, 0], vec![0, 0, 1]]), 3);
     }
 
     #[test]
