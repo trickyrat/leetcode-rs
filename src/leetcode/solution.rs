@@ -750,6 +750,18 @@ pub fn num_special(mut mat: Vec<Vec<i32>>) -> i32 {
     sum
 }
 
+/// 1608. Special Array With X Elements Greater Than or Equal X
+pub fn special_array(mut nums: Vec<i32>) -> i32 {
+    let n = nums.len();
+    nums.sort_by(|a, b| b.cmp(a));
+    for i in 1..=n {
+        if nums[i - 1] >= i as i32 && (i == n || nums[i] < i as i32) {
+            return i as i32;
+        }
+    }
+    -1
+}
+
 /// 1672. Richest Customer Wealth
 pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
     accounts.iter().map(|x| x.iter().sum()).max().unwrap()
@@ -1280,6 +1292,13 @@ mod tests {
     fn test_num_special() {
         assert_eq!(num_special(vec![vec![1, 0, 0], vec![0, 0, 1], vec![1, 0, 0]]), 1);
         assert_eq!(num_special(vec![vec![1, 0, 0], vec![0, 1, 0], vec![0, 0, 1]]), 3);
+    }
+
+    #[test]
+    fn test_special_array() {
+        assert_eq!(special_array(vec![3, 5]), 2);
+        assert_eq!(special_array(vec![0, 0]), -1);
+        assert_eq!(special_array(vec![0, 4, 3, 0, 4]), 3);
     }
 
     #[test]
