@@ -293,6 +293,28 @@ pub fn width_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     dfs(&root, 1, 1, &mut level_min)
 }
 
+/// 670. Maximum Swap
+pub fn maximum_swap(num: i32) -> i32 {
+    let mut chars = num.to_string().chars().collect::<Vec<char>>();
+    let n = chars.len();
+    let mut max_index = n - 1;
+    let mut index1  = 0;
+    let mut index2 = 0;
+    for i in (0..n).rev() {
+        if chars[i] > chars[max_index] {
+            max_index = i;
+        } else if chars[i] < chars[max_index] {
+            index1 = i;
+            index2 = max_index;
+        }
+    }
+    if index1 >= 0 {
+        chars.swap(index1, index2);
+        return chars.iter().collect::<String>().parse::<i32>().unwrap();
+    }
+    num
+}
+
 /// 682. Baseball Game
 pub fn cal_points(ops: Vec<String>) -> i32 {
     ops.iter()
@@ -1000,6 +1022,12 @@ mod tests {
             find_closest_elements(vec![1, 2, 3, 4, 5], 4, -1),
             vec![1, 2, 3, 4]
         );
+    }
+
+    #[test]
+    fn test_maximum_swap() {
+        assert_eq!(7236, maximum_swap(2736));
+        assert_eq!(9973, maximum_swap(9973));
     }
 
     #[test]
