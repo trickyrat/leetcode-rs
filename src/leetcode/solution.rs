@@ -298,7 +298,7 @@ pub fn maximum_swap(num: i32) -> i32 {
     let mut chars = num.to_string().chars().collect::<Vec<char>>();
     let n = chars.len();
     let mut max_index = n - 1;
-    let mut index1  = 0;
+    let mut index1 = 0;
     let mut index2 = 0;
     for i in (0..n).rev() {
         if chars[i] > chars[max_index] {
@@ -994,16 +994,7 @@ mod tests {
                     .collect(),
             )
         );
-        assert_eq!(
-            vec![1],
-            exclusive_time(
-                1,
-                vec!["0:start:0", "0:end:0"]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
-            )
-        );
+        assert_eq!(vec![1], exclusive_time(1, vec!["0:start:0", "0:end:0"].iter().map(|&x| x.to_string()).collect()));
     }
 
     #[test]
@@ -1032,29 +1023,10 @@ mod tests {
 
     #[test]
     fn test_cal_points() {
-        assert_eq!(
-            cal_points(vec![
-                String::from("5"),
-                String::from("2"),
-                String::from("C"),
-                String::from("D"),
-                String::from("+"),
-            ]),
-            30
-        );
-        assert_eq!(
-            cal_points(vec![
-                String::from("5"),
-                String::from("-2"),
-                String::from("4"),
-                String::from("C"),
-                String::from("D"),
-                String::from("9"),
-                String::from("+"),
-                String::from("+"),
-            ]),
-            27
-        );
+        let v1 = vec!["5", "2", "C", "D", "+"].iter().map(|&x| x.to_string()).collect();
+        let v2 = vec!["5", "-2", "4", "C", "D", "9", "+", "+"].iter().map(|&x| x.to_string()).collect();
+        assert_eq!(cal_points(v1), 30);
+        assert_eq!(cal_points(v2), 27);
         assert_eq!(cal_points(vec![String::from("1")]), 1);
     }
 
@@ -1105,19 +1077,14 @@ mod tests {
 
     #[test]
     fn test_unique_morse_representations() {
-        assert_eq!(
-            unique_morse_representations(vec![
-                String::from("gin"),
-                String::from("zen"),
-                String::from("gig"),
-                String::from("msg"),
-            ]),
-            2
-        );
-        assert_eq!(
-            unique_morse_representations(vec![String::from("a")]),
-            1
-        );
+        let v1 = vec![
+            String::from("gin"),
+            String::from("zen"),
+            String::from("gig"),
+            String::from("msg"),
+        ].into_iter().map(|x| x.to_string()).collect::<Vec<String>>();
+        assert_eq!(unique_morse_representations(v1), 2);
+        assert_eq!(unique_morse_representations(vec![String::from("a")]), 1);
     }
 
     #[test]
@@ -1197,26 +1164,12 @@ mod tests {
 
     #[test]
     fn test_min_deletion_size() {
-        assert_eq!(
-            min_deletion_size(vec![
-                "cba".to_string(),
-                "daf".to_string(),
-                "ghi".to_string(),
-            ]),
-            1
-        );
-        assert_eq!(
-            min_deletion_size(vec!["a".to_string(), "b".to_string()]),
-            0
-        );
-        assert_eq!(
-            min_deletion_size(vec![
-                "zyx".to_string(),
-                "wvu".to_string(),
-                "tsr".to_string(),
-            ]),
-            3
-        );
+        let v1 = vec!["cba", "daf", "ghi"].iter().map(|&x| x.to_string()).collect();
+        let v2 = vec!["a", "b"].iter().map(|&x| x.to_string()).collect();
+        let v3 = vec!["zyx", "wvu", "tsr"].iter().map(|&x| x.to_string()).collect();
+        assert_eq!(min_deletion_size(v1), 1);
+        assert_eq!(min_deletion_size(v2), 0);
+        assert_eq!(min_deletion_size(v3), 3);
     }
 
     #[test]
@@ -1228,18 +1181,9 @@ mod tests {
 
     #[test]
     fn test_string_matching() {
-        let words1: Vec<String> = vec!["mass", "as", "hero", "superhero"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        let words2: Vec<String> = vec!["leetcode", "et", "code"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        let words3: Vec<String> = vec!["blue", "green", "bu"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
+        let words1: Vec<String> = vec!["mass", "as", "hero", "superhero"].iter().map(|&x| x.to_string()).collect();
+        let words2: Vec<String> = vec!["leetcode", "et", "code"].iter().map(|&x| x.to_string()).collect();
+        let words3: Vec<String> = vec!["blue", "green", "bu"].iter().map(|&x| x.to_string()).collect();
         let expected1: Vec<String> = vec!["as", "hero"].iter().map(|&x| x.to_string()).collect();
         let expected2: Vec<String> = vec!["et", "code"].iter().map(|&x| x.to_string()).collect();
         let expected3: Vec<String> = vec![];
@@ -1256,29 +1200,14 @@ mod tests {
 
     #[test]
     fn test_is_prefix_of_word() {
-        assert_eq!(
-            is_prefix_of_word("i love eating burger".to_string(), "burg".to_string()),
-            4
-        );
-        assert_eq!(
-            is_prefix_of_word(
-                "this problem is an easy problem".to_string(),
-                "pro".to_string(),
-            ),
-            2
-        );
-        assert_eq!(
-            is_prefix_of_word("i am tired".to_string(), "you".to_string()),
-            -1
-        );
+        assert_eq!(is_prefix_of_word("i love eating burger".to_string(), "burg".to_string()), 4);
+        assert_eq!(is_prefix_of_word("this problem is an easy problem".to_string(), "pro".to_string()), 2);
+        assert_eq!(is_prefix_of_word("i am tired".to_string(), "you".to_string()), -1);
     }
 
     #[test]
     fn test_can_be_equal() {
-        assert_eq!(
-            can_be_equal(vec![1, 2, 3, 4], vec![2, 1, 3, 4]),
-            true
-        );
+        assert_eq!(can_be_equal(vec![1, 2, 3, 4], vec![2, 1, 3, 4]), true);
         assert_eq!(can_be_equal(vec![7], vec![7]), true);
         assert_eq!(can_be_equal(vec![3, 7, 9], vec![3, 7, 11]), false);
     }
@@ -1292,27 +1221,15 @@ mod tests {
 
     #[test]
     fn test_shuffle() {
-        assert_eq!(
-            vec![2, 3, 5, 4, 1, 7],
-            shuffle(vec![2, 5, 1, 3, 4, 7], 3)
-        );
-        assert_eq!(
-            vec![1, 4, 2, 3, 3, 2, 4, 1],
-            shuffle(vec![1, 2, 3, 4, 4, 3, 2, 1], 4)
-        );
+        assert_eq!(vec![2, 3, 5, 4, 1, 7], shuffle(vec![2, 5, 1, 3, 4, 7], 3));
+        assert_eq!(vec![1, 4, 2, 3, 3, 2, 4, 1], shuffle(vec![1, 2, 3, 4, 4, 3, 2, 1], 4));
         assert_eq!(vec![1, 2, 1, 2], shuffle(vec![1, 1, 2, 2], 2));
     }
 
     #[test]
     fn test_final_prices() {
-        assert_eq!(
-            vec![4, 2, 4, 2, 3],
-            final_prices(vec![8, 4, 6, 2, 3])
-        );
-        assert_eq!(
-            vec![1, 2, 3, 4, 5],
-            final_prices(vec![1, 2, 3, 4, 5])
-        );
+        assert_eq!(vec![4, 2, 4, 2, 3], final_prices(vec![8, 4, 6, 2, 3]));
+        assert_eq!(vec![1, 2, 3, 4, 5], final_prices(vec![1, 2, 3, 4, 5]));
         assert_eq!(vec![9, 0, 1, 6], final_prices(vec![10, 1, 1, 6]));
     }
 
@@ -1331,18 +1248,9 @@ mod tests {
 
     #[test]
     fn test_maximum_wealth() {
-        assert_eq!(
-            maximum_wealth(vec![vec![1, 2, 3], vec![3, 2, 1]]),
-            6
-        );
-        assert_eq!(
-            maximum_wealth(vec![vec![1, 5], vec![7, 3], vec![3, 5]]),
-            10
-        );
-        assert_eq!(
-            maximum_wealth(vec![vec![2, 8, 7], vec![7, 1, 3], vec![1, 9, 5]]),
-            17
-        );
+        assert_eq!(maximum_wealth(vec![vec![1, 2, 3], vec![3, 2, 1]]), 6);
+        assert_eq!(maximum_wealth(vec![vec![1, 5], vec![7, 3], vec![3, 5]]), 10);
+        assert_eq!(maximum_wealth(vec![vec![2, 8, 7], vec![7, 1, 3], vec![1, 9, 5]]), 17);
     }
 
     #[test]
