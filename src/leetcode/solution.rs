@@ -784,6 +784,13 @@ pub fn special_array(mut nums: Vec<i32>) -> i32 {
     -1
 }
 
+/// 1619. Mean of Array After Removing Some Elements
+pub fn trim_mean(mut arr: Vec<i32>) -> f64 {
+    let n = arr.len();
+    arr.sort();
+    arr[n / 20..(19 * n / 20)].iter().sum::<i32>() as f64 / (n as f64 * 0.9)
+}
+
 /// 1672. Richest Customer Wealth
 pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
     accounts.iter().map(|x| x.iter().sum()).max().unwrap()
@@ -1244,6 +1251,13 @@ mod tests {
         assert_eq!(special_array(vec![3, 5]), 2);
         assert_eq!(special_array(vec![0, 0]), -1);
         assert_eq!(special_array(vec![0, 4, 3, 0, 4]), 3);
+    }
+
+    #[test]
+    fn test_trim_mean() {
+        assert_eq!((trim_mean(vec![1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3]) - 2.00000) <= 0.00001, true);
+        assert_eq!((trim_mean(vec![6, 2, 7, 5, 1, 2, 0, 3, 10, 2, 5, 0, 5, 5, 0, 8, 7, 6, 8, 0]) - 4.00000) <= 0.00001, true);
+        assert_eq!((trim_mean(vec![6, 0, 7, 0, 7, 5, 7, 8, 3, 4, 0, 7, 8, 1, 6, 8, 1, 1, 2, 4, 8, 1, 9, 5, 4, 3, 8, 5, 10, 8, 6, 6, 1, 0, 6, 10, 8, 2, 3, 4]) - 4.77778) <= 0.00001, true);
     }
 
     #[test]
