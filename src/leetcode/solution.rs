@@ -315,6 +315,32 @@ pub fn maximum_swap(num: i32) -> i32 {
     num
 }
 
+/// 672. Bulb Switcher II
+pub fn flip_lights(n: i32, presses: i32) -> i32 {
+    let mut seen: HashSet<i32> = HashSet::new();
+    for i in 0..16 {
+        let mut press_array: Vec<i32> = vec![0;4];
+        for j in 0..4 {
+            press_array[j] = (i >> j) & 1;
+        }
+        let sum: i32 = press_array.iter().sum();
+        if sum % 2 == presses % 2 && sum <= presses {
+            let mut status = press_array[0] ^ press_array[1] ^ press_array[3];
+            if n >= 2 {
+                status |= (press_array[0] ^ press_array[1]) << 1;
+            }
+            if n >= 3 {
+                status |= (press_array[0] ^ press_array[2]) << 2;
+            }
+            if n >= 4 {
+                status |= (press_array[0] ^ press_array[1] ^ press_array[3]) << 3;
+            }
+            seen.insert(status);
+        }
+    }
+    seen.len() as i32
+}
+
 /// 682. Baseball Game
 pub fn cal_points(ops: Vec<String>) -> i32 {
     ops.iter()
@@ -1026,6 +1052,13 @@ mod tests {
     fn test_maximum_swap() {
         assert_eq!(7236, maximum_swap(2736));
         assert_eq!(9973, maximum_swap(9973));
+    }
+
+    #[test]
+    fn test_flip_lights() {
+        assert_eq!(2, flip_lights(1, 1));
+        assert_eq!(3, flip_lights(2, 1));
+        assert_eq!(4, flip_lights(3, 1));
     }
 
     #[test]
