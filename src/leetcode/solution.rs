@@ -817,6 +817,20 @@ pub fn trim_mean(mut arr: Vec<i32>) -> f64 {
     arr[n / 20..(19 * n / 20)].iter().sum::<i32>() as f64 / (n as f64 * 0.9)
 }
 
+/// 1624. Largest Substring Between Two Equal Characters
+pub fn max_length_between_equal_characters(s: String) -> i32 {
+    let mut map: HashMap<char, usize> = HashMap::new();
+    let mut res: i32 = -1;
+    for (i, ch) in s.chars().enumerate() {
+        if !map.contains_key(&ch) {
+            map.insert(ch, i);
+        } else {
+            res = max(res, (i - map[&ch] - 1) as i32);
+        }
+    }
+    res
+}
+
 /// 1672. Richest Customer Wealth
 pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
     accounts.iter().map(|x| x.iter().sum()).max().unwrap()
@@ -1291,6 +1305,13 @@ mod tests {
         assert_eq!((trim_mean(vec![1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3]) - 2.00000) <= 0.00001, true);
         assert_eq!((trim_mean(vec![6, 2, 7, 5, 1, 2, 0, 3, 10, 2, 5, 0, 5, 5, 0, 8, 7, 6, 8, 0]) - 4.00000) <= 0.00001, true);
         assert_eq!((trim_mean(vec![6, 0, 7, 0, 7, 5, 7, 8, 3, 4, 0, 7, 8, 1, 6, 8, 1, 1, 2, 4, 8, 1, 9, 5, 4, 3, 8, 5, 10, 8, 6, 6, 1, 0, 6, 10, 8, 2, 3, 4]) - 4.77778) <= 0.00001, true);
+    }
+
+    #[test]
+    fn test_max_length_between_equal_characters() {
+        assert_eq!(0, max_length_between_equal_characters(String::from("aa")));
+        assert_eq!(2, max_length_between_equal_characters(String::from("abca")));
+        assert_eq!(-1, max_length_between_equal_characters(String::from("cbzyx")));
     }
 
     #[test]
