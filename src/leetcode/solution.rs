@@ -1,7 +1,7 @@
 use crate::leetcode::data_structures::ListNode;
 use crate::leetcode::TreeNode;
 use std::cell::RefCell;
-use std::cmp::max;
+use std::cmp::{max, Ordering};
 use std::collections::HashSet;
 use std::collections::{HashMap, VecDeque};
 use std::rc::Rc;
@@ -319,7 +319,7 @@ pub fn maximum_swap(num: i32) -> i32 {
 pub fn flip_lights(n: i32, presses: i32) -> i32 {
     let mut seen: HashSet<i32> = HashSet::new();
     for i in 0..16 {
-        let mut press_array: Vec<i32> = vec![0;4];
+        let mut press_array: Vec<i32> = vec![0; 4];
         for j in 0..4 {
             press_array[j] = (i >> j) & 1;
         }
@@ -831,6 +831,18 @@ pub fn max_length_between_equal_characters(s: String) -> i32 {
     res
 }
 
+/// 1636. Sort Array by Increasing Frequency
+pub fn frequency_sort(mut nums: Vec<i32>) -> Vec<i32> {
+    let mut count = HashMap::<i32, i32>::new();
+    nums.iter().for_each(|&num| *count.entry(num).or_default() += 1);
+    nums.sort_by(|x, y| match count.get(x).unwrap().cmp(count.get(y).unwrap()) {
+        Ordering::Greater => Ordering::Greater,
+        Ordering::Less => Ordering::Less,
+        _ => y.cmp(x),
+    });
+    nums
+}
+
 /// 1672. Richest Customer Wealth
 pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
     accounts.iter().map(|x| x.iter().sum()).max().unwrap()
@@ -1312,6 +1324,13 @@ mod tests {
         assert_eq!(0, max_length_between_equal_characters(String::from("aa")));
         assert_eq!(2, max_length_between_equal_characters(String::from("abca")));
         assert_eq!(-1, max_length_between_equal_characters(String::from("cbzyx")));
+    }
+
+    #[test]
+    fn test_frequency_sort() {
+        assert_eq!(vec![3, 1, 1, 2, 2, 2], frequency_sort(vec![1, 1, 2, 2, 2, 3]));
+        assert_eq!(vec![1, 3, 3, 2, 2], frequency_sort(vec![2, 3, 1, 3, 2]));
+        assert_eq!(vec![5, -1, 4, 4, -6, -6, 1, 1, 1], frequency_sort(vec![-1, 1, -6, 4, 5, -6, 1, 4, 1]));
     }
 
     #[test]
