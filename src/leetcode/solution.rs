@@ -870,6 +870,28 @@ pub fn find_middle_index(nums: Vec<i32>) -> i32 {
     -1
 }
 
+///  01.02. Check Permutation LCCI
+pub fn  check_permutation(s1: String, s2: String) -> bool {
+    let len1 = s1.len();
+    let len2 = s2.len();
+    if len1 != len2 {
+        return false;
+    }
+    let mut map: Vec<i32> = vec![0;128];
+    for c in s1.chars() {
+        map[c as usize] += 1;
+    }
+    for c in s2.chars() {
+        let index = c as usize;
+        map[index] -= 1;
+        if map[index] < 0 {
+            return false;
+        }
+    }
+    true
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1351,5 +1373,11 @@ mod tests {
         assert_eq!(find_middle_index(vec! {2, 3, -1, 8, 4}), 3);
         assert_eq!(find_middle_index(vec! {1, -1, 4}), 2);
         assert_eq!(find_middle_index(vec! {2, 5}), -1);
+    }
+
+    #[test]
+    fn test_check_permutation() {
+        assert_eq!(check_permutation("abc".to_string(), "bca".to_string()), true);
+        assert_eq!(check_permutation("abc".to_string(), "bad".to_string()), false);
     }
 }
