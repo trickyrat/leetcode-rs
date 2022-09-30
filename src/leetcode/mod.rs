@@ -1,7 +1,9 @@
 mod data_structures;
-mod solution;
+mod interviewsolution;
 mod randomizedset;
+mod solution;
 
-pub use self::solution::*;
 pub use self::data_structures::*;
+pub use self::interviewsolution::*;
 pub use self::randomizedset::RandomizedSet;
+pub use self::solution::*;
