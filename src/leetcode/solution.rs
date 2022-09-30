@@ -6,7 +6,6 @@ use std::collections::HashSet;
 use std::collections::{HashMap, VecDeque};
 use std::rc::Rc;
 
-
 /// 1. Two Sum
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     let mut hashmap: HashMap<i32, usize> = HashMap::with_capacity(nums.len());
@@ -465,9 +464,9 @@ pub fn preimage_size_fzf(k: i32) -> i32 {
 /// 804. Unique Morse Code Words
 pub fn unique_morse_representations(words: Vec<String>) -> i32 {
     let morse = vec![
-        ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..",
-        "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-",
-        "-.--", "--..",
+        ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--",
+        "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--",
+        "--..",
     ];
     words
         .iter()
@@ -637,15 +636,15 @@ pub fn insert_into_max_tree(
     }
     while curr.as_ref().unwrap().borrow().right.is_some()
         && curr
-        .as_ref()
-        .unwrap()
-        .borrow()
-        .right
-        .as_ref()
-        .unwrap()
-        .borrow()
-        .val
-        > val
+            .as_ref()
+            .unwrap()
+            .borrow()
+            .right
+            .as_ref()
+            .unwrap()
+            .borrow()
+            .val
+            > val
     {
         let right = curr.as_ref().unwrap().borrow().right.clone();
         curr = right;
@@ -834,12 +833,15 @@ pub fn max_length_between_equal_characters(s: String) -> i32 {
 /// 1636. Sort Array by Increasing Frequency
 pub fn frequency_sort(mut nums: Vec<i32>) -> Vec<i32> {
     let mut count = HashMap::<i32, i32>::new();
-    nums.iter().for_each(|&num| *count.entry(num).or_default() += 1);
-    nums.sort_by(|x, y| match count.get(x).unwrap().cmp(count.get(y).unwrap()) {
-        Ordering::Greater => Ordering::Greater,
-        Ordering::Less => Ordering::Less,
-        _ => y.cmp(x),
-    });
+    nums.iter()
+        .for_each(|&num| *count.entry(num).or_default() += 1);
+    nums.sort_by(
+        |x, y| match count.get(x).unwrap().cmp(count.get(y).unwrap()) {
+            Ordering::Greater => Ordering::Greater,
+            Ordering::Less => Ordering::Less,
+            _ => y.cmp(x),
+        },
+    );
     nums
 }
 
@@ -871,13 +873,13 @@ pub fn find_middle_index(nums: Vec<i32>) -> i32 {
 }
 
 ///  01.02. Check Permutation LCCI
-pub fn  check_permutation(s1: String, s2: String) -> bool {
+pub fn check_permutation(s1: String, s2: String) -> bool {
     let len1 = s1.len();
     let len2 = s2.len();
     if len1 != len2 {
         return false;
     }
-    let mut map: Vec<i32> = vec![0;128];
+    let mut map: Vec<i32> = vec![0; 128];
     for c in s1.chars() {
         map[c as usize] += 1;
     }
@@ -890,7 +892,6 @@ pub fn  check_permutation(s1: String, s2: String) -> bool {
     }
     true
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -954,10 +955,7 @@ mod tests {
     #[test]
     fn test_remove_element() {
         assert_eq!(remove_element(&mut vec![3, 2, 2, 3], 3), 2);
-        assert_eq!(
-            remove_element(&mut vec![0, 1, 2, 2, 3, 0, 4, 2], 2),
-            5
-        );
+        assert_eq!(remove_element(&mut vec![0, 1, 2, 2, 3, 0, 4, 2], 2), 5);
     }
 
     #[test]
@@ -1036,9 +1034,9 @@ mod tests {
                     "0:end:6",
                     "0:end:7",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
         assert_eq!(
@@ -1053,9 +1051,9 @@ mod tests {
                     "1:end:6",
                     "0:end:7",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
         assert_eq!(
@@ -1070,18 +1068,33 @@ mod tests {
                     "1:end:7",
                     "0:end:8",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
-        assert_eq!(vec![1], exclusive_time(1, vec!["0:start:0", "0:end:0"].iter().map(|&x| x.to_string()).collect()));
+        assert_eq!(
+            vec![1],
+            exclusive_time(
+                1,
+                vec!["0:start:0", "0:end:0"]
+                    .iter()
+                    .map(|&x| x.to_string())
+                    .collect()
+            )
+        );
     }
 
     #[test]
     fn test_find_longest_chain() {
-        assert_eq!(find_longest_chain(vec![vec![1, 2], vec![2, 3], vec![3, 4]]), 2);
-        assert_eq!(find_longest_chain(vec![vec![1, 2], vec![7, 8], vec![4, 5]]), 3);
+        assert_eq!(
+            find_longest_chain(vec![vec![1, 2], vec![2, 3], vec![3, 4]]),
+            2
+        );
+        assert_eq!(
+            find_longest_chain(vec![vec![1, 2], vec![7, 8], vec![4, 5]]),
+            3
+        );
     }
 
     #[test]
@@ -1111,8 +1124,14 @@ mod tests {
 
     #[test]
     fn test_cal_points() {
-        let v1 = vec!["5", "2", "C", "D", "+"].iter().map(|&x| x.to_string()).collect();
-        let v2 = vec!["5", "-2", "4", "C", "D", "9", "+", "+"].iter().map(|&x| x.to_string()).collect();
+        let v1 = vec!["5", "2", "C", "D", "+"]
+            .iter()
+            .map(|&x| x.to_string())
+            .collect();
+        let v2 = vec!["5", "-2", "4", "C", "D", "9", "+", "+"]
+            .iter()
+            .map(|&x| x.to_string())
+            .collect();
         assert_eq!(cal_points(v1), 30);
         assert_eq!(cal_points(v2), 27);
         assert_eq!(cal_points(vec![String::from("1")]), 1);
@@ -1170,7 +1189,10 @@ mod tests {
             String::from("zen"),
             String::from("gig"),
             String::from("msg"),
-        ].into_iter().map(|x| x.to_string()).collect::<Vec<String>>();
+        ]
+        .into_iter()
+        .map(|x| x.to_string())
+        .collect::<Vec<String>>();
         assert_eq!(unique_morse_representations(v1), 2);
         assert_eq!(unique_morse_representations(vec![String::from("a")]), 1);
     }
@@ -1227,34 +1249,28 @@ mod tests {
 
     #[test]
     fn test_sort_array_by_parity() {
-        assert_eq!(
-            sort_array_by_parity(vec![3, 1, 2, 4]),
-            vec![4, 2, 1, 3]
-        );
+        assert_eq!(sort_array_by_parity(vec![3, 1, 2, 4]), vec![4, 2, 1, 3]);
         assert_eq!(sort_array_by_parity(vec![0]), vec![0]);
     }
 
     #[test]
     fn test_di_string_match() {
-        assert_eq!(
-            di_string_match(String::from("IDID")),
-            vec![0, 4, 1, 3, 2]
-        );
-        assert_eq!(
-            di_string_match(String::from("III")),
-            vec![0, 1, 2, 3]
-        );
-        assert_eq!(
-            di_string_match(String::from("DDI")),
-            vec![3, 2, 0, 1]
-        );
+        assert_eq!(di_string_match(String::from("IDID")), vec![0, 4, 1, 3, 2]);
+        assert_eq!(di_string_match(String::from("III")), vec![0, 1, 2, 3]);
+        assert_eq!(di_string_match(String::from("DDI")), vec![3, 2, 0, 1]);
     }
 
     #[test]
     fn test_min_deletion_size() {
-        let v1 = vec!["cba", "daf", "ghi"].iter().map(|&x| x.to_string()).collect();
+        let v1 = vec!["cba", "daf", "ghi"]
+            .iter()
+            .map(|&x| x.to_string())
+            .collect();
         let v2 = vec!["a", "b"].iter().map(|&x| x.to_string()).collect();
-        let v3 = vec!["zyx", "wvu", "tsr"].iter().map(|&x| x.to_string()).collect();
+        let v3 = vec!["zyx", "wvu", "tsr"]
+            .iter()
+            .map(|&x| x.to_string())
+            .collect();
         assert_eq!(min_deletion_size(v1), 1);
         assert_eq!(min_deletion_size(v2), 0);
         assert_eq!(min_deletion_size(v3), 3);
@@ -1269,9 +1285,18 @@ mod tests {
 
     #[test]
     fn test_string_matching() {
-        let words1: Vec<String> = vec!["mass", "as", "hero", "superhero"].iter().map(|&x| x.to_string()).collect();
-        let words2: Vec<String> = vec!["leetcode", "et", "code"].iter().map(|&x| x.to_string()).collect();
-        let words3: Vec<String> = vec!["blue", "green", "bu"].iter().map(|&x| x.to_string()).collect();
+        let words1: Vec<String> = vec!["mass", "as", "hero", "superhero"]
+            .iter()
+            .map(|&x| x.to_string())
+            .collect();
+        let words2: Vec<String> = vec!["leetcode", "et", "code"]
+            .iter()
+            .map(|&x| x.to_string())
+            .collect();
+        let words3: Vec<String> = vec!["blue", "green", "bu"]
+            .iter()
+            .map(|&x| x.to_string())
+            .collect();
         let expected1: Vec<String> = vec!["as", "hero"].iter().map(|&x| x.to_string()).collect();
         let expected2: Vec<String> = vec!["et", "code"].iter().map(|&x| x.to_string()).collect();
         let expected3: Vec<String> = vec![];
@@ -1288,9 +1313,21 @@ mod tests {
 
     #[test]
     fn test_is_prefix_of_word() {
-        assert_eq!(is_prefix_of_word("i love eating burger".to_string(), "burg".to_string()), 4);
-        assert_eq!(is_prefix_of_word("this problem is an easy problem".to_string(), "pro".to_string()), 2);
-        assert_eq!(is_prefix_of_word("i am tired".to_string(), "you".to_string()), -1);
+        assert_eq!(
+            is_prefix_of_word("i love eating burger".to_string(), "burg".to_string()),
+            4
+        );
+        assert_eq!(
+            is_prefix_of_word(
+                "this problem is an easy problem".to_string(),
+                "pro".to_string()
+            ),
+            2
+        );
+        assert_eq!(
+            is_prefix_of_word("i am tired".to_string(), "you".to_string()),
+            -1
+        );
     }
 
     #[test]
@@ -1310,7 +1347,10 @@ mod tests {
     #[test]
     fn test_shuffle() {
         assert_eq!(vec![2, 3, 5, 4, 1, 7], shuffle(vec![2, 5, 1, 3, 4, 7], 3));
-        assert_eq!(vec![1, 4, 2, 3, 3, 2, 4, 1], shuffle(vec![1, 2, 3, 4, 4, 3, 2, 1], 4));
+        assert_eq!(
+            vec![1, 4, 2, 3, 3, 2, 4, 1],
+            shuffle(vec![1, 2, 3, 4, 4, 3, 2, 1], 4)
+        );
         assert_eq!(vec![1, 2, 1, 2], shuffle(vec![1, 1, 2, 2], 2));
     }
 
@@ -1323,8 +1363,14 @@ mod tests {
 
     #[test]
     fn test_num_special() {
-        assert_eq!(num_special(vec![vec![1, 0, 0], vec![0, 0, 1], vec![1, 0, 0]]), 1);
-        assert_eq!(num_special(vec![vec![1, 0, 0], vec![0, 1, 0], vec![0, 0, 1]]), 3);
+        assert_eq!(
+            num_special(vec![vec![1, 0, 0], vec![0, 0, 1], vec![1, 0, 0]]),
+            1
+        );
+        assert_eq!(
+            num_special(vec![vec![1, 0, 0], vec![0, 1, 0], vec![0, 0, 1]]),
+            3
+        );
     }
 
     #[test]
@@ -1336,30 +1382,61 @@ mod tests {
 
     #[test]
     fn test_trim_mean() {
-        assert_eq!((trim_mean(vec![1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3]) - 2.00000) <= 0.00001, true);
-        assert_eq!((trim_mean(vec![6, 2, 7, 5, 1, 2, 0, 3, 10, 2, 5, 0, 5, 5, 0, 8, 7, 6, 8, 0]) - 4.00000) <= 0.00001, true);
-        assert_eq!((trim_mean(vec![6, 0, 7, 0, 7, 5, 7, 8, 3, 4, 0, 7, 8, 1, 6, 8, 1, 1, 2, 4, 8, 1, 9, 5, 4, 3, 8, 5, 10, 8, 6, 6, 1, 0, 6, 10, 8, 2, 3, 4]) - 4.77778) <= 0.00001, true);
+        assert_eq!(
+            (trim_mean(vec![
+                1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3
+            ]) - 2.00000)
+                <= 0.00001,
+            true
+        );
+        assert_eq!(
+            (trim_mean(vec![
+                6, 2, 7, 5, 1, 2, 0, 3, 10, 2, 5, 0, 5, 5, 0, 8, 7, 6, 8, 0
+            ]) - 4.00000)
+                <= 0.00001,
+            true
+        );
+        assert_eq!(
+            (trim_mean(vec![
+                6, 0, 7, 0, 7, 5, 7, 8, 3, 4, 0, 7, 8, 1, 6, 8, 1, 1, 2, 4, 8, 1, 9, 5, 4, 3, 8, 5,
+                10, 8, 6, 6, 1, 0, 6, 10, 8, 2, 3, 4
+            ]) - 4.77778)
+                <= 0.00001,
+            true
+        );
     }
 
     #[test]
     fn test_max_length_between_equal_characters() {
         assert_eq!(0, max_length_between_equal_characters(String::from("aa")));
         assert_eq!(2, max_length_between_equal_characters(String::from("abca")));
-        assert_eq!(-1, max_length_between_equal_characters(String::from("cbzyx")));
+        assert_eq!(
+            -1,
+            max_length_between_equal_characters(String::from("cbzyx"))
+        );
     }
 
     #[test]
     fn test_frequency_sort() {
-        assert_eq!(vec![3, 1, 1, 2, 2, 2], frequency_sort(vec![1, 1, 2, 2, 2, 3]));
+        assert_eq!(
+            vec![3, 1, 1, 2, 2, 2],
+            frequency_sort(vec![1, 1, 2, 2, 2, 3])
+        );
         assert_eq!(vec![1, 3, 3, 2, 2], frequency_sort(vec![2, 3, 1, 3, 2]));
-        assert_eq!(vec![5, -1, 4, 4, -6, -6, 1, 1, 1], frequency_sort(vec![-1, 1, -6, 4, 5, -6, 1, 4, 1]));
+        assert_eq!(
+            vec![5, -1, 4, 4, -6, -6, 1, 1, 1],
+            frequency_sort(vec![-1, 1, -6, 4, 5, -6, 1, 4, 1])
+        );
     }
 
     #[test]
     fn test_maximum_wealth() {
         assert_eq!(maximum_wealth(vec![vec![1, 2, 3], vec![3, 2, 1]]), 6);
         assert_eq!(maximum_wealth(vec![vec![1, 5], vec![7, 3], vec![3, 5]]), 10);
-        assert_eq!(maximum_wealth(vec![vec![2, 8, 7], vec![7, 1, 3], vec![1, 9, 5]]), 17);
+        assert_eq!(
+            maximum_wealth(vec![vec![2, 8, 7], vec![7, 1, 3], vec![1, 9, 5]]),
+            17
+        );
     }
 
     #[test]
@@ -1377,7 +1454,13 @@ mod tests {
 
     #[test]
     fn test_check_permutation() {
-        assert_eq!(check_permutation("abc".to_string(), "bca".to_string()), true);
-        assert_eq!(check_permutation("abc".to_string(), "bad".to_string()), false);
+        assert_eq!(
+            check_permutation("abc".to_string(), "bca".to_string()),
+            true
+        );
+        assert_eq!(
+            check_permutation("abc".to_string(), "bad".to_string()),
+            false
+        );
     }
 }
