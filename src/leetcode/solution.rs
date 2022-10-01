@@ -850,6 +850,37 @@ pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
     accounts.iter().map(|x| x.iter().sum()).max().unwrap()
 }
 
+/// 1694. Reformat Phone Number
+pub fn reformat_number(number: String) -> String {
+    let mut digits = String::new();
+    for ch in number.chars() {
+        if ch.is_digit(10) {
+            digits.push(ch);
+        }
+    }
+    let mut n  = digits.len();
+    let mut res = String::new();
+    let mut pt = 0;
+    while n > 0 {
+        if n > 4 {
+            res.push_str(&digits[pt..pt+3]);
+            res.push_str("-");
+            pt += 3;
+            n -= 3;
+        } else {
+            if n == 4 {
+                res.push_str(&digits[pt..pt+2]);
+                res.push_str("-");
+                res.push_str(&digits[pt+2..pt+4]);
+            } else {
+                res.push_str(&digits[pt..pt+n]);
+            }
+            break;
+        }
+    }
+    res.to_string()
+}
+
 /// 1823. Find the Winner of the Circular Game
 pub fn find_the_winner(n: i32, k: i32) -> i32 {
     let mut winner = 1;
@@ -1416,6 +1447,13 @@ mod tests {
             maximum_wealth(vec![vec![2, 8, 7], vec![7, 1, 3], vec![1, 9, 5]]),
             17
         );
+    }
+
+    #[test]
+    fn test_reformat_number() {
+        assert_eq!(reformat_number("1-23-45 6".to_string()), "123-456".to_string());
+        assert_eq!(reformat_number("123 4-567".to_string()), "123-45-67".to_string());
+        assert_eq!(reformat_number("123 4-5678".to_string()), "123-456-78".to_string());
     }
 
     #[test]
