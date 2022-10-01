@@ -1,6 +1,27 @@
 use std::cmp::min;
 
-/// 面试题 01.09. String Rotation LCCI
+/// 01.02. Check Permutation LCCI
+pub fn check_permutation(s1: String, s2: String) -> bool {
+    let len1 = s1.len();
+    let len2 = s2.len();
+    if len1 != len2 {
+        return false;
+    }
+    let mut map: Vec<i32> = vec![0; 128];
+    for c in s1.chars() {
+        map[c as usize] += 1;
+    }
+    for c in s2.chars() {
+        let index = c as usize;
+        map[index] -= 1;
+        if map[index] < 0 {
+            return false;
+        }
+    }
+    true
+}
+
+/// 01.09. String Rotation LCCI
 pub fn is_flipped_string(s1: String, s2: String) -> bool {
     if s1.is_empty() && s2.is_empty() {
         return true;
@@ -11,7 +32,7 @@ pub fn is_flipped_string(s1: String, s2: String) -> bool {
     s1.repeat(2).find(&s2).is_some()
 }
 
-/// 面试题 17.09. Get Kth Magic Number LCCI
+/// 17.09. Get Kth Magic Number LCCI
 pub fn get_kth_magic_number(k: i32) -> i32 {
     let mut dp = vec![0; k as usize + 1];
     dp[1] = 1;
@@ -35,6 +56,19 @@ pub fn get_kth_magic_number(k: i32) -> i32 {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_check_permutation() {
+        assert_eq!(
+            check_permutation("abc".to_string(), "bca".to_string()),
+            true
+        );
+        assert_eq!(
+            check_permutation("abc".to_string(), "bad".to_string()),
+            false
+        );
+    }
+
     #[test]
     fn test_is_flipped_string() {
         assert_eq!(
