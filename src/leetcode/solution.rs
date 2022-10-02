@@ -881,6 +881,11 @@ pub fn reformat_number(number: String) -> String {
     res.to_string()
 }
 
+/// 1784. Check if Binary String Has at Most One Segment of Ones
+pub fn check_ones_segment(s: String) -> bool {
+    !s.contains("01")
+}
+
 /// 1823. Find the Winner of the Circular Game
 pub fn find_the_winner(n: i32, k: i32) -> i32 {
     let mut winner = 1;
@@ -1463,6 +1468,12 @@ mod tests {
             reformat_number("123 4-5678".to_string()),
             "123-456-78".to_string()
         );
+    }
+
+    #[test]
+    fn test_check_ones_segment() {
+        assert_eq!(check_ones_segment("1001".to_string()), false);
+        assert_eq!(check_ones_segment("110".to_string()), true);
     }
 
     #[test]
