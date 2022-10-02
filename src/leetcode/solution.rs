@@ -482,13 +482,13 @@ pub fn unique_morse_representations(words: Vec<String>) -> i32 {
 
 /// 806. Number of Lines To Write String
 pub fn number_of_lines(widths: Vec<i32>, s: String) -> Vec<i32> {
-    let max_wdith = 100;
+    let max_width = 100;
     let mut lines = 1;
     let mut width = 0;
     for c in s.chars() {
         let need = widths[(c as u8 - b'a') as usize];
         width += need;
-        if width > max_wdith {
+        if width > max_width {
             width = need;
             lines += 1;
         }
@@ -858,22 +858,22 @@ pub fn reformat_number(number: String) -> String {
             digits.push(ch);
         }
     }
-    let mut n  = digits.len();
+    let mut n = digits.len();
     let mut res = String::new();
     let mut pt = 0;
     while n > 0 {
         if n > 4 {
-            res.push_str(&digits[pt..pt+3]);
+            res.push_str(&digits[pt..pt + 3]);
             res.push_str("-");
             pt += 3;
             n -= 3;
         } else {
             if n == 4 {
-                res.push_str(&digits[pt..pt+2]);
+                res.push_str(&digits[pt..pt + 2]);
                 res.push_str("-");
-                res.push_str(&digits[pt+2..pt+4]);
+                res.push_str(&digits[pt + 2..pt + 4]);
             } else {
-                res.push_str(&digits[pt..pt+n]);
+                res.push_str(&digits[pt..pt + n]);
             }
             break;
         }
@@ -1451,9 +1451,18 @@ mod tests {
 
     #[test]
     fn test_reformat_number() {
-        assert_eq!(reformat_number("1-23-45 6".to_string()), "123-456".to_string());
-        assert_eq!(reformat_number("123 4-567".to_string()), "123-45-67".to_string());
-        assert_eq!(reformat_number("123 4-5678".to_string()), "123-456-78".to_string());
+        assert_eq!(
+            reformat_number("1-23-45 6".to_string()),
+            "123-456".to_string()
+        );
+        assert_eq!(
+            reformat_number("123 4-567".to_string()),
+            "123-45-67".to_string()
+        );
+        assert_eq!(
+            reformat_number("123 4-5678".to_string()),
+            "123-456-78".to_string()
+        );
     }
 
     #[test]
