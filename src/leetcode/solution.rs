@@ -6,7 +6,7 @@ use std::collections::HashSet;
 use std::collections::{HashMap, VecDeque};
 use std::rc::Rc;
 
-/// 1. Two Sum
+// 1. Two Sum
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     let mut hashmap: HashMap<i32, usize> = HashMap::with_capacity(nums.len());
     for i in 0..nums.len() {
@@ -20,7 +20,7 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     panic!("???")
 }
 
-/// 2. Add Two Numbers
+// 2. Add Two Numbers
 pub fn add_two_numbers(
     l1: Option<Box<ListNode>>,
     l2: Option<Box<ListNode>>,
@@ -52,7 +52,7 @@ pub fn add_two_numbers(
     carried(l1, l2, 0)
 }
 
-/// 7. Convert Integer
+// 7. Convert Integer
 pub fn reverse_int(x: i32) -> i32 {
     let mut x = x;
     let mut res = 0;
@@ -67,7 +67,7 @@ pub fn reverse_int(x: i32) -> i32 {
     res
 }
 
-/// 27. Remove Element
+// 27. Remove Element
 pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
     let mut left = 0;
     let n = nums.len();
@@ -80,7 +80,7 @@ pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
     left as i32
 }
 
-/// 172. Factorial Trailing Zeroes
+// 172. Factorial Trailing Zeroes
 pub fn trailing_zeroes(n: i32) -> i32 {
     let mut ans = 0;
     let mut n = n;
@@ -91,7 +91,7 @@ pub fn trailing_zeroes(n: i32) -> i32 {
     ans
 }
 
-/// 357. Count Numbers with Unique Digits
+// 357. Count Numbers with Unique Digits
 pub fn count_numbers_with_unique_digits(n: i32) -> i32 {
     if n == 0 {
         return 1;
@@ -108,7 +108,7 @@ pub fn count_numbers_with_unique_digits(n: i32) -> i32 {
     res
 }
 
-/// 386. Lexicographical Numbers
+// 386. Lexicographical Numbers
 pub fn lexical_order(n: i32) -> Vec<i32> {
     let mut ret: Vec<i32> = Vec::with_capacity(n as usize);
     let mut num = 1;
@@ -126,7 +126,7 @@ pub fn lexical_order(n: i32) -> Vec<i32> {
     ret
 }
 
-/// 498. Diagonal Traverse
+// 498. Diagonal Traverse
 pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {
     if mat.len() == 0 {
         return Vec::new();
@@ -160,7 +160,7 @@ pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {
     res
 }
 
-/// 504. Base 7
+// 504. Base 7
 pub fn convert_to_base7(num: i32) -> String {
     let mut num = num;
     if num == 0 {
@@ -179,7 +179,7 @@ pub fn convert_to_base7(num: i32) -> String {
     digits.chars().rev().collect()
 }
 
-/// 537. Complex Number Multiplication
+// 537. Complex Number Multiplication
 pub fn complex_number_multiply(num1: String, num2: String) -> String {
     let &complex1 = &num1[..num1.len() - 1].split_once('+').unwrap();
     let &complex2 = &num2[..num2.len() - 1].split_once('+').unwrap();
@@ -192,7 +192,7 @@ pub fn complex_number_multiply(num1: String, num2: String) -> String {
     )
 }
 
-/// 636. Exclusive Time of Functions
+// 636. Exclusive Time of Functions
 pub fn exclusive_time(n: i32, logs: Vec<String>) -> Vec<i32> {
     let mut stack: Vec<Vec<i32>> = Vec::new();
     let mut res: Vec<i32> = vec![0; n as usize];
@@ -219,7 +219,7 @@ pub fn exclusive_time(n: i32, logs: Vec<String>) -> Vec<i32> {
     res
 }
 
-/// 646. Maximum Length of Pair Chain
+// 646. Maximum Length of Pair Chain
 pub fn find_longest_chain(mut pairs: Vec<Vec<i32>>) -> i32 {
     pairs.sort_by(|a, b| a[1].cmp(&b[1]));
     let mut curr = i32::MIN;
@@ -233,7 +233,7 @@ pub fn find_longest_chain(mut pairs: Vec<Vec<i32>>) -> i32 {
     res
 }
 
-/// 658. Find K Closest Elements
+// 658. Find K Closest Elements
 pub fn find_closest_elements(arr: Vec<i32>, k: i32, x: i32) -> Vec<i32> {
     let mut right = match arr.binary_search(&x) {
         Ok(i) => i as i32,
@@ -256,7 +256,7 @@ pub fn find_closest_elements(arr: Vec<i32>, k: i32, x: i32) -> Vec<i32> {
     arr[left..right].to_vec()
 }
 
-/// 662. Maximum Width of Binary Tree
+// 662. Maximum Width of Binary Tree
 pub fn width_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     let mut level_min: HashMap<usize, usize> = HashMap::new();
     fn dfs(
@@ -292,7 +292,7 @@ pub fn width_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     dfs(&root, 1, 1, &mut level_min)
 }
 
-/// 670. Maximum Swap
+// 670. Maximum Swap
 pub fn maximum_swap(num: i32) -> i32 {
     let mut chars = num.to_string().chars().collect::<Vec<char>>();
     let n = chars.len();
@@ -314,7 +314,7 @@ pub fn maximum_swap(num: i32) -> i32 {
     num
 }
 
-/// 672. Bulb Switcher II
+// 672. Bulb Switcher II
 pub fn flip_lights(n: i32, presses: i32) -> i32 {
     let mut seen: HashSet<i32> = HashSet::new();
     for i in 0..16 {
@@ -340,7 +340,7 @@ pub fn flip_lights(n: i32, presses: i32) -> i32 {
     seen.len() as i32
 }
 
-/// 682. Baseball Game
+// 682. Baseball Game
 pub fn cal_points(ops: Vec<String>) -> i32 {
     ops.iter()
         .map(|x| x.as_str())
@@ -367,13 +367,13 @@ pub fn cal_points(ops: Vec<String>) -> i32 {
         .sum()
 }
 
-/// 693. Binary Number with Alternating bits
+// 693. Binary Number with Alternating bits
 pub fn has_alternating_bits(n: i32) -> bool {
     let a = n ^ (n >> 1);
     a & (a + 1) == 0
 }
 
-/// 724. Find Pivot Index
+// 724. Find Pivot Index
 pub fn pivot_index(nums: Vec<i32>) -> i32 {
     let total: i32 = nums.iter().sum();
     let mut sum: i32 = 0;
@@ -386,7 +386,7 @@ pub fn pivot_index(nums: Vec<i32>) -> i32 {
     -1
 }
 
-/// 728. Self Dividing Numbers
+// 728. Self Dividing Numbers
 pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
     let mut ans = Vec::new();
     fn is_self_dividing(num: i32) -> bool {
@@ -409,7 +409,7 @@ pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
     ans
 }
 
-/// 744. Find Smallest Letter Greater Than Target
+// 744. Find Smallest Letter Greater Than Target
 pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
     let len = letters.len();
     if target >= letters[len - 1] {
@@ -428,12 +428,12 @@ pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
     return letters[low];
 }
 
-/// 762. Prime Number of Set Bits in Binary Representation
+// 762. Prime Number of Set Bits in Binary Representation
 pub fn count_prime_set_bits(left: i32, right: i32) -> i32 {
     (left..=right).fold(0, |ret, i| ret + (665772 >> i.count_ones() & 1))
 }
 
-/// 793. Preimage Size of Factorial Zeroes Function
+// 793. Preimage Size of Factorial Zeroes Function
 pub fn preimage_size_fzf(k: i32) -> i32 {
     fn zeta(mut n: i32) -> i32 {
         let mut res = 0;
@@ -461,7 +461,7 @@ pub fn preimage_size_fzf(k: i32) -> i32 {
     nx(k + 1) - nx(k)
 }
 
-/// 804. Unique Morse Code Words
+// 804. Unique Morse Code Words
 pub fn unique_morse_representations(words: Vec<String>) -> i32 {
     let morse = vec![
         ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--",
@@ -480,7 +480,7 @@ pub fn unique_morse_representations(words: Vec<String>) -> i32 {
         .len() as i32
 }
 
-/// 806. Number of Lines To Write String
+// 806. Number of Lines To Write String
 pub fn number_of_lines(widths: Vec<i32>, s: String) -> Vec<i32> {
     let max_width = 100;
     let mut lines = 1;
@@ -496,7 +496,7 @@ pub fn number_of_lines(widths: Vec<i32>, s: String) -> Vec<i32> {
     vec![lines, width]
 }
 
-/// 821. Shortest Distance to a Character
+// 821. Shortest Distance to a Character
 pub fn shortest_to_char(s: String, c: char) -> Vec<i32> {
     let cmp = |initial: &mut i32, ch: char| {
         if ch == c {
@@ -514,7 +514,7 @@ pub fn shortest_to_char(s: String, c: char) -> Vec<i32> {
         .collect()
 }
 
-/// 828. Count Unique Characters of All Substrings of a Given String
+// 828. Count Unique Characters of All Substrings of a Given String
 pub fn unique_letter_string(s: String) -> i32 {
     let mut index: HashMap<char, Vec<i32>> = HashMap::new();
     for i in 0..s.len() {
@@ -535,7 +535,7 @@ pub fn unique_letter_string(s: String) -> i32 {
     res
 }
 
-///  883. Projection Area of 3D Shapes
+//  883. Projection Area of 3D Shapes
 pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
     let max_row = grid
         .iter()
@@ -551,7 +551,7 @@ pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
         + max_col
 }
 
-/// 905. Sort Array By Parity
+// 905. Sort Array By Parity
 pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
     let (mut left, mut right) = (0, nums.len() - 1);
     while left < right {
@@ -572,7 +572,7 @@ pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
     nums
 }
 
-/// 921. Minimum Add to Make Parentheses Valid
+// 921. Minimum Add to Make Parentheses Valid
 pub fn min_add_to_make_valid(s: String) -> i32 {
     let mut res = 0;
     let mut leftCount = 0;
@@ -591,7 +591,7 @@ pub fn min_add_to_make_valid(s: String) -> i32 {
     res
 }
 
-/// 942. DI String Match
+// 942. DI String Match
 pub fn di_string_match(s: String) -> Vec<i32> {
     let n = s.len();
     let mut lo = 0;
@@ -610,7 +610,7 @@ pub fn di_string_match(s: String) -> Vec<i32> {
     res
 }
 
-/// 944. Delete Columns to Make Sorted
+// 944. Delete Columns to Make Sorted
 pub fn min_deletion_size(strs: Vec<String>) -> i32 {
     let strs_arr = strs
         .iter()
@@ -628,7 +628,7 @@ pub fn min_deletion_size(strs: Vec<String>) -> i32 {
     ans
 }
 
-/// 946. Validate Stack Sequences
+// 946. Validate Stack Sequences
 pub fn validate_stack_sequences(pushed: Vec<i32>, popped: Vec<i32>) -> bool {
     let mut stack: VecDeque<i32> = VecDeque::new();
     let n = pushed.len();
@@ -643,7 +643,7 @@ pub fn validate_stack_sequences(pushed: Vec<i32>, popped: Vec<i32>) -> bool {
     stack.is_empty()
 }
 
-/// 998. Maximum Binary Tree II
+// 998. Maximum Binary Tree II
 pub fn insert_into_max_tree(
     root: Option<Rc<RefCell<TreeNode>>>,
     val: i32,
@@ -673,7 +673,7 @@ pub fn insert_into_max_tree(
     root
 }
 
-/// 1403. Minimum Subsequence in Non-Increasing Order
+// 1403. Minimum Subsequence in Non-Increasing Order
 pub fn min_subsequence(mut nums: Vec<i32>) -> Vec<i32> {
     let total: i32 = nums.iter().sum();
     nums.sort_by(|a, b| b.cmp(a));
@@ -689,7 +689,7 @@ pub fn min_subsequence(mut nums: Vec<i32>) -> Vec<i32> {
     ans
 }
 
-/// 1408. String Matching in an Array
+// 1408. String Matching in an Array
 pub fn string_matching(words: Vec<String>) -> Vec<String> {
     let mut res: Vec<String> = vec![];
     for i in 0..words.len() {
@@ -705,7 +705,7 @@ pub fn string_matching(words: Vec<String>) -> Vec<String> {
     res
 }
 
-/// 1450. Number of Students Doing Homework at a Given Time
+// 1450. Number of Students Doing Homework at a Given Time
 pub fn busy_student(start_time: Vec<i32>, end_time: Vec<i32>, query_time: i32) -> i32 {
     let mut res = 0;
     for i in 0..start_time.len() {
@@ -716,7 +716,7 @@ pub fn busy_student(start_time: Vec<i32>, end_time: Vec<i32>, query_time: i32) -
     res
 }
 
-/// 1455. Check If a Word Occurs As a Prefix of Any Word in a Sentence
+// 1455. Check If a Word Occurs As a Prefix of Any Word in a Sentence
 pub fn is_prefix_of_word(sentence: String, search_word: String) -> i32 {
     let words = sentence.as_str().split_ascii_whitespace();
     let mut index = 1;
@@ -729,14 +729,14 @@ pub fn is_prefix_of_word(sentence: String, search_word: String) -> i32 {
     -1
 }
 
-/// 1460. Make Two Arrays Equal by Reversing Sub-arrays
+// 1460. Make Two Arrays Equal by Reversing Sub-arrays
 pub fn can_be_equal(mut target: Vec<i32>, mut arr: Vec<i32>) -> bool {
     target.sort();
     arr.sort();
     target == arr
 }
 
-/// 1464. Maximum Product of Two Elements in an Array
+// 1464. Maximum Product of Two Elements in an Array
 pub fn max_product(nums: Vec<i32>) -> i32 {
     let mut a = nums[0];
     let mut b = nums[1];
@@ -756,7 +756,7 @@ pub fn max_product(nums: Vec<i32>) -> i32 {
     (a - 1) * (b - 1)
 }
 
-/// 1470. Shuffle the Array
+// 1470. Shuffle the Array
 pub fn shuffle(nums: Vec<i32>, n: i32) -> Vec<i32> {
     let mut res: Vec<i32> = vec![0; (n * 2) as usize];
     let n = n as usize;
@@ -767,7 +767,7 @@ pub fn shuffle(nums: Vec<i32>, n: i32) -> Vec<i32> {
     res
 }
 
-/// 1475. Final Prices With a Special Discount in a Shop
+// 1475. Final Prices With a Special Discount in a Shop
 pub fn final_prices(prices: Vec<i32>) -> Vec<i32> {
     let n = prices.len();
     let mut res: Vec<i32> = vec![0; n];
@@ -785,7 +785,7 @@ pub fn final_prices(prices: Vec<i32>) -> Vec<i32> {
     res
 }
 
-/// 1582. Special Positions in a Binary Matrix
+// 1582. Special Positions in a Binary Matrix
 pub fn num_special(mut mat: Vec<Vec<i32>>) -> i32 {
     let m = mat.len();
     let n = mat[0].len();
@@ -816,7 +816,7 @@ pub fn num_special(mut mat: Vec<Vec<i32>>) -> i32 {
     sum
 }
 
-/// 1608. Special Array With X Elements Greater Than or Equal X
+// 1608. Special Array With X Elements Greater Than or Equal X
 pub fn special_array(mut nums: Vec<i32>) -> i32 {
     let n = nums.len();
     nums.sort_by(|a, b| b.cmp(a));
@@ -828,14 +828,14 @@ pub fn special_array(mut nums: Vec<i32>) -> i32 {
     -1
 }
 
-/// 1619. Mean of Array After Removing Some Elements
+// 1619. Mean of Array After Removing Some Elements
 pub fn trim_mean(mut arr: Vec<i32>) -> f64 {
     let n = arr.len();
     arr.sort();
     arr[n / 20..(19 * n / 20)].iter().sum::<i32>() as f64 / (n as f64 * 0.9)
 }
 
-/// 1624. Largest Substring Between Two Equal Characters
+// 1624. Largest Substring Between Two Equal Characters
 pub fn max_length_between_equal_characters(s: String) -> i32 {
     let mut map: HashMap<char, usize> = HashMap::new();
     let mut res: i32 = -1;
@@ -849,7 +849,7 @@ pub fn max_length_between_equal_characters(s: String) -> i32 {
     res
 }
 
-/// 1636. Sort Array by Increasing Frequency
+// 1636. Sort Array by Increasing Frequency
 pub fn frequency_sort(mut nums: Vec<i32>) -> Vec<i32> {
     let mut count = HashMap::<i32, i32>::new();
     nums.iter()
@@ -864,12 +864,12 @@ pub fn frequency_sort(mut nums: Vec<i32>) -> Vec<i32> {
     nums
 }
 
-/// 1672. Richest Customer Wealth
+// 1672. Richest Customer Wealth
 pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
     accounts.iter().map(|x| x.iter().sum()).max().unwrap()
 }
 
-/// 1694. Reformat Phone Number
+// 1694. Reformat Phone Number
 pub fn reformat_number(number: String) -> String {
     let mut digits = String::new();
     for ch in number.chars() {
@@ -900,12 +900,12 @@ pub fn reformat_number(number: String) -> String {
     res.to_string()
 }
 
-/// 1784. Check if Binary String Has at Most One Segment of Ones
+// 1784. Check if Binary String Has at Most One Segment of Ones
 pub fn check_ones_segment(s: String) -> bool {
     !s.contains("01")
 }
 
-/// 1823. Find the Winner of the Circular Game
+// 1823. Find the Winner of the Circular Game
 pub fn find_the_winner(n: i32, k: i32) -> i32 {
     let mut winner = 1;
     for i in 2..=n {
@@ -914,7 +914,7 @@ pub fn find_the_winner(n: i32, k: i32) -> i32 {
     winner
 }
 
-/// 1991. Find the Middle Index in Array
+// 1991. Find the Middle Index in Array
 pub fn find_middle_index(nums: Vec<i32>) -> i32 {
     let total: i32 = nums.iter().sum();
     let mut sum: i32 = 0;
