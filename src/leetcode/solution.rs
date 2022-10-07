@@ -572,6 +572,25 @@ pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
     nums
 }
 
+/// 921. Minimum Add to Make Parentheses Valid
+pub fn min_add_to_make_valid(s: String) -> i32 {
+    let mut res = 0;
+    let mut leftCount = 0;
+    for ch in s.chars() {
+        if ch == '(' {
+            leftCount += 1;
+        } else {
+            if leftCount > 0 {
+                leftCount -= 1;
+            } else {
+                res += 1;
+            }
+        }
+    }
+    res += leftCount;
+    res
+}
+
 /// 942. DI String Match
 pub fn di_string_match(s: String) -> Vec<i32> {
     let n = s.len();
