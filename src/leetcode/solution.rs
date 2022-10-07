@@ -1288,6 +1288,12 @@ mod tests {
     }
 
     #[test]
+    fn test_min_add_to_make_valid() {
+        assert_eq!(min_add_to_make_valid("())".to_string()), 1);
+        assert_eq!(min_add_to_make_valid("(((".to_string()), 3);
+    }
+
+    #[test]
     fn test_di_string_match() {
         assert_eq!(di_string_match(String::from("IDID")), vec![0, 4, 1, 3, 2]);
         assert_eq!(di_string_match(String::from("III")), vec![0, 1, 2, 3]);
