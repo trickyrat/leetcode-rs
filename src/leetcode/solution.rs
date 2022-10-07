@@ -496,6 +496,25 @@ pub fn number_of_lines(widths: Vec<i32>, s: String) -> Vec<i32> {
     vec![lines, width]
 }
 
+// 811. Subdomain Visit Count
+pub fn subdomain_visits(cpdomains: Vec<String>) -> Vec<String> {
+    let mut map = HashMap::<&str, usize>::new();
+    let mut count = 0;
+    for cpdomain in &cpdomains {
+        for (i, v) in cpdomain.as_bytes().iter().enumerate() {
+            if *v == ' ' as u8 {
+                count = cpdomain[..i].parse::<usize>().unwrap();
+                map.entry(&cpdomain[i + 1..]).and_modify(|x| *x += count).or_insert(count);
+                continue;
+            }
+            if *v == '.' as u8 {
+                map.entry(&cpdomain[i + 1..]).and_modify(|x| *x += count).or_insert(count);
+            }
+        }
+    }
+    map.iter().map(|(s, n)| format!("{} {}", n, s)).collect()
+}
+
 // 821. Shortest Distance to a Character
 pub fn shortest_to_char(s: String, c: char) -> Vec<i32> {
     let cmp = |initial: &mut i32, ch: char| {
@@ -655,15 +674,15 @@ pub fn insert_into_max_tree(
     }
     while curr.as_ref().unwrap().borrow().right.is_some()
         && curr
-            .as_ref()
-            .unwrap()
-            .borrow()
-            .right
-            .as_ref()
-            .unwrap()
-            .borrow()
-            .val
-            > val
+        .as_ref()
+        .unwrap()
+        .borrow()
+        .right
+        .as_ref()
+        .unwrap()
+        .borrow()
+        .val
+        > val
     {
         let right = curr.as_ref().unwrap().borrow().right.clone();
         curr = right;
@@ -1068,9 +1087,9 @@ mod tests {
                     "0:end:6",
                     "0:end:7",
                 ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
+                    .iter()
+                    .map(|&x| x.to_string())
+                    .collect(),
             )
         );
         assert_eq!(
@@ -1085,9 +1104,9 @@ mod tests {
                     "1:end:6",
                     "0:end:7",
                 ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
+                    .iter()
+                    .map(|&x| x.to_string())
+                    .collect(),
             )
         );
         assert_eq!(
@@ -1102,9 +1121,9 @@ mod tests {
                     "1:end:7",
                     "0:end:8",
                 ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
+                    .iter()
+                    .map(|&x| x.to_string())
+                    .collect(),
             )
         );
         assert_eq!(
@@ -1114,7 +1133,7 @@ mod tests {
                 vec!["0:start:0", "0:end:0"]
                     .iter()
                     .map(|&x| x.to_string())
-                    .collect()
+                    .collect(),
             )
         );
     }
@@ -1224,9 +1243,9 @@ mod tests {
             String::from("gig"),
             String::from("msg"),
         ]
-        .into_iter()
-        .map(|x| x.to_string())
-        .collect::<Vec<String>>();
+            .into_iter()
+            .map(|x| x.to_string())
+            .collect::<Vec<String>>();
         assert_eq!(unique_morse_representations(v1), 2);
         assert_eq!(unique_morse_representations(vec![String::from("a")]), 1);
     }
@@ -1253,6 +1272,28 @@ mod tests {
             ),
             vec![2, 4]
         );
+    }
+
+    #[test]
+    fn test_subdomain_visits() {
+        let cpdomains1 = vec!["9001 discuss.leetcode.com"]
+            .iter()
+            .map(|&x| x.to_string())
+            .collect::<Vec<String>>();
+        let cpdomains2 = vec!["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]
+            .iter()
+            .map(|&x| x.to_string())
+            .collect::<Vec<String>>();
+        let expected1 = vec!["9001 com", "9001 leetcode.com", "9001 discuss.leetcode.com"]
+            .iter()
+            .map(|&x| x.to_string())
+            .collect::<Vec<String>>();
+        let expected2 = vec!["901 mail.com","50 yahoo.com","900 google.mail.com","5 wiki.org","5 org","1 intel.mail.com","951 com"]
+            .iter()
+            .map(|&x| x.to_string())
+            .collect::<Vec<String>>();
+        assert_eq!(subdomain_visits(cpdomains1), expected1);
+        assert_eq!(subdomain_visits(cpdomains2), expected2);
     }
 
     #[test]
@@ -1360,7 +1401,7 @@ mod tests {
         assert_eq!(
             is_prefix_of_word(
                 "this problem is an easy problem".to_string(),
-                "pro".to_string()
+                "pro".to_string(),
             ),
             2
         );
@@ -1424,14 +1465,14 @@ mod tests {
     fn test_trim_mean() {
         assert_eq!(
             (trim_mean(vec![
-                1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3
+                1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
             ]) - 2.00000)
                 <= 0.00001,
             true
         );
         assert_eq!(
             (trim_mean(vec![
-                6, 2, 7, 5, 1, 2, 0, 3, 10, 2, 5, 0, 5, 5, 0, 8, 7, 6, 8, 0
+                6, 2, 7, 5, 1, 2, 0, 3, 10, 2, 5, 0, 5, 5, 0, 8, 7, 6, 8, 0,
             ]) - 4.00000)
                 <= 0.00001,
             true
@@ -1439,7 +1480,7 @@ mod tests {
         assert_eq!(
             (trim_mean(vec![
                 6, 0, 7, 0, 7, 5, 7, 8, 3, 4, 0, 7, 8, 1, 6, 8, 1, 1, 2, 4, 8, 1, 9, 5, 4, 3, 8, 5,
-                10, 8, 6, 6, 1, 0, 6, 10, 8, 2, 3, 4
+                10, 8, 6, 6, 1, 0, 6, 10, 8, 2, 3, 4,
             ]) - 4.77778)
                 <= 0.00001,
             true
