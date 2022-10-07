@@ -5,6 +5,7 @@ use std::cmp::{max, Ordering};
 use std::collections::HashSet;
 use std::collections::{HashMap, VecDeque};
 use std::rc::Rc;
+use std::thread::scope;
 
 // 1. Two Sum
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
@@ -594,20 +595,57 @@ pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
 // 921. Minimum Add to Make Parentheses Valid
 pub fn min_add_to_make_valid(s: String) -> i32 {
     let mut res = 0;
-    let mut leftCount = 0;
+    let mut left_count = 0;
     for ch in s.chars() {
         if ch == '(' {
-            leftCount += 1;
+            left_count += 1;
         } else {
-            if leftCount > 0 {
-                leftCount -= 1;
+            if left_count > 0 {
+                left_count -= 1;
             } else {
                 res += 1;
             }
         }
     }
-    res += leftCount;
+    res += left_count;
     res
+}
+
+// 927. Three Equal Parts
+pub fn three_equal_parts(arr: Vec<i32>) -> Vec<i32> {
+    let sum: i32 = arr.iter().sum();
+    if sum % 3 != 0 {
+        return vec![-1, -1];
+    }
+    if sum == 0 {
+        return vec![0, 2];
+    }
+    let mut partial = sum / 3;
+    let (mut first, mut second, mut third, mut curr) = (0, 0, 0, 0);
+    for (i, v) in arr.iter().enumerate() {
+        if *v == 1 {
+            if curr == 0 {
+                first = i;
+            } else if curr == partial {
+                second = i;
+            } else if curr == 2 * partial {
+                third = i;
+            }
+            curr += 1;
+        }
+    }
+    let n = arr.len() - third;
+    if first + n <= second && second + n <= third {
+        let mut i = 0;
+        while third + i < arr.len() {
+            if (arr[first + i] != arr[second + i]) || (arr[first + i] != arr[third + i]) {
+                return vec![-1, -1];
+            }
+            i += 1;
+        }
+        return vec![(first + n - 1) as i32, (second + n) as i32];
+    }
+    vec![-1, -1]
 }
 
 // 942. DI String Match
@@ -1288,7 +1326,7 @@ mod tests {
             .iter()
             .map(|&x| x.to_string())
             .collect::<Vec<String>>();
-        let expected2 = vec!["901 mail.com","50 yahoo.com","900 google.mail.com","5 wiki.org","5 org","1 intel.mail.com","951 com"]
+        let expected2 = vec!["901 mail.com", "50 yahoo.com", "900 google.mail.com", "5 wiki.org", "5 org", "1 intel.mail.com", "951 com"]
             .iter()
             .map(|&x| x.to_string())
             .collect::<Vec<String>>();
@@ -1332,6 +1370,13 @@ mod tests {
     fn test_min_add_to_make_valid() {
         assert_eq!(min_add_to_make_valid("())".to_string()), 1);
         assert_eq!(min_add_to_make_valid("(((".to_string()), 3);
+    }
+
+    #[test]
+    fn test_three_equal_parts() {
+        assert_eq!(three_equal_parts(vec![1, 0, 1, 0, 1]), vec![0, 3]);
+        assert_eq!(three_equal_parts(vec![1, 1, 0, 1, 1]), vec![-1, -1]);
+        assert_eq!(three_equal_parts(vec![1, 1, 0, 0, 1]), vec![0, 2]);
     }
 
     #[test]
