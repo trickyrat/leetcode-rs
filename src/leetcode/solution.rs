@@ -962,6 +962,22 @@ pub fn check_ones_segment(s: String) -> bool {
     !s.contains("01")
 }
 
+// 1800. Maximum Ascending Subarray Sum
+pub fn max_ascending_sum(nums: Vec<i32>) -> i32 {
+    let (mut res, mut i) = (0, 0);
+    let n = nums.len();
+    while i < n {
+        let mut curr = nums[i];
+        i += 1;
+        while i < n && nums[i] > nums[i-1] {
+            curr += nums[i];
+            i += 1
+        }
+        res = max(res, curr);
+    }
+    res
+}
+
 // 1823. Find the Winner of the Circular Game
 pub fn find_the_winner(n: i32, k: i32) -> i32 {
     let mut winner = 1;
