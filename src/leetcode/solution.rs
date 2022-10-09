@@ -555,6 +555,15 @@ pub fn unique_letter_string(s: String) -> i32 {
     res
 }
 
+// 856. Score of Parentheses
+pub fn score_of_parentheses(s: String) -> i32 {
+    let mut chars = s.as_bytes();
+    chars.iter().enumerate().fold((0, 0), |(mut l, ret), (i, &ch)| {
+        l += if ch == b'(' { 1 } else { -1 };
+        (l, if ch == b')' && chars[i - 1] == b'(' { ret + (1 << l) } else { ret })
+    }).1
+}
+
 //  883. Projection Area of 3D Shapes
 pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
     let max_row = grid
@@ -1338,7 +1347,7 @@ mod tests {
             .iter()
             .map(|&x| x.to_string())
             .collect::<Vec<String>>();
-        let expected1 = vec!["9001 com", "9001 leetcode.com", "9001 discuss.leetcode.com"]
+        let expected1 = vec!["9001 leetcode.com", "9001 discuss.leetcode.com", "9001 com"]
             .iter()
             .map(|&x| x.to_string())
             .collect::<Vec<String>>();
@@ -1367,6 +1376,13 @@ mod tests {
         assert_eq!(unique_letter_string("ABC".to_string()), 10);
         assert_eq!(unique_letter_string("ABA".to_string()), 8);
         assert_eq!(unique_letter_string("LEETCODE".to_string()), 92);
+    }
+
+    #[test]
+    fn test_score_of_parentheses() {
+        assert_eq!(1, score_of_parentheses("()".to_string()));
+        assert_eq!(2, score_of_parentheses("(())".to_string()));
+        assert_eq!(2, score_of_parentheses("()()".to_string()));
     }
 
     #[test]
