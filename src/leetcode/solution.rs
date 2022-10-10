@@ -1,11 +1,10 @@
 use crate::leetcode::data_structures::ListNode;
 use crate::leetcode::TreeNode;
 use std::cell::RefCell;
-use std::cmp::{max, Ordering};
+use std::cmp::{max, min, Ordering};
 use std::collections::HashSet;
 use std::collections::{HashMap, VecDeque};
 use std::rc::Rc;
-use std::thread::scope;
 
 // 1. Two Sum
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
@@ -462,6 +461,26 @@ pub fn preimage_size_fzf(k: i32) -> i32 {
     nx(k + 1) - nx(k)
 }
 
+// 801. Minimum Swaps To Make Sequences Increasing
+pub fn min_swap(nums1: Vec<i32>, nums2: Vec<i32>) -> i32 {
+    let n = nums1.len();
+    let (mut a, mut b) = (0, 1);
+    for i in 1..n {
+        let (at, bt) = (a, b);
+        a = n;
+        b = n;
+        if nums1[i] > nums1[i - 1] && nums2[i] > nums2[i - 1] {
+            a = min(a, at);
+            b = min(b, bt + 1);
+        }
+        if nums1[i] > nums2[i - 1] && nums2[i] > nums1[i - 1] {
+            a = min(a, bt);
+            b = min(b, at + 1);
+        }
+    }
+    min(a, b) as i32
+}
+
 // 804. Unique Morse Code Words
 pub fn unique_morse_representations(words: Vec<String>) -> i32 {
     let morse = vec![
@@ -505,11 +524,15 @@ pub fn subdomain_visits(cpdomains: Vec<String>) -> Vec<String> {
         for (i, v) in cpdomain.as_bytes().iter().enumerate() {
             if *v == ' ' as u8 {
                 count = cpdomain[..i].parse::<usize>().unwrap();
-                map.entry(&cpdomain[i + 1..]).and_modify(|x| *x += count).or_insert(count);
+                map.entry(&cpdomain[i + 1..])
+                    .and_modify(|x| *x += count)
+                    .or_insert(count);
                 continue;
             }
             if *v == '.' as u8 {
-                map.entry(&cpdomain[i + 1..]).and_modify(|x| *x += count).or_insert(count);
+                map.entry(&cpdomain[i + 1..])
+                    .and_modify(|x| *x += count)
+                    .or_insert(count);
             }
         }
     }
@@ -557,11 +580,22 @@ pub fn unique_letter_string(s: String) -> i32 {
 
 // 856. Score of Parentheses
 pub fn score_of_parentheses(s: String) -> i32 {
-    let mut chars = s.as_bytes();
-    chars.iter().enumerate().fold((0, 0), |(mut l, ret), (i, &ch)| {
-        l += if ch == b'(' { 1 } else { -1 };
-        (l, if ch == b')' && chars[i - 1] == b'(' { ret + (1 << l) } else { ret })
-    }).1
+    let chars = s.as_bytes();
+    chars
+        .iter()
+        .enumerate()
+        .fold((0, 0), |(mut l, ret), (i, &ch)| {
+            l += if ch == b'(' { 1 } else { -1 };
+            (
+                l,
+                if ch == b')' && chars[i - 1] == b'(' {
+                    ret + (1 << l)
+                } else {
+                    ret
+                },
+            )
+        })
+        .1
 }
 
 //  883. Projection Area of 3D Shapes
@@ -629,7 +663,7 @@ pub fn three_equal_parts(arr: Vec<i32>) -> Vec<i32> {
     if sum == 0 {
         return vec![0, 2];
     }
-    let mut partial = sum / 3;
+    let partial = sum / 3;
     let (mut first, mut second, mut third, mut curr) = (0, 0, 0, 0);
     for (i, v) in arr.iter().enumerate() {
         if *v == 1 {
@@ -721,15 +755,15 @@ pub fn insert_into_max_tree(
     }
     while curr.as_ref().unwrap().borrow().right.is_some()
         && curr
-        .as_ref()
-        .unwrap()
-        .borrow()
-        .right
-        .as_ref()
-        .unwrap()
-        .borrow()
-        .val
-        > val
+            .as_ref()
+            .unwrap()
+            .borrow()
+            .right
+            .as_ref()
+            .unwrap()
+            .borrow()
+            .val
+            > val
     {
         let right = curr.as_ref().unwrap().borrow().right.clone();
         curr = right;
@@ -978,7 +1012,7 @@ pub fn max_ascending_sum(nums: Vec<i32>) -> i32 {
     while i < n {
         let mut curr = nums[i];
         i += 1;
-        while i < n && nums[i] > nums[i-1] {
+        while i < n && nums[i] > nums[i - 1] {
             curr += nums[i];
             i += 1
         }
@@ -1150,9 +1184,9 @@ mod tests {
                     "0:end:6",
                     "0:end:7",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
         assert_eq!(
@@ -1167,9 +1201,9 @@ mod tests {
                     "1:end:6",
                     "0:end:7",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
         assert_eq!(
@@ -1184,9 +1218,9 @@ mod tests {
                     "1:end:7",
                     "0:end:8",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
         assert_eq!(
@@ -1299,6 +1333,12 @@ mod tests {
     }
 
     #[test]
+    fn test_min_swap() {
+        assert_eq!(1, min_swap(vec![1, 3, 5, 4], vec![1, 2, 3, 7]));
+        assert_eq!(1, min_swap(vec![0, 3, 5, 8, 9], vec![2, 1, 4, 6, 9]));
+    }
+
+    #[test]
     fn test_unique_morse_representations() {
         let v1 = vec![
             String::from("gin"),
@@ -1306,9 +1346,9 @@ mod tests {
             String::from("gig"),
             String::from("msg"),
         ]
-            .into_iter()
-            .map(|x| x.to_string())
-            .collect::<Vec<String>>();
+        .into_iter()
+        .map(|x| x.to_string())
+        .collect::<Vec<String>>();
         assert_eq!(unique_morse_representations(v1), 2);
         assert_eq!(unique_morse_representations(vec![String::from("a")]), 1);
     }
@@ -1343,18 +1383,31 @@ mod tests {
             .iter()
             .map(|&x| x.to_string())
             .collect::<Vec<String>>();
-        let cpdomains2 = vec!["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect::<Vec<String>>();
+        let cpdomains2 = vec![
+            "900 google.mail.com",
+            "50 yahoo.com",
+            "1 intel.mail.com",
+            "5 wiki.org",
+        ]
+        .iter()
+        .map(|&x| x.to_string())
+        .collect::<Vec<String>>();
         let expected1 = vec!["9001 leetcode.com", "9001 discuss.leetcode.com", "9001 com"]
             .iter()
             .map(|&x| x.to_string())
             .collect::<Vec<String>>();
-        let expected2 = vec!["901 mail.com", "50 yahoo.com", "900 google.mail.com", "5 wiki.org", "5 org", "1 intel.mail.com", "951 com"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect::<Vec<String>>();
+        let expected2 = vec![
+            "901 mail.com",
+            "50 yahoo.com",
+            "900 google.mail.com",
+            "5 wiki.org",
+            "5 org",
+            "1 intel.mail.com",
+            "951 com",
+        ]
+        .iter()
+        .map(|&x| x.to_string())
+        .collect::<Vec<String>>();
         assert_eq!(subdomain_visits(cpdomains1), expected1);
         assert_eq!(subdomain_visits(cpdomains2), expected2);
     }
