@@ -1005,6 +1005,30 @@ pub fn check_ones_segment(s: String) -> bool {
     !s.contains("01")
 }
 
+/// 1790.Check if One String Swap Can Make Strings Equal
+pub fn are_almost_equal(s1: String, s2: String) -> bool {
+    let mut diff: Vec<usize> = vec![];
+    let chars1 = s1.chars().collect::<Vec<char>>();
+    let chars2 = s2.chars().collect::<Vec<char>>();
+    for i in 0..s1.len() {
+        if chars1[i] != chars2[i] {
+            if diff.len() > 2 {
+                return false;
+            }
+            diff.push(i);
+        }
+    }
+    let n = diff.len();
+    if n == 0 {
+        return true;
+    }
+
+    if n != 2 {
+        return false;
+    }
+    chars1[diff[0]] == chars2[diff[1]] && chars1[diff[1]] == chars2[diff[0]]
+}
+
 /// 1800.Maximum Ascending Subarray Sum
 pub fn max_ascending_sum(nums: Vec<i32>) -> i32 {
     let (mut res, mut i) = (0, 0);

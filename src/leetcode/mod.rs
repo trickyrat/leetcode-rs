@@ -638,6 +638,22 @@ mod tests {
     }
 
     #[test]
+    fn test_are_almost_equal() {
+        assert_eq!(
+            true,
+            are_almost_equal("bank".to_string(), "kanb".to_string())
+        );
+        assert_eq!(
+            false,
+            are_almost_equal("attack".to_string(), "defend".to_string())
+        );
+        assert_eq!(
+            true,
+            are_almost_equal("kelb".to_string(), "kelbf".to_string())
+        );
+    }
+
+    #[test]
     fn test_find_the_winner() {
         assert_eq!(find_the_winner(5, 2), 3);
         assert_eq!(find_the_winner(6, 5), 1);
