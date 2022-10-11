@@ -1,6 +1,6 @@
 use std::cmp::min;
 
-// 01.02. Check Permutation LCCI
+/// 01.02. Check Permutation LCCI
 pub fn check_permutation(s1: String, s2: String) -> bool {
     let len1 = s1.len();
     let len2 = s2.len();
@@ -21,7 +21,7 @@ pub fn check_permutation(s1: String, s2: String) -> bool {
     true
 }
 
-// 01.09. String Rotation LCCI
+/// 01.09. String Rotation LCCI
 pub fn is_flipped_string(s1: String, s2: String) -> bool {
     if s1.is_empty() && s2.is_empty() {
         return true;
@@ -32,7 +32,7 @@ pub fn is_flipped_string(s1: String, s2: String) -> bool {
     s1.repeat(2).find(&s2).is_some()
 }
 
-// 17.09. Get Kth Magic Number LCCI
+/// 17.09. Get Kth Magic Number LCCI
 pub fn get_kth_magic_number(k: i32) -> i32 {
     let mut dp = vec![0; k as usize + 1];
     dp[1] = 1;

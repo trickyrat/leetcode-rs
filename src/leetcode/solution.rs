@@ -6,7 +6,7 @@ use std::collections::HashSet;
 use std::collections::{HashMap, VecDeque};
 use std::rc::Rc;
 
-// 1. Two Sum
+/// 1.Two Sum
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     let mut hashmap: HashMap<i32, usize> = HashMap::with_capacity(nums.len());
     for i in 0..nums.len() {
@@ -20,7 +20,7 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     panic!("???")
 }
 
-// 2. Add Two Numbers
+/// 2.Add Two Numbers
 pub fn add_two_numbers(
     l1: Option<Box<ListNode>>,
     l2: Option<Box<ListNode>>,
@@ -52,7 +52,7 @@ pub fn add_two_numbers(
     carried(l1, l2, 0)
 }
 
-// 7. Convert Integer
+/// 7.Convert Integer
 pub fn reverse_int(x: i32) -> i32 {
     let mut x = x;
     let mut res = 0;
@@ -67,7 +67,7 @@ pub fn reverse_int(x: i32) -> i32 {
     res
 }
 
-// 27. Remove Element
+/// 27.Remove Element
 pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
     let mut left = 0;
     let n = nums.len();
@@ -80,7 +80,7 @@ pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
     left as i32
 }
 
-// 172. Factorial Trailing Zeroes
+/// 172.Factorial Trailing Zeroes
 pub fn trailing_zeroes(n: i32) -> i32 {
     let mut ans = 0;
     let mut n = n;
@@ -91,7 +91,7 @@ pub fn trailing_zeroes(n: i32) -> i32 {
     ans
 }
 
-// 357. Count Numbers with Unique Digits
+/// 357.Count Numbers with Unique Digits
 pub fn count_numbers_with_unique_digits(n: i32) -> i32 {
     if n == 0 {
         return 1;
@@ -108,7 +108,7 @@ pub fn count_numbers_with_unique_digits(n: i32) -> i32 {
     res
 }
 
-// 386. Lexicographical Numbers
+/// 386.Lexicographical Numbers
 pub fn lexical_order(n: i32) -> Vec<i32> {
     let mut ret: Vec<i32> = Vec::with_capacity(n as usize);
     let mut num = 1;
@@ -126,7 +126,7 @@ pub fn lexical_order(n: i32) -> Vec<i32> {
     ret
 }
 
-// 498. Diagonal Traverse
+/// 498.Diagonal Traverse
 pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {
     if mat.len() == 0 {
         return Vec::new();
@@ -160,7 +160,7 @@ pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {
     res
 }
 
-// 504. Base 7
+/// 504.Base 7
 pub fn convert_to_base7(num: i32) -> String {
     let mut num = num;
     if num == 0 {
@@ -179,7 +179,7 @@ pub fn convert_to_base7(num: i32) -> String {
     digits.chars().rev().collect()
 }
 
-// 537. Complex Number Multiplication
+/// 537.Complex Number Multiplication
 pub fn complex_number_multiply(num1: String, num2: String) -> String {
     let &complex1 = &num1[..num1.len() - 1].split_once('+').unwrap();
     let &complex2 = &num2[..num2.len() - 1].split_once('+').unwrap();
@@ -192,7 +192,7 @@ pub fn complex_number_multiply(num1: String, num2: String) -> String {
     )
 }
 
-// 636. Exclusive Time of Functions
+/// 636.Exclusive Time of Functions
 pub fn exclusive_time(n: i32, logs: Vec<String>) -> Vec<i32> {
     let mut stack: Vec<Vec<i32>> = Vec::new();
     let mut res: Vec<i32> = vec![0; n as usize];
@@ -219,7 +219,7 @@ pub fn exclusive_time(n: i32, logs: Vec<String>) -> Vec<i32> {
     res
 }
 
-// 646. Maximum Length of Pair Chain
+/// 646.Maximum Length of Pair Chain
 pub fn find_longest_chain(mut pairs: Vec<Vec<i32>>) -> i32 {
     pairs.sort_by(|a, b| a[1].cmp(&b[1]));
     let mut curr = i32::MIN;
@@ -233,7 +233,7 @@ pub fn find_longest_chain(mut pairs: Vec<Vec<i32>>) -> i32 {
     res
 }
 
-// 658. Find K Closest Elements
+/// 658.Find K Closest Elements
 pub fn find_closest_elements(arr: Vec<i32>, k: i32, x: i32) -> Vec<i32> {
     let mut right = match arr.binary_search(&x) {
         Ok(i) => i as i32,
@@ -256,7 +256,7 @@ pub fn find_closest_elements(arr: Vec<i32>, k: i32, x: i32) -> Vec<i32> {
     arr[left..right].to_vec()
 }
 
-// 662. Maximum Width of Binary Tree
+/// 662.Maximum Width of Binary Tree
 pub fn width_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     let mut level_min: HashMap<usize, usize> = HashMap::new();
     fn dfs(
@@ -292,7 +292,7 @@ pub fn width_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     dfs(&root, 1, 1, &mut level_min)
 }
 
-// 670. Maximum Swap
+/// 670.Maximum Swap
 pub fn maximum_swap(num: i32) -> i32 {
     let mut chars = num.to_string().chars().collect::<Vec<char>>();
     let n = chars.len();
@@ -314,7 +314,7 @@ pub fn maximum_swap(num: i32) -> i32 {
     num
 }
 
-// 672. Bulb Switcher II
+/// 672.Bulb Switcher II
 pub fn flip_lights(n: i32, presses: i32) -> i32 {
     let mut seen: HashSet<i32> = HashSet::new();
     for i in 0..16 {
@@ -340,7 +340,7 @@ pub fn flip_lights(n: i32, presses: i32) -> i32 {
     seen.len() as i32
 }
 
-// 682. Baseball Game
+/// 682.Baseball Game
 pub fn cal_points(ops: Vec<String>) -> i32 {
     ops.iter()
         .map(|x| x.as_str())
@@ -367,13 +367,13 @@ pub fn cal_points(ops: Vec<String>) -> i32 {
         .sum()
 }
 
-// 693. Binary Number with Alternating bits
+/// 693.Binary Number with Alternating bits
 pub fn has_alternating_bits(n: i32) -> bool {
     let a = n ^ (n >> 1);
     a & (a + 1) == 0
 }
 
-// 724. Find Pivot Index
+/// 724.Find Pivot Index
 pub fn pivot_index(nums: Vec<i32>) -> i32 {
     let total: i32 = nums.iter().sum();
     let mut sum: i32 = 0;
@@ -386,7 +386,7 @@ pub fn pivot_index(nums: Vec<i32>) -> i32 {
     -1
 }
 
-// 728. Self Dividing Numbers
+/// 728.Self Dividing Numbers
 pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
     let mut ans = Vec::new();
     fn is_self_dividing(num: i32) -> bool {
@@ -409,7 +409,7 @@ pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
     ans
 }
 
-// 744. Find Smallest Letter Greater Than Target
+/// 744.Find Smallest Letter Greater Than Target
 pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
     let len = letters.len();
     if target >= letters[len - 1] {
@@ -428,12 +428,12 @@ pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
     return letters[low];
 }
 
-// 762. Prime Number of Set Bits in Binary Representation
+/// 762.Prime Number of Set Bits in Binary Representation
 pub fn count_prime_set_bits(left: i32, right: i32) -> i32 {
     (left..=right).fold(0, |ret, i| ret + (665772 >> i.count_ones() & 1))
 }
 
-// 793. Preimage Size of Factorial Zeroes Function
+/// 793.Preimage Size of Factorial Zeroes Function
 pub fn preimage_size_fzf(k: i32) -> i32 {
     fn zeta(mut n: i32) -> i32 {
         let mut res = 0;
@@ -461,7 +461,7 @@ pub fn preimage_size_fzf(k: i32) -> i32 {
     nx(k + 1) - nx(k)
 }
 
-// 801. Minimum Swaps To Make Sequences Increasing
+/// 801.Minimum Swaps To Make Sequences Increasing
 pub fn min_swap(nums1: Vec<i32>, nums2: Vec<i32>) -> i32 {
     let n = nums1.len();
     let (mut a, mut b) = (0, 1);
@@ -481,7 +481,7 @@ pub fn min_swap(nums1: Vec<i32>, nums2: Vec<i32>) -> i32 {
     min(a, b) as i32
 }
 
-// 804. Unique Morse Code Words
+/// 804.Unique Morse Code Words
 pub fn unique_morse_representations(words: Vec<String>) -> i32 {
     let morse = vec![
         ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--",
@@ -500,7 +500,7 @@ pub fn unique_morse_representations(words: Vec<String>) -> i32 {
         .len() as i32
 }
 
-// 806. Number of Lines To Write String
+/// 806.Number of Lines To Write String
 pub fn number_of_lines(widths: Vec<i32>, s: String) -> Vec<i32> {
     let max_width = 100;
     let mut lines = 1;
@@ -516,7 +516,7 @@ pub fn number_of_lines(widths: Vec<i32>, s: String) -> Vec<i32> {
     vec![lines, width]
 }
 
-// 811. Subdomain Visit Count
+/// 811.Subdomain Visit Count
 pub fn subdomain_visits(cpdomains: Vec<String>) -> Vec<String> {
     let mut map = HashMap::<&str, usize>::new();
     let mut count = 0;
@@ -539,7 +539,7 @@ pub fn subdomain_visits(cpdomains: Vec<String>) -> Vec<String> {
     map.iter().map(|(s, n)| format!("{} {}", n, s)).collect()
 }
 
-// 821. Shortest Distance to a Character
+/// 821.Shortest Distance to a Character
 pub fn shortest_to_char(s: String, c: char) -> Vec<i32> {
     let cmp = |initial: &mut i32, ch: char| {
         if ch == c {
@@ -557,7 +557,7 @@ pub fn shortest_to_char(s: String, c: char) -> Vec<i32> {
         .collect()
 }
 
-// 828. Count Unique Characters of All Substrings of a Given String
+/// 828.Count Unique Characters of All Substrings of a Given String
 pub fn unique_letter_string(s: String) -> i32 {
     let mut index: HashMap<char, Vec<i32>> = HashMap::new();
     for i in 0..s.len() {
@@ -578,7 +578,7 @@ pub fn unique_letter_string(s: String) -> i32 {
     res
 }
 
-// 856. Score of Parentheses
+/// 856.Score of Parentheses
 pub fn score_of_parentheses(s: String) -> i32 {
     let chars = s.as_bytes();
     chars
@@ -598,7 +598,7 @@ pub fn score_of_parentheses(s: String) -> i32 {
         .1
 }
 
-//  883. Projection Area of 3D Shapes
+///  883.Projection Area of 3D Shapes
 pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
     let max_row = grid
         .iter()
@@ -614,7 +614,7 @@ pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
         + max_col
 }
 
-// 905. Sort Array By Parity
+/// 905.Sort Array By Parity
 pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
     let (mut left, mut right) = (0, nums.len() - 1);
     while left < right {
@@ -635,7 +635,7 @@ pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
     nums
 }
 
-// 921. Minimum Add to Make Parentheses Valid
+/// 921.Minimum Add to Make Parentheses Valid
 pub fn min_add_to_make_valid(s: String) -> i32 {
     let mut res = 0;
     let mut left_count = 0;
@@ -654,7 +654,7 @@ pub fn min_add_to_make_valid(s: String) -> i32 {
     res
 }
 
-// 927. Three Equal Parts
+/// 927.Three Equal Parts
 pub fn three_equal_parts(arr: Vec<i32>) -> Vec<i32> {
     let sum: i32 = arr.iter().sum();
     if sum % 3 != 0 {
@@ -691,7 +691,7 @@ pub fn three_equal_parts(arr: Vec<i32>) -> Vec<i32> {
     vec![-1, -1]
 }
 
-// 942. DI String Match
+/// 942.DI String Match
 pub fn di_string_match(s: String) -> Vec<i32> {
     let n = s.len();
     let mut lo = 0;
@@ -710,7 +710,7 @@ pub fn di_string_match(s: String) -> Vec<i32> {
     res
 }
 
-// 944. Delete Columns to Make Sorted
+/// 944.Delete Columns to Make Sorted
 pub fn min_deletion_size(strs: Vec<String>) -> i32 {
     let strs_arr = strs
         .iter()
@@ -728,7 +728,7 @@ pub fn min_deletion_size(strs: Vec<String>) -> i32 {
     ans
 }
 
-// 946. Validate Stack Sequences
+/// 946.Validate Stack Sequences
 pub fn validate_stack_sequences(pushed: Vec<i32>, popped: Vec<i32>) -> bool {
     let mut stack: VecDeque<i32> = VecDeque::new();
     let n = pushed.len();
@@ -743,7 +743,7 @@ pub fn validate_stack_sequences(pushed: Vec<i32>, popped: Vec<i32>) -> bool {
     stack.is_empty()
 }
 
-// 998. Maximum Binary Tree II
+/// 998.Maximum Binary Tree II
 pub fn insert_into_max_tree(
     root: Option<Rc<RefCell<TreeNode>>>,
     val: i32,
@@ -773,7 +773,7 @@ pub fn insert_into_max_tree(
     root
 }
 
-// 1403. Minimum Subsequence in Non-Increasing Order
+/// 1403.Minimum Subsequence in Non-Increasing Order
 pub fn min_subsequence(mut nums: Vec<i32>) -> Vec<i32> {
     let total: i32 = nums.iter().sum();
     nums.sort_by(|a, b| b.cmp(a));
@@ -789,7 +789,7 @@ pub fn min_subsequence(mut nums: Vec<i32>) -> Vec<i32> {
     ans
 }
 
-// 1408. String Matching in an Array
+/// 1408.String Matching in an Array
 pub fn string_matching(words: Vec<String>) -> Vec<String> {
     let mut res: Vec<String> = vec![];
     for i in 0..words.len() {
@@ -805,7 +805,7 @@ pub fn string_matching(words: Vec<String>) -> Vec<String> {
     res
 }
 
-// 1450. Number of Students Doing Homework at a Given Time
+/// 1450.Number of Students Doing Homework at a Given Time
 pub fn busy_student(start_time: Vec<i32>, end_time: Vec<i32>, query_time: i32) -> i32 {
     let mut res = 0;
     for i in 0..start_time.len() {
@@ -816,7 +816,7 @@ pub fn busy_student(start_time: Vec<i32>, end_time: Vec<i32>, query_time: i32) -
     res
 }
 
-// 1455. Check If a Word Occurs As a Prefix of Any Word in a Sentence
+/// 1455.Check If a Word Occurs As a Prefix of Any Word in a Sentence
 pub fn is_prefix_of_word(sentence: String, search_word: String) -> i32 {
     let words = sentence.as_str().split_ascii_whitespace();
     let mut index = 1;
@@ -829,14 +829,14 @@ pub fn is_prefix_of_word(sentence: String, search_word: String) -> i32 {
     -1
 }
 
-// 1460. Make Two Arrays Equal by Reversing Sub-arrays
+/// 1460.Make Two Arrays Equal by Reversing Sub-arrays
 pub fn can_be_equal(mut target: Vec<i32>, mut arr: Vec<i32>) -> bool {
     target.sort();
     arr.sort();
     target == arr
 }
 
-// 1464. Maximum Product of Two Elements in an Array
+/// 1464.Maximum Product of Two Elements in an Array
 pub fn max_product(nums: Vec<i32>) -> i32 {
     let mut a = nums[0];
     let mut b = nums[1];
@@ -856,7 +856,7 @@ pub fn max_product(nums: Vec<i32>) -> i32 {
     (a - 1) * (b - 1)
 }
 
-// 1470. Shuffle the Array
+/// 1470.Shuffle the Array
 pub fn shuffle(nums: Vec<i32>, n: i32) -> Vec<i32> {
     let mut res: Vec<i32> = vec![0; (n * 2) as usize];
     let n = n as usize;
@@ -867,7 +867,7 @@ pub fn shuffle(nums: Vec<i32>, n: i32) -> Vec<i32> {
     res
 }
 
-// 1475. Final Prices With a Special Discount in a Shop
+/// 1475.Final Prices With a Special Discount in a Shop
 pub fn final_prices(prices: Vec<i32>) -> Vec<i32> {
     let n = prices.len();
     let mut res: Vec<i32> = vec![0; n];
@@ -885,7 +885,7 @@ pub fn final_prices(prices: Vec<i32>) -> Vec<i32> {
     res
 }
 
-// 1582. Special Positions in a Binary Matrix
+/// 1582.Special Positions in a Binary Matrix
 pub fn num_special(mut mat: Vec<Vec<i32>>) -> i32 {
     let m = mat.len();
     let n = mat[0].len();
@@ -916,7 +916,7 @@ pub fn num_special(mut mat: Vec<Vec<i32>>) -> i32 {
     sum
 }
 
-// 1608. Special Array With X Elements Greater Than or Equal X
+/// 1608.Special Array With X Elements Greater Than or Equal X
 pub fn special_array(mut nums: Vec<i32>) -> i32 {
     let n = nums.len();
     nums.sort_by(|a, b| b.cmp(a));
@@ -928,14 +928,14 @@ pub fn special_array(mut nums: Vec<i32>) -> i32 {
     -1
 }
 
-// 1619. Mean of Array After Removing Some Elements
+/// 1619.Mean of Array After Removing Some Elements
 pub fn trim_mean(mut arr: Vec<i32>) -> f64 {
     let n = arr.len();
     arr.sort();
     arr[n / 20..(19 * n / 20)].iter().sum::<i32>() as f64 / (n as f64 * 0.9)
 }
 
-// 1624. Largest Substring Between Two Equal Characters
+/// 1624.Largest Substring Between Two Equal Characters
 pub fn max_length_between_equal_characters(s: String) -> i32 {
     let mut map: HashMap<char, usize> = HashMap::new();
     let mut res: i32 = -1;
@@ -949,7 +949,7 @@ pub fn max_length_between_equal_characters(s: String) -> i32 {
     res
 }
 
-// 1636. Sort Array by Increasing Frequency
+/// 1636.Sort Array by Increasing Frequency
 pub fn frequency_sort(mut nums: Vec<i32>) -> Vec<i32> {
     let mut count = HashMap::<i32, i32>::new();
     nums.iter()
@@ -964,12 +964,12 @@ pub fn frequency_sort(mut nums: Vec<i32>) -> Vec<i32> {
     nums
 }
 
-// 1672. Richest Customer Wealth
+/// 1672.Richest Customer Wealth
 pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
     accounts.iter().map(|x| x.iter().sum()).max().unwrap()
 }
 
-// 1694. Reformat Phone Number
+/// 1694.Reformat Phone Number
 pub fn reformat_number(number: String) -> String {
     let mut digits = String::new();
     for ch in number.chars() {
@@ -1000,12 +1000,12 @@ pub fn reformat_number(number: String) -> String {
     res.to_string()
 }
 
-// 1784. Check if Binary String Has at Most One Segment of Ones
+/// 1784.Check if Binary String Has at Most One Segment of Ones
 pub fn check_ones_segment(s: String) -> bool {
     !s.contains("01")
 }
 
-// 1800. Maximum Ascending Subarray Sum
+/// 1800.Maximum Ascending Subarray Sum
 pub fn max_ascending_sum(nums: Vec<i32>) -> i32 {
     let (mut res, mut i) = (0, 0);
     let n = nums.len();
@@ -1021,7 +1021,7 @@ pub fn max_ascending_sum(nums: Vec<i32>) -> i32 {
     res
 }
 
-// 1823. Find the Winner of the Circular Game
+/// 1823.Find the Winner of the Circular Game
 pub fn find_the_winner(n: i32, k: i32) -> i32 {
     let mut winner = 1;
     for i in 2..=n {
@@ -1030,7 +1030,7 @@ pub fn find_the_winner(n: i32, k: i32) -> i32 {
     winner
 }
 
-// 1991. Find the Middle Index in Array
+/// 1991.Find the Middle Index in Array
 pub fn find_middle_index(nums: Vec<i32>) -> i32 {
     let total: i32 = nums.iter().sum();
     let mut sum: i32 = 0;
@@ -1041,647 +1041,4 @@ pub fn find_middle_index(nums: Vec<i32>) -> i32 {
         sum += nums[i];
     }
     -1
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    fn generate_list_node(nums: Vec<i32>) -> Option<Box<ListNode>> {
-        let n = nums.len();
-        if n <= 0 {
-            return None;
-        } else {
-            let mut head = ListNode {
-                val: nums[0],
-                next: None,
-            };
-            for i in 1..n {
-                head.append(nums[i]);
-            }
-            Some(Box::new(head))
-        }
-    }
-
-    #[test]
-    fn test_two_sum() {
-        assert_eq!(two_sum(vec![2, 7, 11, 15], 9), vec![0, 1]);
-        assert_eq!(two_sum(vec![3, 2, 4], 6), vec![1, 2]);
-        assert_eq!(two_sum(vec![3, 3], 6), vec![0, 1]);
-    }
-
-    #[test]
-    fn test_add_two_numbers() {
-        assert_eq!(
-            add_two_numbers(
-                generate_list_node(vec![2, 4, 3]),
-                generate_list_node(vec![5, 6, 4]),
-            ),
-            generate_list_node(vec![7, 0, 8])
-        );
-        assert_eq!(
-            add_two_numbers(generate_list_node(vec![0]), generate_list_node(vec![0])),
-            generate_list_node(vec![0])
-        );
-        assert_eq!(
-            add_two_numbers(
-                generate_list_node(vec![9, 9, 9, 9, 9, 9, 9]),
-                generate_list_node(vec![9, 9, 9, 9]),
-            ),
-            generate_list_node(vec![8, 9, 9, 9, 0, 0, 0, 1])
-        );
-    }
-
-    #[test]
-    fn test_reverse_int() {
-        assert_eq!(reverse_int(123), 321);
-        assert_eq!(reverse_int(-123), -321);
-        assert_eq!(reverse_int(120), 21);
-        assert_eq!(reverse_int(100), 1);
-        assert_eq!(reverse_int(2147483647), 0);
-        assert_eq!(reverse_int(-2147483648), 0);
-    }
-
-    #[test]
-    fn test_remove_element() {
-        assert_eq!(remove_element(&mut vec![3, 2, 2, 3], 3), 2);
-        assert_eq!(remove_element(&mut vec![0, 1, 2, 2, 3, 0, 4, 2], 2), 5);
-    }
-
-    #[test]
-    fn test_trailing_zeroes() {
-        assert_eq!(trailing_zeroes(3), 0);
-        assert_eq!(trailing_zeroes(5), 1);
-        assert_eq!(trailing_zeroes(0), 0);
-    }
-
-    #[test]
-    fn test_count_numbers_with_unique_digits() {
-        assert_eq!(count_numbers_with_unique_digits(2), 91);
-        assert_eq!(count_numbers_with_unique_digits(0), 1);
-    }
-
-    #[test]
-    fn test_lexical_order() {
-        assert_eq!(
-            lexical_order(13),
-            vec![1, 10, 11, 12, 13, 2, 3, 4, 5, 6, 7, 8, 9]
-        );
-        assert_eq!(lexical_order(2), vec![1, 2]);
-    }
-
-    #[test]
-    fn test_find_diagonal_order() {
-        assert_eq!(
-            find_diagonal_order(vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]]),
-            vec![1, 2, 4, 7, 5, 3, 6, 8, 9]
-        );
-        assert_eq!(
-            find_diagonal_order(vec![vec![1, 2], vec![3, 4]]),
-            vec![1, 2, 3, 4]
-        );
-    }
-
-    #[test]
-    fn test_convert_to_base7() {
-        assert_eq!(convert_to_base7(100), "202");
-        assert_eq!(convert_to_base7(-7), "-10");
-    }
-
-    #[test]
-    fn test_complex_number_multiply() {
-        assert_eq!(
-            complex_number_multiply(String::from("1+1i"), String::from("1+1i")),
-            String::from("0+2i")
-        );
-        assert_eq!(
-            complex_number_multiply(String::from("1+-1i"), String::from("1+-1i")),
-            String::from("0+-2i")
-        );
-    }
-
-    #[test]
-    fn test_exclusive_time() {
-        assert_eq!(
-            vec![3, 4],
-            exclusive_time(
-                2,
-                vec!["0:start:0", "1:start:2", "1:end:5", "0:end:6"]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
-            )
-        );
-        assert_eq!(
-            vec![8],
-            exclusive_time(
-                1,
-                vec![
-                    "0:start:0",
-                    "0:start:2",
-                    "0:end:5",
-                    "0:start:6",
-                    "0:end:6",
-                    "0:end:7",
-                ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
-            )
-        );
-        assert_eq!(
-            vec![7, 1],
-            exclusive_time(
-                2,
-                vec![
-                    "0:start:0",
-                    "0:start:2",
-                    "0:end:5",
-                    "1:start:6",
-                    "1:end:6",
-                    "0:end:7",
-                ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
-            )
-        );
-        assert_eq!(
-            vec![8, 1],
-            exclusive_time(
-                2,
-                vec![
-                    "0:start:0",
-                    "0:start:2",
-                    "0:end:5",
-                    "1:start:7",
-                    "1:end:7",
-                    "0:end:8",
-                ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
-            )
-        );
-        assert_eq!(
-            vec![1],
-            exclusive_time(
-                1,
-                vec!["0:start:0", "0:end:0"]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
-            )
-        );
-    }
-
-    #[test]
-    fn test_find_longest_chain() {
-        assert_eq!(
-            find_longest_chain(vec![vec![1, 2], vec![2, 3], vec![3, 4]]),
-            2
-        );
-        assert_eq!(
-            find_longest_chain(vec![vec![1, 2], vec![7, 8], vec![4, 5]]),
-            3
-        );
-    }
-
-    #[test]
-    fn test_find_closest_elements() {
-        assert_eq!(
-            find_closest_elements(vec![1, 2, 3, 4, 5], 4, 3),
-            vec![1, 2, 3, 4]
-        );
-        assert_eq!(
-            find_closest_elements(vec![1, 2, 3, 4, 5], 4, -1),
-            vec![1, 2, 3, 4]
-        );
-    }
-
-    #[test]
-    fn test_maximum_swap() {
-        assert_eq!(7236, maximum_swap(2736));
-        assert_eq!(9973, maximum_swap(9973));
-    }
-
-    #[test]
-    fn test_flip_lights() {
-        assert_eq!(2, flip_lights(1, 1));
-        assert_eq!(3, flip_lights(2, 1));
-        assert_eq!(4, flip_lights(3, 1));
-    }
-
-    #[test]
-    fn test_cal_points() {
-        let v1 = vec!["5", "2", "C", "D", "+"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        let v2 = vec!["5", "-2", "4", "C", "D", "9", "+", "+"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        assert_eq!(cal_points(v1), 30);
-        assert_eq!(cal_points(v2), 27);
-        assert_eq!(cal_points(vec![String::from("1")]), 1);
-    }
-
-    #[test]
-    fn test_has_alternating_bits() {
-        assert_eq!(has_alternating_bits(5), true);
-        assert_eq!(has_alternating_bits(7), false);
-        assert_eq!(has_alternating_bits(11), false);
-    }
-
-    #[test]
-    fn test_pivot_index() {
-        assert_eq!(
-            self_dividing_numbers(1, 22),
-            vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 15, 22]
-        );
-        assert_eq!(self_dividing_numbers(47, 85), vec![48, 55, 66, 77]);
-    }
-
-    #[test]
-    fn test_self_dividing_numbers() {
-        assert_eq!(
-            self_dividing_numbers(1, 22),
-            vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 15, 22]
-        );
-        assert_eq!(self_dividing_numbers(47, 85), vec![48, 55, 66, 77]);
-    }
-
-    #[test]
-    fn test_next_greatest_letter() {
-        assert_eq!(next_greatest_letter(vec!['c', 'f', 'j'], 'a'), 'c');
-        assert_eq!(next_greatest_letter(vec!['c', 'f', 'j'], 'c'), 'f');
-        assert_eq!(next_greatest_letter(vec!['c', 'f', 'j'], 'd'), 'f');
-    }
-
-    #[test]
-    fn test_count_prime_set_bits() {
-        assert_eq!(count_prime_set_bits(6, 10), 4);
-        assert_eq!(count_prime_set_bits(10, 15), 5);
-    }
-
-    #[test]
-    fn test_preimage_size_fzf() {
-        assert_eq!(preimage_size_fzf(0), 5);
-        assert_eq!(preimage_size_fzf(5), 0);
-        assert_eq!(preimage_size_fzf(3), 5);
-    }
-
-    #[test]
-    fn test_min_swap() {
-        assert_eq!(1, min_swap(vec![1, 3, 5, 4], vec![1, 2, 3, 7]));
-        assert_eq!(1, min_swap(vec![0, 3, 5, 8, 9], vec![2, 1, 4, 6, 9]));
-    }
-
-    #[test]
-    fn test_unique_morse_representations() {
-        let v1 = vec![
-            String::from("gin"),
-            String::from("zen"),
-            String::from("gig"),
-            String::from("msg"),
-        ]
-        .into_iter()
-        .map(|x| x.to_string())
-        .collect::<Vec<String>>();
-        assert_eq!(unique_morse_representations(v1), 2);
-        assert_eq!(unique_morse_representations(vec![String::from("a")]), 1);
-    }
-
-    #[test]
-    fn test_number_of_lines() {
-        assert_eq!(
-            number_of_lines(
-                vec![
-                    10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-                    10, 10, 10, 10, 10, 10,
-                ],
-                String::from("abcdefghijklmnopqrstuvwxyz"),
-            ),
-            vec![3, 60]
-        );
-        assert_eq!(
-            number_of_lines(
-                vec![
-                    4, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-                    10, 10, 10, 10, 10, 10,
-                ],
-                String::from("bbbcccdddaaa"),
-            ),
-            vec![2, 4]
-        );
-    }
-
-    #[test]
-    fn test_subdomain_visits() {
-        let cpdomains1 = vec!["9001 discuss.leetcode.com"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect::<Vec<String>>();
-        let cpdomains2 = vec![
-            "900 google.mail.com",
-            "50 yahoo.com",
-            "1 intel.mail.com",
-            "5 wiki.org",
-        ]
-        .iter()
-        .map(|&x| x.to_string())
-        .collect::<Vec<String>>();
-        let expected1 = vec!["9001 leetcode.com", "9001 discuss.leetcode.com", "9001 com"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect::<Vec<String>>();
-        let expected2 = vec![
-            "901 mail.com",
-            "50 yahoo.com",
-            "900 google.mail.com",
-            "5 wiki.org",
-            "5 org",
-            "1 intel.mail.com",
-            "951 com",
-        ]
-        .iter()
-        .map(|&x| x.to_string())
-        .collect::<Vec<String>>();
-        assert_eq!(subdomain_visits(cpdomains1), expected1);
-        assert_eq!(subdomain_visits(cpdomains2), expected2);
-    }
-
-    #[test]
-    fn test_shortest_to_char() {
-        assert_eq!(
-            shortest_to_char(String::from("loveleetcode"), 'e'),
-            vec![3, 2, 1, 0, 1, 0, 0, 1, 2, 2, 1, 0]
-        );
-        assert_eq!(
-            shortest_to_char(String::from("aaab"), 'b'),
-            vec![3, 2, 1, 0]
-        );
-    }
-
-    #[test]
-    fn test_unique_letter_string() {
-        assert_eq!(unique_letter_string("ABC".to_string()), 10);
-        assert_eq!(unique_letter_string("ABA".to_string()), 8);
-        assert_eq!(unique_letter_string("LEETCODE".to_string()), 92);
-    }
-
-    #[test]
-    fn test_score_of_parentheses() {
-        assert_eq!(1, score_of_parentheses("()".to_string()));
-        assert_eq!(2, score_of_parentheses("(())".to_string()));
-        assert_eq!(2, score_of_parentheses("()()".to_string()));
-    }
-
-    #[test]
-    fn test_projection_area() {
-        assert_eq!(projection_area(vec![vec![1, 2], vec![3, 4]]), 17);
-        assert_eq!(projection_area(vec![vec![2]]), 5);
-        assert_eq!(projection_area(vec![vec![1, 0], vec![0, 2]]), 8);
-    }
-
-    #[test]
-    fn test_sort_array_by_parity() {
-        assert_eq!(sort_array_by_parity(vec![3, 1, 2, 4]), vec![4, 2, 1, 3]);
-        assert_eq!(sort_array_by_parity(vec![0]), vec![0]);
-    }
-
-    #[test]
-    fn test_min_add_to_make_valid() {
-        assert_eq!(min_add_to_make_valid("())".to_string()), 1);
-        assert_eq!(min_add_to_make_valid("(((".to_string()), 3);
-    }
-
-    #[test]
-    fn test_three_equal_parts() {
-        assert_eq!(three_equal_parts(vec![1, 0, 1, 0, 1]), vec![0, 3]);
-        assert_eq!(three_equal_parts(vec![1, 1, 0, 1, 1]), vec![-1, -1]);
-        assert_eq!(three_equal_parts(vec![1, 1, 0, 0, 1]), vec![0, 2]);
-    }
-
-    #[test]
-    fn test_di_string_match() {
-        assert_eq!(di_string_match(String::from("IDID")), vec![0, 4, 1, 3, 2]);
-        assert_eq!(di_string_match(String::from("III")), vec![0, 1, 2, 3]);
-        assert_eq!(di_string_match(String::from("DDI")), vec![3, 2, 0, 1]);
-    }
-
-    #[test]
-    fn test_min_deletion_size() {
-        let v1 = vec!["cba", "daf", "ghi"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        let v2 = vec!["a", "b"].iter().map(|&x| x.to_string()).collect();
-        let v3 = vec!["zyx", "wvu", "tsr"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        assert_eq!(min_deletion_size(v1), 1);
-        assert_eq!(min_deletion_size(v2), 0);
-        assert_eq!(min_deletion_size(v3), 3);
-    }
-
-    #[test]
-    fn test_min_subsequence() {
-        assert_eq!(min_subsequence(vec![4, 3, 10, 9, 8]), vec![10, 9]);
-        assert_eq!(min_subsequence(vec![4, 4, 7, 6, 7]), vec![7, 7, 6]);
-        assert_eq!(min_subsequence(vec![6]), vec![6]);
-    }
-
-    #[test]
-    fn test_string_matching() {
-        let words1: Vec<String> = vec!["mass", "as", "hero", "superhero"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        let words2: Vec<String> = vec!["leetcode", "et", "code"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        let words3: Vec<String> = vec!["blue", "green", "bu"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        let expected1: Vec<String> = vec!["as", "hero"].iter().map(|&x| x.to_string()).collect();
-        let expected2: Vec<String> = vec!["et", "code"].iter().map(|&x| x.to_string()).collect();
-        let expected3: Vec<String> = vec![];
-        assert_eq!(string_matching(words1), expected1);
-        assert_eq!(string_matching(words2), expected2);
-        assert_eq!(string_matching(words3), expected3);
-    }
-
-    #[test]
-    fn test_busy_student() {
-        assert_eq!(busy_student(vec![1, 2, 3], vec![3, 2, 7], 4), 1);
-        assert_eq!(busy_student(vec![4], vec![4], 4), 1);
-    }
-
-    #[test]
-    fn test_is_prefix_of_word() {
-        assert_eq!(
-            is_prefix_of_word("i love eating burger".to_string(), "burg".to_string()),
-            4
-        );
-        assert_eq!(
-            is_prefix_of_word(
-                "this problem is an easy problem".to_string(),
-                "pro".to_string(),
-            ),
-            2
-        );
-        assert_eq!(
-            is_prefix_of_word("i am tired".to_string(), "you".to_string()),
-            -1
-        );
-    }
-
-    #[test]
-    fn test_can_be_equal() {
-        assert_eq!(can_be_equal(vec![1, 2, 3, 4], vec![2, 1, 3, 4]), true);
-        assert_eq!(can_be_equal(vec![7], vec![7]), true);
-        assert_eq!(can_be_equal(vec![3, 7, 9], vec![3, 7, 11]), false);
-    }
-
-    #[test]
-    fn test_max_product() {
-        assert_eq!(max_product(vec![3, 4, 5, 2]), 12);
-        assert_eq!(max_product(vec![1, 5, 4, 5]), 16);
-        assert_eq!(max_product(vec![3, 7]), 12);
-    }
-
-    #[test]
-    fn test_shuffle() {
-        assert_eq!(vec![2, 3, 5, 4, 1, 7], shuffle(vec![2, 5, 1, 3, 4, 7], 3));
-        assert_eq!(
-            vec![1, 4, 2, 3, 3, 2, 4, 1],
-            shuffle(vec![1, 2, 3, 4, 4, 3, 2, 1], 4)
-        );
-        assert_eq!(vec![1, 2, 1, 2], shuffle(vec![1, 1, 2, 2], 2));
-    }
-
-    #[test]
-    fn test_final_prices() {
-        assert_eq!(vec![4, 2, 4, 2, 3], final_prices(vec![8, 4, 6, 2, 3]));
-        assert_eq!(vec![1, 2, 3, 4, 5], final_prices(vec![1, 2, 3, 4, 5]));
-        assert_eq!(vec![9, 0, 1, 6], final_prices(vec![10, 1, 1, 6]));
-    }
-
-    #[test]
-    fn test_num_special() {
-        assert_eq!(
-            num_special(vec![vec![1, 0, 0], vec![0, 0, 1], vec![1, 0, 0]]),
-            1
-        );
-        assert_eq!(
-            num_special(vec![vec![1, 0, 0], vec![0, 1, 0], vec![0, 0, 1]]),
-            3
-        );
-    }
-
-    #[test]
-    fn test_special_array() {
-        assert_eq!(special_array(vec![3, 5]), 2);
-        assert_eq!(special_array(vec![0, 0]), -1);
-        assert_eq!(special_array(vec![0, 4, 3, 0, 4]), 3);
-    }
-
-    #[test]
-    fn test_trim_mean() {
-        assert_eq!(
-            (trim_mean(vec![
-                1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
-            ]) - 2.00000)
-                <= 0.00001,
-            true
-        );
-        assert_eq!(
-            (trim_mean(vec![
-                6, 2, 7, 5, 1, 2, 0, 3, 10, 2, 5, 0, 5, 5, 0, 8, 7, 6, 8, 0,
-            ]) - 4.00000)
-                <= 0.00001,
-            true
-        );
-        assert_eq!(
-            (trim_mean(vec![
-                6, 0, 7, 0, 7, 5, 7, 8, 3, 4, 0, 7, 8, 1, 6, 8, 1, 1, 2, 4, 8, 1, 9, 5, 4, 3, 8, 5,
-                10, 8, 6, 6, 1, 0, 6, 10, 8, 2, 3, 4,
-            ]) - 4.77778)
-                <= 0.00001,
-            true
-        );
-    }
-
-    #[test]
-    fn test_max_length_between_equal_characters() {
-        assert_eq!(0, max_length_between_equal_characters(String::from("aa")));
-        assert_eq!(2, max_length_between_equal_characters(String::from("abca")));
-        assert_eq!(
-            -1,
-            max_length_between_equal_characters(String::from("cbzyx"))
-        );
-    }
-
-    #[test]
-    fn test_frequency_sort() {
-        assert_eq!(
-            vec![3, 1, 1, 2, 2, 2],
-            frequency_sort(vec![1, 1, 2, 2, 2, 3])
-        );
-        assert_eq!(vec![1, 3, 3, 2, 2], frequency_sort(vec![2, 3, 1, 3, 2]));
-        assert_eq!(
-            vec![5, -1, 4, 4, -6, -6, 1, 1, 1],
-            frequency_sort(vec![-1, 1, -6, 4, 5, -6, 1, 4, 1])
-        );
-    }
-
-    #[test]
-    fn test_maximum_wealth() {
-        assert_eq!(maximum_wealth(vec![vec![1, 2, 3], vec![3, 2, 1]]), 6);
-        assert_eq!(maximum_wealth(vec![vec![1, 5], vec![7, 3], vec![3, 5]]), 10);
-        assert_eq!(
-            maximum_wealth(vec![vec![2, 8, 7], vec![7, 1, 3], vec![1, 9, 5]]),
-            17
-        );
-    }
-
-    #[test]
-    fn test_reformat_number() {
-        assert_eq!(
-            reformat_number("1-23-45 6".to_string()),
-            "123-456".to_string()
-        );
-        assert_eq!(
-            reformat_number("123 4-567".to_string()),
-            "123-45-67".to_string()
-        );
-        assert_eq!(
-            reformat_number("123 4-5678".to_string()),
-            "123-456-78".to_string()
-        );
-    }
-
-    #[test]
-    fn test_check_ones_segment() {
-        assert_eq!(check_ones_segment("1001".to_string()), false);
-        assert_eq!(check_ones_segment("110".to_string()), true);
-    }
-
-    #[test]
-    fn test_find_the_winner() {
-        assert_eq!(find_the_winner(5, 2), 3);
-        assert_eq!(find_the_winner(6, 5), 1);
-    }
-
-    #[test]
-    fn test_find_middle_index() {
-        assert_eq!(find_middle_index(vec! {2, 3, -1, 8, 4}), 3);
-        assert_eq!(find_middle_index(vec! {1, -1, 4}), 2);
-        assert_eq!(find_middle_index(vec! {2, 5}), -1);
-    }
 }
