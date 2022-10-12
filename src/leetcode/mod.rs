@@ -2,11 +2,13 @@ mod data_structures;
 mod interviewsolution;
 mod randomizedset;
 mod solution;
+mod util;
 
 pub use self::data_structures::*;
 pub use self::interviewsolution::*;
 pub use self::randomizedset::RandomizedSet;
 pub use self::solution::*;
+pub use self::util::*;
 
 #[cfg(test)]
 mod tests {
@@ -375,6 +377,14 @@ mod tests {
         .collect::<Vec<String>>();
         assert_eq!(subdomain_visits(cpdomains1), expected1);
         assert_eq!(subdomain_visits(cpdomains2), expected2);
+    }
+
+    #[test]
+    fn test_num_components() {
+        let head1 = generate_list_node(vec![0, 1, 2, 3]);
+        let head2 = generate_list_node(vec![0, 1, 2, 3, 4]);
+        assert_eq!(2, num_components(head1, vec![0, 1, 3]));
+        assert_eq!(2, num_components(head2, vec![0, 3, 1, 4]));
     }
 
     #[test]

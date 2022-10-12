@@ -539,6 +539,29 @@ pub fn subdomain_visits(cpdomains: Vec<String>) -> Vec<String> {
     map.iter().map(|(s, n)| format!("{} {}", n, s)).collect()
 }
 
+/// 817.Linked List Components
+pub fn num_components(head: Option<Box<ListNode>>, nums: Vec<i32>) -> i32 {
+    let set = nums.iter().fold(HashSet::new(), |mut set, num| {
+        set.insert(num);
+        set
+    });
+    let mut inSet = false;
+    let mut res = 0;
+    let mut head = &head;
+    while let Some(node) = head {
+        if set.contains(&node.val) {
+            if !inSet {
+                inSet = true;
+                res += 1;
+            }
+        } else {
+            inSet = false;
+        }
+        head = &node.next;
+    }
+    res
+}
+
 /// 821.Shortest Distance to a Character
 pub fn shortest_to_char(s: String, c: char) -> Vec<i32> {
     let cmp = |initial: &mut i32, ch: char| {
