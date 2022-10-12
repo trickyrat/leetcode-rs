@@ -12,23 +12,9 @@ pub use self::util::*;
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use std::collections::HashSet;
 
-    fn generate_list_node(nums: Vec<i32>) -> Option<Box<ListNode>> {
-        let n = nums.len();
-        if n <= 0 {
-            return None;
-        } else {
-            let mut head = ListNode {
-                val: nums[0],
-                next: None,
-            };
-            for i in 1..n {
-                head.append(nums[i]);
-            }
-            Some(Box::new(head))
-        }
-    }
+    use super::*;
 
     #[test]
     fn test_two_sum() {
@@ -350,6 +336,14 @@ mod tests {
             .iter()
             .map(|&x| x.to_string())
             .collect::<Vec<String>>();
+        let actual1 =
+            subdomain_visits(cpdomains1)
+                .iter()
+                .fold(HashSet::<String>::new(), |mut set, x| {
+                    set.insert(x.to_string());
+                    set
+                });
+
         let cpdomains2 = vec![
             "900 google.mail.com",
             "50 yahoo.com",
@@ -359,10 +353,22 @@ mod tests {
         .iter()
         .map(|&x| x.to_string())
         .collect::<Vec<String>>();
+
+        let actual2 =
+            subdomain_visits(cpdomains2)
+                .iter()
+                .fold(HashSet::<String>::new(), |mut set, x| {
+                    set.insert(x.to_string());
+                    set
+                });
+
         let expected1 = vec!["9001 discuss.leetcode.com", "9001 com", "9001 leetcode.com"]
             .iter()
-            .map(|&x| x.to_string())
-            .collect::<Vec<String>>();
+            .fold(HashSet::<String>::new(), |mut set, &x| {
+                set.insert(x.to_string());
+                set
+            });
+
         let expected2 = vec![
             "901 mail.com",
             "50 yahoo.com",
@@ -373,10 +379,13 @@ mod tests {
             "951 com",
         ]
         .iter()
-        .map(|&x| x.to_string())
-        .collect::<Vec<String>>();
-        assert_eq!(subdomain_visits(cpdomains1), expected1);
-        assert_eq!(subdomain_visits(cpdomains2), expected2);
+        .fold(HashSet::<String>::new(), |mut set, &x| {
+            set.insert(x.to_string());
+            set
+        });
+
+        assert_eq!(actual1, expected1);
+        assert_eq!(actual2, expected2);
     }
 
     #[test]

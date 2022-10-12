@@ -545,17 +545,17 @@ pub fn num_components(head: Option<Box<ListNode>>, nums: Vec<i32>) -> i32 {
         set.insert(num);
         set
     });
-    let mut inSet = false;
+    let mut in_set = false;
     let mut res = 0;
     let mut head = &head;
     while let Some(node) = head {
         if set.contains(&node.val) {
-            if !inSet {
-                inSet = true;
+            if !in_set {
+                in_set = true;
                 res += 1;
             }
         } else {
-            inSet = false;
+            in_set = false;
         }
         head = &node.next;
     }
