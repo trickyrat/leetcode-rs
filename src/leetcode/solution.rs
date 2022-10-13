@@ -433,6 +433,18 @@ pub fn count_prime_set_bits(left: i32, right: i32) -> i32 {
     (left..=right).fold(0, |ret, i| ret + (665772 >> i.count_ones() & 1))
 }
 
+/// 769. Max Chunks To Make Sorted
+pub fn max_chunks_to_sorted(arr: Vec<i32>) -> i32 {
+    let (mut res, mut maximum) = (0, 0);
+    for (i, v) in arr.iter().enumerate() {
+        maximum = max(maximum, *v);
+        if maximum == i as i32 {
+            res += 1
+        }
+    }
+    res
+}
+
 /// 793.Preimage Size of Factorial Zeroes Function
 pub fn preimage_size_fzf(k: i32) -> i32 {
     fn zeta(mut n: i32) -> i32 {
