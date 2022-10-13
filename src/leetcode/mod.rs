@@ -137,9 +137,9 @@ mod tests {
                     "0:end:6",
                     "0:end:7",
                 ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
+                    .iter()
+                    .map(|&x| x.to_string())
+                    .collect(),
             )
         );
         assert_eq!(
@@ -154,9 +154,9 @@ mod tests {
                     "1:end:6",
                     "0:end:7",
                 ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
+                    .iter()
+                    .map(|&x| x.to_string())
+                    .collect(),
             )
         );
         assert_eq!(
@@ -171,9 +171,9 @@ mod tests {
                     "1:end:7",
                     "0:end:8",
                 ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
+                    .iter()
+                    .map(|&x| x.to_string())
+                    .collect(),
             )
         );
         assert_eq!(
@@ -279,6 +279,12 @@ mod tests {
     }
 
     #[test]
+    fn test_max_chunks_to_sorted() {
+        assert_eq!(1, max_chunks_to_sorted(vec![4, 3, 2, 1, 0]));
+        assert_eq!(4, max_chunks_to_sorted(vec![1, 0, 2, 3, 4]));
+    }
+
+    #[test]
     fn test_preimage_size_fzf() {
         assert_eq!(preimage_size_fzf(0), 5);
         assert_eq!(preimage_size_fzf(5), 0);
@@ -299,9 +305,9 @@ mod tests {
             String::from("gig"),
             String::from("msg"),
         ]
-        .into_iter()
-        .map(|x| x.to_string())
-        .collect::<Vec<String>>();
+            .into_iter()
+            .map(|x| x.to_string())
+            .collect::<Vec<String>>();
         assert_eq!(unique_morse_representations(v1), 2);
         assert_eq!(unique_morse_representations(vec![String::from("a")]), 1);
     }
@@ -350,9 +356,9 @@ mod tests {
             "1 intel.mail.com",
             "5 wiki.org",
         ]
-        .iter()
-        .map(|&x| x.to_string())
-        .collect::<Vec<String>>();
+            .iter()
+            .map(|&x| x.to_string())
+            .collect::<Vec<String>>();
 
         let actual2 =
             subdomain_visits(cpdomains2)
@@ -378,11 +384,11 @@ mod tests {
             "1 intel.mail.com",
             "951 com",
         ]
-        .iter()
-        .fold(HashSet::<String>::new(), |mut set, &x| {
-            set.insert(x.to_string());
-            set
-        });
+            .iter()
+            .fold(HashSet::<String>::new(), |mut set, &x| {
+                set.insert(x.to_string());
+                set
+            });
 
         assert_eq!(actual1, expected1);
         assert_eq!(actual2, expected2);
