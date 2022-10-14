@@ -137,9 +137,9 @@ mod tests {
                     "0:end:6",
                     "0:end:7",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
         assert_eq!(
@@ -154,9 +154,9 @@ mod tests {
                     "1:end:6",
                     "0:end:7",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
         assert_eq!(
@@ -171,9 +171,9 @@ mod tests {
                     "1:end:7",
                     "0:end:8",
                 ]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                .iter()
+                .map(|&x| x.to_string())
+                .collect(),
             )
         );
         assert_eq!(
@@ -305,9 +305,9 @@ mod tests {
             String::from("gig"),
             String::from("msg"),
         ]
-            .into_iter()
-            .map(|x| x.to_string())
-            .collect::<Vec<String>>();
+        .into_iter()
+        .map(|x| x.to_string())
+        .collect::<Vec<String>>();
         assert_eq!(unique_morse_representations(v1), 2);
         assert_eq!(unique_morse_representations(vec![String::from("a")]), 1);
     }
@@ -356,9 +356,9 @@ mod tests {
             "1 intel.mail.com",
             "5 wiki.org",
         ]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect::<Vec<String>>();
+        .iter()
+        .map(|&x| x.to_string())
+        .collect::<Vec<String>>();
 
         let actual2 =
             subdomain_visits(cpdomains2)
@@ -384,11 +384,11 @@ mod tests {
             "1 intel.mail.com",
             "951 com",
         ]
-            .iter()
-            .fold(HashSet::<String>::new(), |mut set, &x| {
-                set.insert(x.to_string());
-                set
-            });
+        .iter()
+        .fold(HashSet::<String>::new(), |mut set, &x| {
+            set.insert(x.to_string());
+            set
+        });
 
         assert_eq!(actual1, expected1);
         assert_eq!(actual2, expected2);
@@ -452,6 +452,13 @@ mod tests {
         assert_eq!(three_equal_parts(vec![1, 0, 1, 0, 1]), vec![0, 3]);
         assert_eq!(three_equal_parts(vec![1, 1, 0, 1, 1]), vec![-1, -1]);
         assert_eq!(three_equal_parts(vec![1, 1, 0, 0, 1]), vec![0, 2]);
+    }
+
+    #[test]
+    fn test_distinct_subseq_ii() {
+        assert_eq!(distinct_subseq_ii("abc".to_string()), 7);
+        assert_eq!(distinct_subseq_ii("aba".to_string()), 6);
+        assert_eq!(distinct_subseq_ii("aaa".to_string()), 3);
     }
 
     #[test]

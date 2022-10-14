@@ -726,6 +726,20 @@ pub fn three_equal_parts(arr: Vec<i32>) -> Vec<i32> {
     vec![-1, -1]
 }
 
+/// 940. Distinct Subsequences II
+pub fn distinct_subseq_ii(s: String) -> i32 {
+    let MOD = 1000000007;
+    let mut alphas = vec![0; 26];
+    let mut res = 0;
+    s.chars().for_each(|x| {
+        let index = ((x as u8) - b'a') as usize;
+        let prev = alphas[index];
+        alphas[index] = (res + 1) % MOD;
+        res = ((res + alphas[index] - prev) % MOD + MOD) % MOD;
+    });
+    res
+}
+
 /// 942.DI String Match
 pub fn di_string_match(s: String) -> Vec<i32> {
     let n = s.len();
