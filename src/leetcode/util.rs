@@ -7,3 +7,9 @@ pub fn generate_list_node(nums: Vec<i32>) -> Option<Box<ListNode>> {
     }
     Some(Box::new(dummy_head1))
 }
+
+pub fn generate_string_vec(strs: Vec<&str>) -> Vec<String> {
+    strs.iter()
+        .map(|&x| String::from(x))
+        .collect::<Vec<String>>()
+}

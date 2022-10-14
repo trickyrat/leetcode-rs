@@ -12,9 +12,8 @@ pub use self::util::*;
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashSet;
-
-    use super::*;
+    use crate::leetcode::solution::*;
+    use crate::leetcode::util::*;
 
     #[test]
     fn test_two_sum() {
@@ -97,8 +96,8 @@ mod tests {
 
     #[test]
     fn test_convert_to_base7() {
-        assert_eq!(convert_to_base7(100), "202");
-        assert_eq!(convert_to_base7(-7), "-10");
+        assert_eq!(convert_to_base7(100), String::from("202"));
+        assert_eq!(convert_to_base7(-7), String::from("-10"));
     }
 
     #[test]
@@ -119,72 +118,54 @@ mod tests {
             vec![3, 4],
             exclusive_time(
                 2,
-                vec!["0:start:0", "1:start:2", "1:end:5", "0:end:6"]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
+                generate_string_vec(vec!["0:start:0", "1:start:2", "1:end:5", "0:end:6"]),
             )
         );
         assert_eq!(
             vec![8],
             exclusive_time(
                 1,
-                vec![
+                generate_string_vec(vec![
                     "0:start:0",
                     "0:start:2",
                     "0:end:5",
                     "0:start:6",
                     "0:end:6",
                     "0:end:7",
-                ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
+                ])
             )
         );
         assert_eq!(
             vec![7, 1],
             exclusive_time(
                 2,
-                vec![
+                generate_string_vec(vec![
                     "0:start:0",
                     "0:start:2",
                     "0:end:5",
                     "1:start:6",
                     "1:end:6",
                     "0:end:7",
-                ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
+                ])
             )
         );
         assert_eq!(
             vec![8, 1],
             exclusive_time(
                 2,
-                vec![
+                generate_string_vec(vec![
                     "0:start:0",
                     "0:start:2",
                     "0:end:5",
                     "1:start:7",
                     "1:end:7",
                     "0:end:8",
-                ]
-                .iter()
-                .map(|&x| x.to_string())
-                .collect(),
+                ])
             )
         );
         assert_eq!(
             vec![1],
-            exclusive_time(
-                1,
-                vec!["0:start:0", "0:end:0"]
-                    .iter()
-                    .map(|&x| x.to_string())
-                    .collect(),
-            )
+            exclusive_time(1, generate_string_vec(vec!["0:start:0", "0:end:0"]))
         );
     }
 
@@ -227,17 +208,17 @@ mod tests {
 
     #[test]
     fn test_cal_points() {
-        let v1 = vec!["5", "2", "C", "D", "+"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        let v2 = vec!["5", "-2", "4", "C", "D", "9", "+", "+"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        assert_eq!(cal_points(v1), 30);
-        assert_eq!(cal_points(v2), 27);
-        assert_eq!(cal_points(vec![String::from("1")]), 1);
+        assert_eq!(
+            cal_points(generate_string_vec(vec!["5", "2", "C", "D", "+"])),
+            30
+        );
+        assert_eq!(
+            cal_points(generate_string_vec(vec![
+                "5", "-2", "4", "C", "D", "9", "+", "+"
+            ])),
+            27
+        );
+        assert_eq!(cal_points(generate_string_vec(vec!["1"])), 1);
     }
 
     #[test]
@@ -299,17 +280,14 @@ mod tests {
 
     #[test]
     fn test_unique_morse_representations() {
-        let v1 = vec![
-            String::from("gin"),
-            String::from("zen"),
-            String::from("gig"),
-            String::from("msg"),
-        ]
-        .into_iter()
-        .map(|x| x.to_string())
-        .collect::<Vec<String>>();
-        assert_eq!(unique_morse_representations(v1), 2);
-        assert_eq!(unique_morse_representations(vec![String::from("a")]), 1);
+        assert_eq!(
+            unique_morse_representations(generate_string_vec(vec!["gin", "zen", "gig", "msg"])),
+            2
+        );
+        assert_eq!(
+            unique_morse_representations(generate_string_vec(vec!["a"])),
+            1
+        );
     }
 
     #[test]
@@ -338,44 +316,22 @@ mod tests {
 
     #[test]
     fn test_subdomain_visits() {
-        let cpdomains1 = vec!["9001 discuss.leetcode.com"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect::<Vec<String>>();
-        let actual1 =
-            subdomain_visits(cpdomains1)
-                .iter()
-                .fold(HashSet::<String>::new(), |mut set, x| {
-                    set.insert(x.to_string());
-                    set
-                });
-
-        let cpdomains2 = vec![
+        let cpdomains1 = generate_string_vec(vec!["9001 discuss.leetcode.com"]);
+        let cpdomains2 = generate_string_vec(vec![
             "900 google.mail.com",
             "50 yahoo.com",
             "1 intel.mail.com",
             "5 wiki.org",
-        ]
-        .iter()
-        .map(|&x| x.to_string())
-        .collect::<Vec<String>>();
+        ]);
+        let mut actual1 = subdomain_visits(cpdomains1);
+        let mut actual2 = subdomain_visits(cpdomains2);
 
-        let actual2 =
-            subdomain_visits(cpdomains2)
-                .iter()
-                .fold(HashSet::<String>::new(), |mut set, x| {
-                    set.insert(x.to_string());
-                    set
-                });
-
-        let expected1 = vec!["9001 discuss.leetcode.com", "9001 com", "9001 leetcode.com"]
-            .iter()
-            .fold(HashSet::<String>::new(), |mut set, &x| {
-                set.insert(x.to_string());
-                set
-            });
-
-        let expected2 = vec![
+        let mut expected1 = generate_string_vec(vec![
+            "9001 discuss.leetcode.com",
+            "9001 com",
+            "9001 leetcode.com",
+        ]);
+        let mut expected2 = generate_string_vec(vec![
             "901 mail.com",
             "50 yahoo.com",
             "900 google.mail.com",
@@ -383,23 +339,22 @@ mod tests {
             "5 org",
             "1 intel.mail.com",
             "951 com",
-        ]
-        .iter()
-        .fold(HashSet::<String>::new(), |mut set, &x| {
-            set.insert(x.to_string());
-            set
-        });
+        ]);
 
-        assert_eq!(actual1, expected1);
-        assert_eq!(actual2, expected2);
+        assert_eq!(actual1.sort(), expected1.sort());
+        assert_eq!(actual2.sort(), expected2.sort());
     }
 
     #[test]
     fn test_num_components() {
-        let head1 = generate_list_node(vec![0, 1, 2, 3]);
-        let head2 = generate_list_node(vec![0, 1, 2, 3, 4]);
-        assert_eq!(2, num_components(head1, vec![0, 1, 3]));
-        assert_eq!(2, num_components(head2, vec![0, 3, 1, 4]));
+        assert_eq!(
+            2,
+            num_components(generate_list_node(vec![0, 1, 2, 3]), vec![0, 1, 3])
+        );
+        assert_eq!(
+            2,
+            num_components(generate_list_node(vec![0, 1, 2, 3, 4]), vec![0, 3, 1, 4])
+        );
     }
 
     #[test]
@@ -416,16 +371,16 @@ mod tests {
 
     #[test]
     fn test_unique_letter_string() {
-        assert_eq!(unique_letter_string("ABC".to_string()), 10);
-        assert_eq!(unique_letter_string("ABA".to_string()), 8);
-        assert_eq!(unique_letter_string("LEETCODE".to_string()), 92);
+        assert_eq!(unique_letter_string(String::from("ABC")), 10);
+        assert_eq!(unique_letter_string(String::from("ABA")), 8);
+        assert_eq!(unique_letter_string(String::from("LEETCODE")), 92);
     }
 
     #[test]
     fn test_score_of_parentheses() {
-        assert_eq!(1, score_of_parentheses("()".to_string()));
-        assert_eq!(2, score_of_parentheses("(())".to_string()));
-        assert_eq!(2, score_of_parentheses("()()".to_string()));
+        assert_eq!(1, score_of_parentheses(String::from("()")));
+        assert_eq!(2, score_of_parentheses(String::from("(())")));
+        assert_eq!(2, score_of_parentheses(String::from("()()")));
     }
 
     #[test]
@@ -443,8 +398,8 @@ mod tests {
 
     #[test]
     fn test_min_add_to_make_valid() {
-        assert_eq!(min_add_to_make_valid("())".to_string()), 1);
-        assert_eq!(min_add_to_make_valid("(((".to_string()), 3);
+        assert_eq!(min_add_to_make_valid(String::from("())")), 1);
+        assert_eq!(min_add_to_make_valid(String::from("(((")), 3);
     }
 
     #[test]
@@ -456,9 +411,9 @@ mod tests {
 
     #[test]
     fn test_distinct_subseq_ii() {
-        assert_eq!(distinct_subseq_ii("abc".to_string()), 7);
-        assert_eq!(distinct_subseq_ii("aba".to_string()), 6);
-        assert_eq!(distinct_subseq_ii("aaa".to_string()), 3);
+        assert_eq!(distinct_subseq_ii(String::from("abc")), 7);
+        assert_eq!(distinct_subseq_ii(String::from("aba")), 6);
+        assert_eq!(distinct_subseq_ii(String::from("aaa")), 3);
     }
 
     #[test]
@@ -470,18 +425,15 @@ mod tests {
 
     #[test]
     fn test_min_deletion_size() {
-        let v1 = vec!["cba", "daf", "ghi"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        let v2 = vec!["a", "b"].iter().map(|&x| x.to_string()).collect();
-        let v3 = vec!["zyx", "wvu", "tsr"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        assert_eq!(min_deletion_size(v1), 1);
-        assert_eq!(min_deletion_size(v2), 0);
-        assert_eq!(min_deletion_size(v3), 3);
+        assert_eq!(
+            min_deletion_size(generate_string_vec(vec!["cba", "daf", "ghi"])),
+            1
+        );
+        assert_eq!(min_deletion_size(generate_string_vec(vec!["a", "b"])), 0);
+        assert_eq!(
+            min_deletion_size(generate_string_vec(vec!["zyx", "wvu", "tsr"])),
+            3
+        );
     }
 
     #[test]
@@ -493,24 +445,19 @@ mod tests {
 
     #[test]
     fn test_string_matching() {
-        let words1: Vec<String> = vec!["mass", "as", "hero", "superhero"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        let words2: Vec<String> = vec!["leetcode", "et", "code"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        let words3: Vec<String> = vec!["blue", "green", "bu"]
-            .iter()
-            .map(|&x| x.to_string())
-            .collect();
-        let expected1: Vec<String> = vec!["as", "hero"].iter().map(|&x| x.to_string()).collect();
-        let expected2: Vec<String> = vec!["et", "code"].iter().map(|&x| x.to_string()).collect();
-        let expected3: Vec<String> = vec![];
-        assert_eq!(string_matching(words1), expected1);
-        assert_eq!(string_matching(words2), expected2);
-        assert_eq!(string_matching(words3), expected3);
+        assert_eq!(
+            string_matching(generate_string_vec(vec!["mass", "as", "hero", "superhero"])),
+            generate_string_vec(vec!["as", "hero"])
+        );
+        assert_eq!(
+            string_matching(generate_string_vec(vec!["leetcode", "et", "code"])),
+            generate_string_vec(vec!["et", "code"])
+        );
+        let expected: Vec<String> = vec![];
+        assert_eq!(
+            string_matching(generate_string_vec(vec!["blue", "green", "bu"])),
+            expected
+        );
     }
 
     #[test]
@@ -650,38 +597,38 @@ mod tests {
     #[test]
     fn test_reformat_number() {
         assert_eq!(
-            reformat_number("1-23-45 6".to_string()),
-            "123-456".to_string()
+            reformat_number(String::from("1-23-45 6")),
+            String::from("123-456")
         );
         assert_eq!(
-            reformat_number("123 4-567".to_string()),
-            "123-45-67".to_string()
+            reformat_number(String::from("123 4-567")),
+            String::from("123-45-67")
         );
         assert_eq!(
-            reformat_number("123 4-5678".to_string()),
-            "123-456-78".to_string()
+            reformat_number(String::from("123 4-5678")),
+            String::from("123-456-78")
         );
     }
 
     #[test]
     fn test_check_ones_segment() {
-        assert_eq!(check_ones_segment("1001".to_string()), false);
-        assert_eq!(check_ones_segment("110".to_string()), true);
+        assert_eq!(check_ones_segment(String::from("1001")), false);
+        assert_eq!(check_ones_segment(String::from("110")), true);
     }
 
     #[test]
     fn test_are_almost_equal() {
         assert_eq!(
             true,
-            are_almost_equal("bank".to_string(), "kanb".to_string())
+            are_almost_equal(String::from("bank"), String::from("kanb"))
         );
         assert_eq!(
             false,
-            are_almost_equal("attack".to_string(), "defend".to_string())
+            are_almost_equal(String::from("attack"), String::from("defend"))
         );
         assert_eq!(
             true,
-            are_almost_equal("kelb".to_string(), "kelbf".to_string())
+            are_almost_equal(String::from("kelb"), String::from("kelbf"))
         );
     }
 
