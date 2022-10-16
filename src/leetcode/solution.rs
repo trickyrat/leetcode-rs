@@ -649,6 +649,35 @@ pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
         + max_col
 }
 
+/// 1441. Build an Array With Stack Operations
+pub fn possible_bipartition(n: i32, dislikes: Vec<Vec<i32>>) -> bool {
+    let mut color = vec![0; (n + 1) as usize];
+    let mut group = vec![vec![]; (n + 1) as usize];
+    for p in dislikes.iter() {
+        group[p[0] as usize].push(p[1] as usize);
+        group[p[1] as usize].push(p[0] as usize);
+    }
+    fn dfs(curr: usize, now_color: i32, color: &mut Vec<i32>, group: &Vec<Vec<usize>>) -> bool {
+        color[curr] = now_color;
+        for &next in group[curr].iter() {
+            if color[next] != 0 && color[next] == color[curr] {
+                return false;
+            }
+            if color[next] == 0 && !dfs(next, 3 ^ now_color, color, group) {
+                return false;
+            }
+        }
+        true
+    }
+
+    for i in 1..=n as usize {
+        if color[i as usize] == 0 && !dfs(i, 1, &mut color, &group) {
+            return false;
+        }
+    }
+    true
+}
+
 /// 905.Sort Array By Parity
 pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
     let (mut left, mut right) = (0, nums.len() - 1);

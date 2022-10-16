@@ -391,6 +391,25 @@ mod tests {
     }
 
     #[test]
+    fn test_possible_bipartiition() {
+        assert_eq!(
+            possible_bipartition(4, vec![vec![1, 2], vec![1, 3], vec![2, 4]]),
+            true
+        );
+        assert_eq!(
+            possible_bipartition(3, vec![vec![1, 2], vec![1, 3], vec![2, 3]]),
+            false
+        );
+        assert_eq!(
+            possible_bipartition(
+                5,
+                vec![vec![1, 2], vec![2, 3], vec![3, 4], vec![4, 5], vec![1, 5]]
+            ),
+            false
+        );
+    }
+
+    #[test]
     fn test_sort_array_by_parity() {
         assert_eq!(sort_array_by_parity(vec![3, 1, 2, 4]), vec![4, 2, 1, 3]);
         assert_eq!(sort_array_by_parity(vec![0]), vec![0]);
