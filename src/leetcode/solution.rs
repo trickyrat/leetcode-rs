@@ -854,6 +854,21 @@ pub fn string_matching(words: Vec<String>) -> Vec<String> {
     res
 }
 
+/// 1441. Build an Array With Stack Operations
+pub fn build_array(target: Vec<i32>, n: i32) -> Vec<String> {
+    let mut res = Vec::<String>::new();
+    let mut prev = 0;
+    target.iter().for_each(|&x| {
+        for i in 0..(x - prev - 1) {
+            res.push(String::from("Push"));
+            res.push(String::from("Pop"));
+        }
+        res.push(String::from("Push"));
+        prev = x;
+    });
+    res
+}
+
 /// 1450.Number of Students Doing Homework at a Given Time
 pub fn busy_student(start_time: Vec<i32>, end_time: Vec<i32>, query_time: i32) -> i32 {
     let mut res = 0;

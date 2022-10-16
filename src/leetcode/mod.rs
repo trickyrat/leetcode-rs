@@ -461,6 +461,22 @@ mod tests {
     }
 
     #[test]
+    fn test_build_array() {
+        assert_eq!(
+            build_array(vec![1, 3], 3),
+            generate_string_vec(vec!["Push", "Push", "Pop", "Push"])
+        );
+        assert_eq!(
+            build_array(vec![1, 2, 3], 3),
+            generate_string_vec(vec!["Push", "Push", "Push"])
+        );
+        assert_eq!(
+            build_array(vec![1, 2], 4),
+            generate_string_vec(vec!["Push", "Push"])
+        );
+    }
+
+    #[test]
     fn test_busy_student() {
         assert_eq!(busy_student(vec![1, 2, 3], vec![3, 2, 7], 4), 1);
         assert_eq!(busy_student(vec![4], vec![4], 4), 1);
