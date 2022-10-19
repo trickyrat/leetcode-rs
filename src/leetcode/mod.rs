@@ -646,6 +646,15 @@ mod tests {
     }
 
     #[test]
+    fn test_count_students() {
+        assert_eq!(count_students(vec![1, 1, 0, 0], vec![0, 1, 0, 1]), 0);
+        assert_eq!(
+            count_students(vec![1, 1, 1, 0, 0, 1], vec![1, 0, 0, 0, 1, 1]),
+            3
+        );
+    }
+
+    #[test]
     fn test_check_ones_segment() {
         assert_eq!(check_ones_segment(String::from("1001")), false);
         assert_eq!(check_ones_segment(String::from("110")), true);

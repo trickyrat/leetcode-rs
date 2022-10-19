@@ -1093,6 +1093,22 @@ pub fn reformat_number(number: String) -> String {
     res.to_string()
 }
 
+/// 1700. Number of Students Unable to Eat Lunch
+pub fn count_students(students: Vec<i32>, sandwiches: Vec<i32>) -> i32 {
+    let mut square: i32 = students.iter().sum();
+    let mut circular = students.len() as i32 - square;
+    for sandwich in sandwiches {
+        if sandwich == 1 && square > 0 {
+            square -= 1;
+        } else if sandwich == 0 && circular > 0 {
+            circular -= 1;
+        } else {
+            break;
+        }
+    }
+    square + circular
+}
+
 /// 1784.Check if Binary String Has at Most One Segment of Ones
 pub fn check_ones_segment(s: String) -> bool {
     !s.contains("01")
