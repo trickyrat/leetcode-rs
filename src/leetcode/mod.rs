@@ -266,6 +266,13 @@ mod tests {
     }
 
     #[test]
+    fn test_kth_grammar() {
+        assert_eq!(0, kth_grammar(1, 1));
+        assert_eq!(0, kth_grammar(2, 1));
+        assert_eq!(1, kth_grammar(2, 2));
+    }
+
+    #[test]
     fn test_preimage_size_fzf() {
         assert_eq!(preimage_size_fzf(0), 5);
         assert_eq!(preimage_size_fzf(5), 0);

@@ -445,6 +445,17 @@ pub fn max_chunks_to_sorted(arr: Vec<i32>) -> i32 {
     res
 }
 
+/// 779. K-th Symbol in Grammar
+pub fn kth_grammar(n: i32, mut k: i32) -> i32 {
+    k -= 1;
+    let mut res = 0;
+    while k > 0 {
+        k &= k - 1;
+        res ^= 1;
+    }
+    res
+}
+
 /// 793.Preimage Size of Factorial Zeroes Function
 pub fn preimage_size_fzf(k: i32) -> i32 {
     fn zeta(mut n: i32) -> i32 {
