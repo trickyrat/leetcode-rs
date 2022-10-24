@@ -3,10 +3,12 @@ mod interviewsolution;
 mod randomizedset;
 mod solution;
 mod util;
+mod stockspanner;
 
 pub use self::data_structures::*;
 pub use self::interviewsolution::*;
 pub use self::randomizedset::RandomizedSet;
+pub use self::stockspanner::StockSpanner;
 pub use self::solution::*;
 pub use self::util::*;
 
