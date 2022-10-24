@@ -22,6 +22,7 @@ impl StockSpanner {
     }
 }
 
+#[cfg(test)]
 mod tests {
     use super::*;
 

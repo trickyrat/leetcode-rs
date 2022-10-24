@@ -44,15 +44,20 @@ impl RandomizedSet {
     }
 }
 
-#[test]
-fn test_randomize_set() {
-    let mut randomized_set = RandomizedSet::new();
-    assert_eq!(randomized_set.insert(1), true);
-    assert_eq!(randomized_set.remove(2), false);
-    assert_eq!(randomized_set.insert(2), true);
-    let v = vec![1, 2];
-    assert!(v.contains(&randomized_set.get_random()));
-    assert_eq!(randomized_set.remove(1), true);
-    assert_eq!(randomized_set.insert(2), false);
-    assert_eq!(randomized_set.get_random(), 2);
+#[cfg(test)]
+mod tests {
+    use crate::leetcode::RandomizedSet;
+
+    #[test]
+    fn test_randomize_set() {
+        let mut randomized_set = RandomizedSet::new();
+        assert_eq!(randomized_set.insert(1), true);
+        assert_eq!(randomized_set.remove(2), false);
+        assert_eq!(randomized_set.insert(2), true);
+        let v = vec![1, 2];
+        assert!(v.contains(&randomized_set.get_random()));
+        assert_eq!(randomized_set.remove(1), true);
+        assert_eq!(randomized_set.insert(2), false);
+        assert_eq!(randomized_set.get_random(), 2);
+    }
 }
