@@ -1120,6 +1120,24 @@ pub fn count_students(students: Vec<i32>, sandwiches: Vec<i32>) -> i32 {
     square + circular
 }
 
+/// 1768. Merge Strings Alternately
+pub fn merge_alternately(word1: String, word2: String) -> String {
+    let (mut word1_iter, mut word2_iter, mut res) = (
+        word1.chars().peekable(),
+        word2.chars().peekable(),
+        String::from(""),
+    );
+    while word1_iter.peek().is_some() || word2_iter.peek().is_some() {
+        if let Some(ch) = word1_iter.next() {
+            res.push(ch);
+        }
+        if let Some(ch) = word2_iter.next() {
+            res.push(ch);
+        }
+    }
+    res
+}
+
 /// 1784.Check if Binary String Has at Most One Segment of Ones
 pub fn check_ones_segment(s: String) -> bool {
     !s.contains("01")
@@ -1835,6 +1853,22 @@ mod tests {
         assert_eq!(
             count_students(vec![1, 1, 1, 0, 0, 1], vec![1, 0, 0, 0, 1, 1]),
             3
+        );
+    }
+
+    #[test]
+    fn test_merge_alternately() {
+        assert_eq!(
+            String::from("apbqcr"),
+            merge_alternately(String::from("abc"), String::from("pqr"))
+        );
+        assert_eq!(
+            String::from("apbqrs"),
+            merge_alternately(String::from("ab"), String::from("pqrs"))
+        );
+        assert_eq!(
+            String::from("apbqcd"),
+            merge_alternately(String::from("abcd"), String::from("pq"))
         );
     }
 
