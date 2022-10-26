@@ -710,6 +710,21 @@ pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
     nums
 }
 
+/// 915. Partition Array into Disjoint Intervals
+pub fn partition_disjoint(nums: Vec<i32>) -> i32 {
+    let n = nums.len();
+    let (mut curr_max, mut left_max) = (nums[0], nums[0]);
+    let mut res = 0;
+    for i in 1..n - 1 {
+        curr_max = max(curr_max, nums[i]);
+        if nums[i] < left_max {
+            left_max = curr_max;
+            res = i as i32
+        }
+    }
+    res + 1
+}
+
 /// 921.Minimum Add to Make Parentheses Valid
 pub fn min_add_to_make_valid(s: String) -> i32 {
     let mut res = 0;
@@ -1615,6 +1630,12 @@ mod tests {
     fn test_sort_array_by_parity() {
         assert_eq!(sort_array_by_parity(vec![3, 1, 2, 4]), vec![4, 2, 1, 3]);
         assert_eq!(sort_array_by_parity(vec![0]), vec![0]);
+    }
+
+    #[test]
+    fn test_partition_disjoint() {
+        assert_eq!(3, partition_disjoint(vec![5, 0, 3, 8, 6]));
+        assert_eq!(4, partition_disjoint(vec![1, 1, 1, 0, 6, 12]));
     }
 
     #[test]
