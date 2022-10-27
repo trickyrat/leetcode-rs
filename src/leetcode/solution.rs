@@ -1,10 +1,12 @@
 use crate::leetcode::data_structures::ListNode;
-use crate::leetcode::TreeNode;
+use crate::leetcode::{stockspanner, TreeNode};
 use std::cell::RefCell;
 use std::cmp::{max, min, Ordering};
 use std::collections::HashSet;
 use std::collections::{HashMap, VecDeque};
 use std::rc::Rc;
+
+use super::data_structures;
 
 /// 1.Two Sum
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
@@ -779,6 +781,61 @@ pub fn three_equal_parts(arr: Vec<i32>) -> Vec<i32> {
         return vec![(first + n - 1) as i32, (second + n) as i32];
     }
     vec![-1, -1]
+}
+
+/// 934. Shortest Bridge
+pub fn shortest_bridge(mut grid: Vec<Vec<i32>>) -> i32 {
+    let n = grid.len();
+    let dirs = vec![vec![-1, 0], vec![1, 0], vec![0, 1], vec![0, -1]];
+    let mut island = Vec::<(i32, i32)>::new();
+    let mut queue = VecDeque::<(i32, i32)>::new();
+
+    for i in 0..n {
+        for j in 0..n {
+            if grid[i][j] == 1 {
+                queue.push_back((i as i32, j as i32));
+                grid[i][j] = -1;
+                while !queue.is_empty() {
+                    let cell = queue.pop_front().unwrap();
+                    island.push((cell.0, cell.1));
+                    for k in 0..4 {
+                        let nx = cell.0 + dirs[k][0];
+                        let ny = cell.1 + dirs[k][1];
+                        if nx >= 0
+                            && ny >= 0
+                            && nx < n as i32
+                            && ny < n as i32
+                            && grid[nx as usize][ny as usize] == 1
+                        {
+                            queue.push_back((nx, ny));
+                            grid[nx as usize][ny as usize] = -1;
+                        }
+                    }
+                }
+                island.iter().for_each(|&x| queue.push_back(x));
+                let mut step = 0;
+                while !queue.is_empty() {
+                    for _k in 0..queue.len() {
+                        let cell = queue.pop_front().unwrap();
+                        for d in 0..4 {
+                            let nx = cell.0 + dirs[d][0];
+                            let ny = cell.1 + dirs[d][1];
+                            if nx >= 0 && ny >= 0 && nx < n as i32 && ny < n as i32 {
+                                if grid[nx as usize][ny as usize] == 0 {
+                                    queue.push_back((nx, ny));
+                                    grid[nx as usize][ny as usize] = -1;
+                                } else if grid[nx as usize][ny as usize] == 1 {
+                                    return step;
+                                }
+                            }
+                        }
+                    }
+                    step += 1;
+                }
+            }
+        }
+    }
+    0
 }
 
 /// 940. Distinct Subsequences II
@@ -1649,6 +1706,25 @@ mod tests {
         assert_eq!(three_equal_parts(vec![1, 0, 1, 0, 1]), vec![0, 3]);
         assert_eq!(three_equal_parts(vec![1, 1, 0, 1, 1]), vec![-1, -1]);
         assert_eq!(three_equal_parts(vec![1, 1, 0, 0, 1]), vec![0, 2]);
+    }
+
+    #[test]
+    fn test_shortest_bridge() {
+        assert_eq!(1, shortest_bridge(vec![vec![0, 1], vec![1, 0]]));
+        assert_eq!(
+            2,
+            shortest_bridge(vec![vec![0, 1, 0], vec![0, 0, 0], vec![0, 0, 1]])
+        );
+        assert_eq!(
+            1,
+            shortest_bridge(vec![
+                vec![1, 1, 1, 1, 1],
+                vec![1, 0, 0, 0, 1],
+                vec![1, 0, 1, 0, 1],
+                vec![1, 0, 0, 0, 1],
+                vec![1, 1, 1, 1, 1]
+            ])
+        );
     }
 
     #[test]
