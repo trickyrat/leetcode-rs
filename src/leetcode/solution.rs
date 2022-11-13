@@ -733,6 +733,31 @@ pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
     nums
 }
 
+/// 907. Sum of Subarray Minimums
+pub fn sum_subarray_mins(arr: Vec<i32>) -> i32 {
+    let MOD = 1000000007;
+    let n = arr.len();
+    let (mut mono_stack, mut dp, mut res) = (Vec::<usize>::new(), vec![0; n], 0);
+    for (i, &v) in arr.iter().enumerate() {
+        while !mono_stack.is_empty() && arr[mono_stack[mono_stack.len() - 1]] > v {
+            mono_stack.pop();
+        }
+        let k = if mono_stack.is_empty() {
+            i + 1
+        } else {
+            i - mono_stack[mono_stack.len() - 1]
+        };
+        dp[i] = if mono_stack.is_empty() {
+            k * (v as usize)
+        } else {
+            k * (v as usize) + (dp[i - k])
+        };
+        res = (res + dp[i]) % MOD;
+        mono_stack.push(i);
+    }
+    res as i32
+}
+
 /// 915. Partition Array into Disjoint Intervals
 pub fn partition_disjoint(nums: Vec<i32>) -> i32 {
     let n = nums.len();
@@ -1729,6 +1754,12 @@ mod tests {
     fn test_sort_array_by_parity() {
         assert_eq!(sort_array_by_parity(vec![3, 1, 2, 4]), vec![4, 2, 1, 3]);
         assert_eq!(sort_array_by_parity(vec![0]), vec![0]);
+    }
+
+    #[test]
+    fn test_sum_subarray_mins() {
+        assert_eq!(17, sum_subarray_mins(vec![3, 1, 2, 4]));
+        assert_eq!(444, sum_subarray_mins(vec![11, 81, 94, 43, 3]));
     }
 
     #[test]
