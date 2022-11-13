@@ -652,11 +652,19 @@ pub fn shortest_subarray(nums: Vec<i32>, k: i32) -> i32 {
     queue.push_back((0, -1));
     for i in 0..nums.len() {
         pre_sum += nums[i] as i64;
-        while !queue.is_empty() && pre_sum <= queue[queue.len() - 1].0 { queue.pop_back(); }
-        while !queue.is_empty() && pre_sum - queue[0].0 >= k as i64 { ret = ret.min(i as i64 - queue.pop_front().unwrap().1 as i64); }
+        while !queue.is_empty() && pre_sum <= queue[queue.len() - 1].0 {
+            queue.pop_back();
+        }
+        while !queue.is_empty() && pre_sum - queue[0].0 >= k as i64 {
+            ret = ret.min(i as i64 - queue.pop_front().unwrap().1 as i64);
+        }
         queue.push_back((pre_sum, i as i32));
     }
-    if ret == i64::MAX { -1 } else { ret as i32 }
+    if ret == i64::MAX {
+        -1
+    } else {
+        ret as i32
+    }
 }
 
 ///  883.Projection Area of 3D Shapes
@@ -675,7 +683,7 @@ pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
         + max_col
 }
 
-/// 1441. Build an Array With Stack Operations
+/// 886. Possible Bipartition
 pub fn possible_bipartition(n: i32, dislikes: Vec<Vec<i32>>) -> bool {
     let mut color = vec![0; (n + 1) as usize];
     let mut group = vec![vec![]; (n + 1) as usize];
@@ -929,15 +937,15 @@ pub fn insert_into_max_tree(
     }
     while curr.as_ref().unwrap().borrow().right.is_some()
         && curr
-        .as_ref()
-        .unwrap()
-        .borrow()
-        .right
-        .as_ref()
-        .unwrap()
-        .borrow()
-        .val
-        > val
+            .as_ref()
+            .unwrap()
+            .borrow()
+            .right
+            .as_ref()
+            .unwrap()
+            .borrow()
+            .val
+            > val
     {
         let right = curr.as_ref().unwrap().borrow().right.clone();
         curr = right;
@@ -1266,6 +1274,20 @@ pub fn max_ascending_sum(nums: Vec<i32>) -> i32 {
         res = max(res, curr);
     }
     res
+}
+
+/// 1822. Sign of the Product of an Array
+pub fn array_sign(nums: Vec<i32>) -> i32 {
+    let mut sign = 1;
+    for num in nums {
+        if num == 0 {
+            return 0;
+        }
+        if num < 0 {
+            sign = -sign;
+        }
+    }
+    sign
 }
 
 /// 1823.Find the Winner of the Circular Game
@@ -2009,6 +2031,13 @@ mod tests {
             true,
             are_almost_equal(String::from("kelb"), String::from("kelbf"))
         );
+    }
+
+    #[test]
+    fn test_array_sign() {
+        assert_eq!(1, array_sign(vec![-1, -2, -3, -4, 3, 2, 1]));
+        assert_eq!(0, array_sign(vec![1, 5, 0, 2, -3]));
+        assert_eq!(-1, array_sign(vec![-1, 1, -1, 1, -1]));
     }
 
     #[test]
