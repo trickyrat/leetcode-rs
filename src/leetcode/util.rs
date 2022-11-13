@@ -13,3 +13,9 @@ pub fn generate_string_vec(strs: Vec<&str>) -> Vec<String> {
         .map(|&x| String::from(x))
         .collect::<Vec<String>>()
 }
+
+pub fn generate_string_matrix(strs: Vec<Vec<&str>>) -> Vec<Vec<String>> {
+    strs.iter()
+        .map(|x| generate_string_vec(x.to_vec()))
+        .collect::<Vec<Vec<String>>>()
+}

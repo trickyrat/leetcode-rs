@@ -1256,6 +1256,22 @@ pub fn merge_alternately(word1: String, word2: String) -> String {
     res
 }
 
+/// 1773. Count Items Matching a Rule
+pub fn count_matches(items: Vec<Vec<String>>, rule_key: String, rule_value: String) -> i32 {
+    let mut rules = HashMap::<String, usize>::new();
+    rules.insert(String::from("type"), 0);
+    rules.insert(String::from("color"), 1);
+    rules.insert(String::from("name"), 2);
+    let index = *rules.get(&rule_key).unwrap();
+    let mut res = 0;
+    for item in items {
+        if item[index] == rule_value {
+            res += 1;
+        }
+    }
+    res
+}
+
 /// 1784.Check if Binary String Has at Most One Segment of Ones
 pub fn check_ones_segment(s: String) -> bool {
     !s.contains("01")
@@ -2039,6 +2055,34 @@ mod tests {
         assert_eq!(
             String::from("apbqcd"),
             merge_alternately(String::from("abcd"), String::from("pq"))
+        );
+    }
+
+    #[test]
+    fn test_count_matches() {
+        assert_eq!(
+            1,
+            count_matches(
+                generate_string_matrix(vec![
+                    vec!["phone", "blue", "pixel"],
+                    vec!["computer", "silver", "lenovo"],
+                    vec!["phone", "gold", "iphone"]
+                ]),
+                String::from("color"),
+                String::from("silver")
+            )
+        );
+        assert_eq!(
+            2,
+            count_matches(
+                generate_string_matrix(vec![
+                    vec!["phone", "blue", "pixel"],
+                    vec!["computer", "silver", "phone"],
+                    vec!["phone", "gold", "iphone"]
+                ]),
+                String::from("type"),
+                String::from("phone")
+            )
         );
     }
 
