@@ -458,6 +458,39 @@ pub fn kth_grammar(n: i32, mut k: i32) -> i32 {
     res
 }
 
+/// 784. Letter Case Permutation
+pub fn letter_case_permutation(s: String) -> Vec<String> {
+    let (mut m, mut res) = (0, Vec::<String>::new());
+    for ch in s.chars().into_iter() {
+        if ch.is_alphabetic() {
+            m += 1;
+        }
+    }
+    for mask in 0..1 << m {
+        let (mut t, mut k) = (Vec::<String>::new(), 0);
+        for c in s.chars().into_iter() {
+            if c.is_alphabetic() {
+                t.push(if mask >> k & 1 != 0 {
+                    c.to_uppercase().to_string()
+                } else {
+                    c.to_lowercase().to_string()
+                });
+
+                // if mask >> k & 1 != 0 {
+                //     t.push(c.to_uppercase().to_string());
+                // } else {
+                //     t.push(c.to_lowercase().to_string());
+                // }
+                k += 1;
+            } else {
+                t.push(c.to_string());
+            }
+        }
+        res.push(t.join(""));
+    }
+    res
+}
+
 /// 793.Preimage Size of Factorial Zeroes Function
 pub fn preimage_size_fzf(k: i32) -> i32 {
     fn zeta(mut n: i32) -> i32 {
@@ -1358,6 +1391,12 @@ mod tests {
     use crate::leetcode::solution::*;
     use crate::leetcode::util::*;
 
+    fn test_string_vec_equal_base(mut expected: Vec<String>, mut actual: Vec<String>) {
+        expected.sort();
+        actual.sort();
+        assert_eq!(expected, actual);
+    }
+
     #[test]
     fn test_two_sum() {
         assert_eq!(two_sum(vec![2, 7, 11, 15], 9), vec![0, 1]);
@@ -1613,6 +1652,16 @@ mod tests {
         assert_eq!(0, kth_grammar(1, 1));
         assert_eq!(0, kth_grammar(2, 1));
         assert_eq!(1, kth_grammar(2, 2));
+    }
+
+    #[test]
+    fn test_letter_case_permutation() {
+        let mut expected1 = generate_string_vec(vec!["a1b2", "a1B2", "A1b2", "A1B2"]);
+        let mut expected2 = generate_string_vec(vec!["3z4", "3Z4"]);
+        let mut actual1 = letter_case_permutation(String::from("a1b2"));
+        let mut actual2 = letter_case_permutation(String::from("3z4"));
+        test_string_vec_equal_base(expected1, actual1);
+        test_string_vec_equal_base(expected2, actual2);
     }
 
     #[test]
