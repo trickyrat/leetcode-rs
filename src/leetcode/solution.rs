@@ -646,6 +646,19 @@ pub fn score_of_parentheses(s: String) -> i32 {
         .1
 }
 
+/// 862. Shortest Subarray with Sum at Least K
+pub fn shortest_subarray(nums: Vec<i32>, k: i32) -> i32 {
+    let (mut ret, mut pre_sum, mut queue) = (i64::MAX, 0, VecDeque::new());
+    queue.push_back((0, -1));
+    for i in 0..nums.len() {
+        pre_sum += nums[i] as i64;
+        while !queue.is_empty() && pre_sum <= queue[queue.len() - 1].0 { queue.pop_back(); }
+        while !queue.is_empty() && pre_sum - queue[0].0 >= k as i64 { ret = ret.min(i as i64 - queue.pop_front().unwrap().1 as i64); }
+        queue.push_back((pre_sum, i as i32));
+    }
+    if ret == i64::MAX { -1 } else { ret as i32 }
+}
+
 ///  883.Projection Area of 3D Shapes
 pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
     let max_row = grid
@@ -916,15 +929,15 @@ pub fn insert_into_max_tree(
     }
     while curr.as_ref().unwrap().borrow().right.is_some()
         && curr
-            .as_ref()
-            .unwrap()
-            .borrow()
-            .right
-            .as_ref()
-            .unwrap()
-            .borrow()
-            .val
-            > val
+        .as_ref()
+        .unwrap()
+        .borrow()
+        .right
+        .as_ref()
+        .unwrap()
+        .borrow()
+        .val
+        > val
     {
         let right = curr.as_ref().unwrap().borrow().right.clone();
         curr = right;
@@ -1399,7 +1412,7 @@ mod tests {
                     "0:start:6",
                     "0:end:6",
                     "0:end:7",
-                ])
+                ]),
             )
         );
         assert_eq!(
@@ -1413,7 +1426,7 @@ mod tests {
                     "1:start:6",
                     "1:end:6",
                     "0:end:7",
-                ])
+                ]),
             )
         );
         assert_eq!(
@@ -1427,7 +1440,7 @@ mod tests {
                     "1:start:7",
                     "1:end:7",
                     "0:end:8",
-                ])
+                ]),
             )
         );
         assert_eq!(
@@ -1481,7 +1494,7 @@ mod tests {
         );
         assert_eq!(
             cal_points(generate_string_vec(vec![
-                "5", "-2", "4", "C", "D", "9", "+", "+"
+                "5", "-2", "4", "C", "D", "9", "+", "+",
             ])),
             27
         );
@@ -1658,6 +1671,13 @@ mod tests {
     }
 
     #[test]
+    fn test_shortest_subarray() {
+        assert_eq!(1, shortest_subarray(vec![1], 1));
+        assert_eq!(-1, shortest_subarray(vec![1, 2], 4));
+        assert_eq!(3, shortest_subarray(vec![2, -1, 2], 3));
+    }
+
+    #[test]
     fn test_projection_area() {
         assert_eq!(projection_area(vec![vec![1, 2], vec![3, 4]]), 17);
         assert_eq!(projection_area(vec![vec![2]]), 5);
@@ -1677,7 +1697,7 @@ mod tests {
         assert_eq!(
             possible_bipartition(
                 5,
-                vec![vec![1, 2], vec![2, 3], vec![3, 4], vec![4, 5], vec![1, 5]]
+                vec![vec![1, 2], vec![2, 3], vec![3, 4], vec![4, 5], vec![1, 5]],
             ),
             false
         );
@@ -1722,7 +1742,7 @@ mod tests {
                 vec![1, 0, 0, 0, 1],
                 vec![1, 0, 1, 0, 1],
                 vec![1, 0, 0, 0, 1],
-                vec![1, 1, 1, 1, 1]
+                vec![1, 1, 1, 1, 1],
             ])
         );
     }
