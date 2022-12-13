@@ -1305,6 +1305,21 @@ pub fn count_matches(items: Vec<Vec<String>>, rule_key: String, rule_value: Stri
     res
 }
 
+/// 1779. Find Nearest Point That Has the Same X or Y Coordinate
+pub fn nearest_valid_point(x: i32, y: i32, points: Vec<Vec<i32>>) -> i32 {
+    let (mut min, mut res) = (i32::MAX, -1);
+    for (i, p) in points.iter().enumerate() {
+        if p[0] == x || p[1] == y {
+            let distance = (p[0] - x).abs() + (p[1] - y).abs();
+            if distance < min {
+                min = distance;
+                res = i as i32;
+            }
+        }
+    }
+    res
+}
+
 /// 1784.Check if Binary String Has at Most One Segment of Ones
 pub fn check_ones_segment(s: String) -> bool {
     !s.contains("01")
@@ -2133,6 +2148,13 @@ mod tests {
                 String::from("phone")
             )
         );
+    }
+
+    #[test]
+    fn test_nearest_valid_point() {
+        assert_eq!(nearest_valid_point(3, 4, vec![vec![1,2], vec![3,1], vec![2,4], vec![2,3], vec![4,4]]), 2);
+        assert_eq!(nearest_valid_point(3, 4, vec![vec![3,4]]), 0);
+        assert_eq!(nearest_valid_point(3, 4, vec![vec![2,3]]), -1);
     }
 
     #[test]
