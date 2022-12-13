@@ -16,7 +16,7 @@ impl StockSpanner {
         while price >= self.stack.last().unwrap().1 {
             self.stack.pop();
         }
-        let mut res = self.index - self.stack.last().unwrap().0;
+        let res = self.index - self.stack.last().unwrap().0;
         self.stack.push((self.index, price));
         res
     }

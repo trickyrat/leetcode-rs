@@ -1,12 +1,10 @@
 use crate::leetcode::data_structures::ListNode;
-use crate::leetcode::{stockspanner, TreeNode};
+use crate::leetcode::TreeNode;
 use std::cell::RefCell;
 use std::cmp::{max, min, Ordering};
 use std::collections::HashSet;
 use std::collections::{HashMap, VecDeque};
 use std::rc::Rc;
-
-use super::data_structures;
 
 /// 1.Two Sum
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
@@ -1050,7 +1048,7 @@ pub fn build_array(target: Vec<i32>, n: i32) -> Vec<String> {
     let mut res = Vec::<String>::new();
     let mut prev = 0;
     target.iter().for_each(|&x| {
-        for i in 0..(x - prev - 1) {
+        for _i in 0..(x - prev - 1) {
             res.push(String::from("Push"));
             res.push(String::from("Pop"));
         }
@@ -1671,10 +1669,10 @@ mod tests {
 
     #[test]
     fn test_letter_case_permutation() {
-        let mut expected1 = generate_string_vec(vec!["a1b2", "a1B2", "A1b2", "A1B2"]);
-        let mut expected2 = generate_string_vec(vec!["3z4", "3Z4"]);
-        let mut actual1 = letter_case_permutation(String::from("a1b2"));
-        let mut actual2 = letter_case_permutation(String::from("3z4"));
+        let expected1 = generate_string_vec(vec!["a1b2", "a1B2", "A1b2", "A1B2"]);
+        let expected2 = generate_string_vec(vec!["3z4", "3Z4"]);
+        let actual1 = letter_case_permutation(String::from("a1b2"));
+        let actual2 = letter_case_permutation(String::from("3z4"));
         test_string_vec_equal_base(expected1, actual1);
         test_string_vec_equal_base(expected2, actual2);
     }
