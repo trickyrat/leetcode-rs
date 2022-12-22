@@ -1399,6 +1399,13 @@ pub fn find_middle_index(nums: Vec<i32>) -> i32 {
     -1
 }
 
+/// 2011. Final Value of Variable After Performing Operations
+pub fn final_value_after_operations(operations: Vec<String>) -> i32 {
+    operations.iter().fold(0, |acc, op| {
+        acc + if op.as_bytes()[1] as char == '+' { 1 } else { -1 }
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use crate::leetcode::solution::*;
@@ -2192,8 +2199,15 @@ mod tests {
 
     #[test]
     fn test_find_middle_index() {
-        assert_eq!(find_middle_index(vec! {2, 3, -1, 8, 4}), 3);
-        assert_eq!(find_middle_index(vec! {1, -1, 4}), 2);
-        assert_eq!(find_middle_index(vec! {2, 5}), -1);
+        assert_eq!(3, find_middle_index(vec! {2, 3, -1, 8, 4}));
+        assert_eq!(2, find_middle_index(vec! {1, -1, 4}));
+        assert_eq!(-1, find_middle_index(vec! {2, 5}));
+    }
+
+    #[test]
+    fn test_final_value_after_operations() {
+        assert_eq!(1, final_value_after_operations(generate_string_vec(vec!["--X","X++","X++"])));
+        assert_eq!(3, final_value_after_operations(generate_string_vec(vec!["++X","++X","X++"])));
+        assert_eq!(0, final_value_after_operations(generate_string_vec(vec!["X++","++X","--X","X--"])));
     }
 }
