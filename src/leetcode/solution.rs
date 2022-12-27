@@ -1406,6 +1406,18 @@ pub fn final_value_after_operations(operations: Vec<String>) -> i32 {
     })
 }
 
+/// 2027. Minimum Moves to Convert String
+pub fn minimum_moves(s: String) -> i32 {
+    let (mut res, mut count) = (0, -1);
+    for (i,ch) in s.chars().enumerate() {
+        if ch == 'X' && i as i32 > count {
+            res += 1;
+            count = i as i32 + 2;
+        }
+    }
+    res
+}
+
 #[cfg(test)]
 mod tests {
     use crate::leetcode::solution::*;
@@ -2209,5 +2221,12 @@ mod tests {
         assert_eq!(1, final_value_after_operations(generate_string_vec(vec!["--X","X++","X++"])));
         assert_eq!(3, final_value_after_operations(generate_string_vec(vec!["++X","++X","X++"])));
         assert_eq!(0, final_value_after_operations(generate_string_vec(vec!["X++","++X","--X","X--"])));
+    }
+
+    #[test]
+    fn test_minimum_moves() {
+        assert_eq!(1, minimum_moves(String::from("XXX")));
+        assert_eq!(2, minimum_moves(String::from("XXOX")));
+        assert_eq!(0, minimum_moves(String::from("OOOO")));
     }
 }
