@@ -1269,6 +1269,21 @@ pub fn count_students(students: Vec<i32>, sandwiches: Vec<i32>) -> i32 {
     square + circular
 }
 
+/// 1750. Minimum Length of String After Deleting Similar Ends
+pub fn minimum_length(s: String) -> i32 {
+    let (mut left, mut right, s) = (0, s.len()-1, s.as_bytes());
+    while left < right && s[left] == s[right] {
+        let c = s[left];
+        while left <= right && s[left] == c {
+            left += 1;
+        }
+        while left <= right && s[right] == c {
+            right -= 1;
+        }
+    }
+    (right + 1 - left ) as i32
+}
+
 /// 1768. Merge Strings Alternately
 pub fn merge_alternately(word1: String, word2: String) -> String {
     let (mut word1_iter, mut word2_iter, mut res) = (
@@ -2121,6 +2136,13 @@ mod tests {
             count_students(vec![1, 1, 1, 0, 0, 1], vec![1, 0, 0, 0, 1, 1]),
             3
         );
+    }
+
+    #[test]
+    fn test_minimum_length() {
+        assert_eq!(2, minimum_length(String::from("ca")));
+        assert_eq!(0, minimum_length(String::from("cabaabac")));
+        assert_eq!(3, minimum_length(String::from("aabccabba")));
     }
 
     #[test]
