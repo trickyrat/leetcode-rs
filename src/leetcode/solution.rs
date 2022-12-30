@@ -993,15 +993,15 @@ pub fn insert_into_max_tree(
     }
     while curr.as_ref().unwrap().borrow().right.is_some()
         && curr
-            .as_ref()
-            .unwrap()
-            .borrow()
-            .right
-            .as_ref()
-            .unwrap()
-            .borrow()
-            .val
-            > val
+        .as_ref()
+        .unwrap()
+        .borrow()
+        .right
+        .as_ref()
+        .unwrap()
+        .borrow()
+        .val
+        > val
     {
         let right = curr.as_ref().unwrap().borrow().right.clone();
         curr = right;
@@ -1271,7 +1271,7 @@ pub fn count_students(students: Vec<i32>, sandwiches: Vec<i32>) -> i32 {
 
 /// 1750. Minimum Length of String After Deleting Similar Ends
 pub fn minimum_length(s: String) -> i32 {
-    let (mut left, mut right, s) = (0, s.len()-1, s.as_bytes());
+    let (mut left, mut right, s) = (0, s.len() - 1, s.as_bytes());
     while left < right && s[left] == s[right] {
         let c = s[left];
         while left <= right && s[left] == c {
@@ -1281,7 +1281,7 @@ pub fn minimum_length(s: String) -> i32 {
             right -= 1;
         }
     }
-    (right + 1 - left ) as i32
+    (right + 1 - left) as i32
 }
 
 /// 1768. Merge Strings Alternately
@@ -1424,10 +1424,37 @@ pub fn final_value_after_operations(operations: Vec<String>) -> i32 {
 /// 2027. Minimum Moves to Convert String
 pub fn minimum_moves(s: String) -> i32 {
     let (mut res, mut count) = (0, -1);
-    for (i,ch) in s.chars().enumerate() {
+    for (i, ch) in s.chars().enumerate() {
         if ch == 'X' && i as i32 > count {
             res += 1;
             count = i as i32 + 2;
+        }
+    }
+    res
+}
+
+/// 2032. Two Out of Three
+pub fn two_out_of_three(nums1: Vec<i32>, nums2: Vec<i32>, nums3: Vec<i32>) -> Vec<i32> {
+    let mut map = HashMap::<i32, i32>::new();
+    for num in nums1 {
+        map.insert(num, 1);
+    }
+    for num in nums2 {
+        map.entry(num).or_insert(0);
+        if let Some(x) = map.get_mut(&num) {
+            *x |= 2;
+        };
+    }
+    for num in nums3 {
+        map.entry(num).or_insert(0);
+        if let Some(x) = map.get_mut(&num) {
+            *x |= 4;
+        };
+    }
+    let mut res = Vec::<i32>::new();
+    for (k, v) in map.iter() {
+        if (v & (v - 1)) != 0 {
+            res.push(*k);
         }
     }
     res
@@ -2169,10 +2196,10 @@ mod tests {
                 generate_string_matrix(vec![
                     vec!["phone", "blue", "pixel"],
                     vec!["computer", "silver", "lenovo"],
-                    vec!["phone", "gold", "iphone"]
+                    vec!["phone", "gold", "iphone"],
                 ]),
                 String::from("color"),
-                String::from("silver")
+                String::from("silver"),
             )
         );
         assert_eq!(
@@ -2181,19 +2208,19 @@ mod tests {
                 generate_string_matrix(vec![
                     vec!["phone", "blue", "pixel"],
                     vec!["computer", "silver", "phone"],
-                    vec!["phone", "gold", "iphone"]
+                    vec!["phone", "gold", "iphone"],
                 ]),
                 String::from("type"),
-                String::from("phone")
+                String::from("phone"),
             )
         );
     }
 
     #[test]
     fn test_nearest_valid_point() {
-        assert_eq!(nearest_valid_point(3, 4, vec![vec![1,2], vec![3,1], vec![2,4], vec![2,3], vec![4,4]]), 2);
-        assert_eq!(nearest_valid_point(3, 4, vec![vec![3,4]]), 0);
-        assert_eq!(nearest_valid_point(3, 4, vec![vec![2,3]]), -1);
+        assert_eq!(nearest_valid_point(3, 4, vec![vec![1, 2], vec![3, 1], vec![2, 4], vec![2, 3], vec![4, 4]]), 2);
+        assert_eq!(nearest_valid_point(3, 4, vec![vec![3, 4]]), 0);
+        assert_eq!(nearest_valid_point(3, 4, vec![vec![2, 3]]), -1);
     }
 
     #[test]
@@ -2240,9 +2267,9 @@ mod tests {
 
     #[test]
     fn test_final_value_after_operations() {
-        assert_eq!(1, final_value_after_operations(generate_string_vec(vec!["--X","X++","X++"])));
-        assert_eq!(3, final_value_after_operations(generate_string_vec(vec!["++X","++X","X++"])));
-        assert_eq!(0, final_value_after_operations(generate_string_vec(vec!["X++","++X","--X","X--"])));
+        assert_eq!(1, final_value_after_operations(generate_string_vec(vec!["--X", "X++", "X++"])));
+        assert_eq!(3, final_value_after_operations(generate_string_vec(vec!["++X", "++X", "X++"])));
+        assert_eq!(0, final_value_after_operations(generate_string_vec(vec!["X++", "++X", "--X", "X--"])));
     }
 
     #[test]
@@ -2250,5 +2277,12 @@ mod tests {
         assert_eq!(1, minimum_moves(String::from("XXX")));
         assert_eq!(2, minimum_moves(String::from("XXOX")));
         assert_eq!(0, minimum_moves(String::from("OOOO")));
+    }
+
+    #[test]
+    fn test_two_out_of_three() {
+        assert_eq!(vec![3, 2].sort(), two_out_of_three(vec![1, 1, 3, 2], vec![2, 3], vec![3]).sort());
+        assert_eq!(vec![2, 3, 1].sort(), two_out_of_three(vec![3, 1], vec![2, 3], vec![1, 2]).sort());
+        assert_eq!(Vec::<i32>::new(), two_out_of_three(vec![1, 2, 2], vec![4, 3, 3], vec![5]));
     }
 }
