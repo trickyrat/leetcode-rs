@@ -1440,16 +1440,10 @@ pub fn two_out_of_three(nums1: Vec<i32>, nums2: Vec<i32>, nums3: Vec<i32>) -> Ve
         map.insert(num, 1);
     }
     for num in nums2 {
-        map.entry(num).or_insert(0);
-        if let Some(x) = map.get_mut(&num) {
-            *x |= 2;
-        };
+        *map.entry(num).or_insert(0) |= 2;
     }
     for num in nums3 {
-        map.entry(num).or_insert(0);
-        if let Some(x) = map.get_mut(&num) {
-            *x |= 4;
-        };
+        *map.entry(num).or_insert(0) |= 4;
     }
     let mut res = Vec::<i32>::new();
     for (k, v) in map.iter() {
