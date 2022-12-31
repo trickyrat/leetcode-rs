@@ -1454,6 +1454,13 @@ pub fn two_out_of_three(nums1: Vec<i32>, nums2: Vec<i32>, nums3: Vec<i32>) -> Ve
     res
 }
 
+/// 2037. Minimum Number of Moves to Seat Everyone
+pub fn min_moves_to_seat(mut seats: Vec<i32>, mut students: Vec<i32>) -> i32 {
+    seats.sort();
+    students.sort();
+    seats.iter().zip(students.iter()).fold(0, |res, (i, j)| res + (i - j).abs())
+}
+
 #[cfg(test)]
 mod tests {
     use crate::leetcode::solution::*;
@@ -2278,5 +2285,12 @@ mod tests {
         assert_eq!(vec![3, 2].sort(), two_out_of_three(vec![1, 1, 3, 2], vec![2, 3], vec![3]).sort());
         assert_eq!(vec![2, 3, 1].sort(), two_out_of_three(vec![3, 1], vec![2, 3], vec![1, 2]).sort());
         assert_eq!(Vec::<i32>::new(), two_out_of_three(vec![1, 2, 2], vec![4, 3, 3], vec![5]));
+    }
+
+    #[test]
+    fn test_min_moves_to_seat() {
+        assert_eq!(4, min_moves_to_seat(vec![3, 1, 5], vec![2, 7, 4]));
+        assert_eq!(7, min_moves_to_seat(vec![4, 1, 5, 9], vec![1, 3, 2, 6]));
+        assert_eq!(4, min_moves_to_seat(vec![2, 2, 6, 6], vec![1, 3, 2, 6]));
     }
 }
