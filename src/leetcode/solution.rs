@@ -1461,6 +1461,19 @@ pub fn min_moves_to_seat(mut seats: Vec<i32>, mut students: Vec<i32>) -> i32 {
     seats.iter().zip(students.iter()).fold(0, |res, (i, j)| res + (i - j).abs())
 }
 
+/// 2351. First Letter to Appear Twice
+pub fn repeated_character(s: String) -> char {
+    let mut seen = 0;
+    for ch in s.chars() {
+        let x = ch as u8 - b'a';
+        if (seen & (1 << x)) > 0 {
+            return ch;
+        }
+        seen |= (1 << x);
+    }
+    ' '
+}
+
 #[cfg(test)]
 mod tests {
     use crate::leetcode::solution::*;
@@ -2292,5 +2305,13 @@ mod tests {
         assert_eq!(4, min_moves_to_seat(vec![3, 1, 5], vec![2, 7, 4]));
         assert_eq!(7, min_moves_to_seat(vec![4, 1, 5, 9], vec![1, 3, 2, 6]));
         assert_eq!(4, min_moves_to_seat(vec![2, 2, 6, 6], vec![1, 3, 2, 6]));
+    }
+
+    #[test]
+    fn test_repeated_character() {
+        assert_eq!('c', repeated_character(String::from("abccbaacz")));
+        assert_eq!('d', repeated_character(String::from("abcdd")));
+        assert_eq!('a', repeated_character(String::from("aa")));
+        assert_eq!('z', repeated_character(String::from("zz")));
     }
 }
