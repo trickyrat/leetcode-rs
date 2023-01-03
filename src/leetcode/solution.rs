@@ -1461,6 +1461,28 @@ pub fn min_moves_to_seat(mut seats: Vec<i32>, mut students: Vec<i32>) -> i32 {
     seats.iter().zip(students.iter()).fold(0, |res, (i, j)| res + (i - j).abs())
 }
 
+/// 2042. Check if Numbers Are Ascending in a Sentence
+pub fn are_number_ascending(s: String) -> bool {
+    let (mut prev, mut pos, mut n) = (0, 0, s.len());
+    let chars = s.as_bytes();
+    while pos < n {
+        if chars[pos].is_ascii_digit() {
+            let mut curr = 0;
+            while pos < n && chars[pos].is_ascii_digit() {
+                curr = curr * 10 + chars[pos] - b'0';
+                pos += 1;
+            }
+            if curr <= prev {
+                return false;
+            }
+            prev = curr;
+        } else {
+            pos += 1;
+        }
+    }
+    true
+}
+
 /// 2351. First Letter to Appear Twice
 pub fn repeated_character(s: String) -> char {
     let mut seen = 0;
@@ -1469,7 +1491,7 @@ pub fn repeated_character(s: String) -> char {
         if (seen & (1 << x)) > 0 {
             return ch;
         }
-        seen |= (1 << x);
+        seen |= 1 << x;
     }
     ' '
 }
@@ -2305,6 +2327,13 @@ mod tests {
         assert_eq!(4, min_moves_to_seat(vec![3, 1, 5], vec![2, 7, 4]));
         assert_eq!(7, min_moves_to_seat(vec![4, 1, 5, 9], vec![1, 3, 2, 6]));
         assert_eq!(4, min_moves_to_seat(vec![2, 2, 6, 6], vec![1, 3, 2, 6]));
+    }
+
+    #[test]
+    fn test_are_number_ascending() {
+        assert_eq!(true, are_number_ascending(String::from("1 box has 3 blue 4 red 6 green and 12 yellow marbles")));
+        assert_eq!(false, are_number_ascending(String::from("hello world 5 x 5")));
+        assert_eq!(false, are_number_ascending(String::from("sunset is at 7 51 pm overnight lows will be in the low 50 and 60 s")));
     }
 
     #[test]
