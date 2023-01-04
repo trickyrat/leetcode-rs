@@ -2,8 +2,7 @@ use crate::leetcode::data_structures::ListNode;
 use crate::leetcode::TreeNode;
 use std::cell::RefCell;
 use std::cmp::{max, min, Ordering};
-use std::collections::HashSet;
-use std::collections::{HashMap, VecDeque};
+use std::collections::{HashMap, HashSet, VecDeque};
 use std::rc::Rc;
 
 /// 1.Two Sum
@@ -50,6 +49,33 @@ pub fn add_two_numbers(
         }
     }
     carried(l1, l2, 0)
+}
+
+/// 3. Longest Substring Without Repeating Characters
+pub fn length_of_longest_substring(s: String) -> i32 {
+    let (mut n, mut res) = (s.len(), 0);
+    // let mut map = HashMap::<u8, i32>::new();
+    // let mut i = 0;
+    // let chars = s.as_bytes();
+    // for j in 0..n {
+    //     if map.contains_key(&chars[j]) {
+    //         i = max(*map.get(&chars[j]).unwrap(), i);
+    //         map.entry(chars[j]).and_modify(|e| *e = j as i32 + 1);
+    //     } else {
+    //         map.insert(chars[j], (j + 1) as i32);
+    //     }
+    //     res = max(res, j as i32 - i + 1);
+    // }
+
+    let mut map = vec![0; 128];
+    let chars = s.as_bytes();
+    let mut i = 0;
+    for j in 0..n {
+        i = max(map[chars[j] as usize], i);
+        res = max(res, j as i32 - i + 1);
+        map[chars[j] as usize] = j as i32 + 1;
+    }
+    res
 }
 
 /// 7.Convert Integer
@@ -1534,6 +1560,13 @@ mod tests {
             ),
             generate_list_node(vec![8, 9, 9, 9, 0, 0, 0, 1])
         );
+    }
+
+    #[test]
+    fn test_length_of_longest_substring() {
+        assert_eq!(3, length_of_longest_substring(String::from("abcabcbb")));
+        assert_eq!(1, length_of_longest_substring(String::from("bbbbb")));
+        assert_eq!(3, length_of_longest_substring(String::from("pwwkew")));
     }
 
     #[test]
