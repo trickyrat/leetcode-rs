@@ -1509,6 +1509,22 @@ pub fn are_number_ascending(s: String) -> bool {
     true
 }
 
+/// 2180. Count Integers With Even Digit Sum
+pub fn count_even(num: i32) -> i32 {
+    let (mut y, mut x) = (num / 10, num % 10);
+    let (mut res, mut y_sum) = (y * 5, 0);
+    while y > 0 {
+        y_sum += y % 10;
+        y /= 10;
+    }
+    if y_sum % 2 == 0 {
+        res += x / 2 + 1;
+    } else {
+        res += (x + 1) / 2;
+    }
+    res - 1
+}
+
 /// 2351. First Letter to Appear Twice
 pub fn repeated_character(s: String) -> char {
     let mut seen = 0;
@@ -2367,6 +2383,12 @@ mod tests {
         assert_eq!(true, are_number_ascending(String::from("1 box has 3 blue 4 red 6 green and 12 yellow marbles")));
         assert_eq!(false, are_number_ascending(String::from("hello world 5 x 5")));
         assert_eq!(false, are_number_ascending(String::from("sunset is at 7 51 pm overnight lows will be in the low 50 and 60 s")));
+    }
+
+    #[test]
+    fn test_count_even() {
+        assert_eq!(2, count_even(4));
+        assert_eq!(14, count_even(30));
     }
 
     #[test]
