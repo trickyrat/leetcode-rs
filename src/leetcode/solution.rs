@@ -1465,6 +1465,47 @@ pub fn max_ascending_sum(nums: Vec<i32>) -> i32 {
     res
 }
 
+/// 1802. Maximum Value at a Given Index in a Bounded Array
+#[allow(dead_code)]
+pub fn max_value(n: i32, index: i32, max_sum: i32) -> i32 {
+    let (mut left, mut right) = (index as f64, (n - index - 1) as f64);
+    let max_sum = max_sum as f64;
+    if left > right {
+        swap(&mut left, &mut right);
+    }
+    let mut upper = ((left + 1.0) * (left + 1.0) - 3.0 * (left + 1.0)) / 2.0
+        + left
+        + 1.0
+        + (left + 1.0)
+        + ((left + 1.0) * (left + 1.0) - 3.0 * (left + 1.0)) / 2.0
+        + right
+        + 1.0;
+    if upper >= max_sum {
+        let (a, b, c) = (1.0, -2.0, left + right + 2.0 - max_sum);
+        return ((-b + (b * b - 4.0 * a * c).sqrt()) / (2.0 * a)).floor() as i32;
+    }
+    upper = (2.0 * (right + 1.0) - left - 1.0) * left / 2.0
+        + (right + 1.0)
+        + ((right + 1.0) * (right + 1.0) - 3.0 * (right + 1.0)) / 2.0
+        + right
+        + 1.0;
+
+    if upper >= max_sum {
+        let (a, b, c) = (
+            1.0 / 2.0,
+            left + 1.0 - 3.0 / 2.0,
+            right + 1.0 + (-left - 1.0) * left / 2.0 - max_sum,
+        );
+        ((-b + (b * b - 4.0 * a * c).sqrt()) / (2.0 * a)).floor() as i32
+    } else {
+        let (a, b) = (
+            left + right + 1.0,
+            (-left * left - left - right * right - right) / 2.0 - max_sum,
+        );
+        (-b / a).floor() as i32
+    }
+}
+
 /// 1822. Sign of the Product of an Array
 #[allow(dead_code)]
 pub fn array_sign(nums: Vec<i32>) -> i32 {
@@ -2407,6 +2448,12 @@ mod tests {
             String::from("kelb"),
             String::from("kelbf")
         ));
+    }
+
+    #[test]
+    fn test_max_value() {
+        assert_eq!(2, max_value(4, 2, 6));
+        assert_eq!(3, max_value(6, 1, 10));
     }
 
     #[test]
