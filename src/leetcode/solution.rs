@@ -2,24 +2,28 @@ use crate::leetcode::data_structures::ListNode;
 use crate::leetcode::TreeNode;
 use std::cell::RefCell;
 use std::cmp::{max, min, Ordering};
+use std::collections::hash_map::Entry::Vacant;
 use std::collections::{HashMap, HashSet, VecDeque};
+use std::mem::swap;
 use std::rc::Rc;
 
 /// 1.Two Sum
+#[allow(dead_code)]
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
-    let mut hashmap: HashMap<i32, usize> = HashMap::with_capacity(nums.len());
-    for i in 0..nums.len() {
-        if let Some(k) = hashmap.get(&(target - nums[i])) {
+    let mut map: HashMap<i32, usize> = HashMap::with_capacity(nums.len());
+    for (i, num) in nums.iter().enumerate() {
+        if let Some(k) = map.get(&(target - num)) {
             if *k != i {
                 return vec![*k as i32, i as i32];
             }
         }
-        hashmap.insert(nums[i], i);
+        map.insert(nums[i], i);
     }
-    panic!("???")
+    vec![]
 }
 
 /// 2.Add Two Numbers
+#[allow(dead_code)]
 pub fn add_two_numbers(
     l1: Option<Box<ListNode>>,
     l2: Option<Box<ListNode>>,
@@ -52,8 +56,9 @@ pub fn add_two_numbers(
 }
 
 /// 3. Longest Substring Without Repeating Characters
+#[allow(dead_code)]
 pub fn length_of_longest_substring(s: String) -> i32 {
-    let (mut n, mut res) = (s.len(), 0);
+    let (n, mut res) = (s.len(), 0);
     // let mut map = HashMap::<u8, i32>::new();
     // let mut i = 0;
     // let chars = s.as_bytes();
@@ -79,11 +84,12 @@ pub fn length_of_longest_substring(s: String) -> i32 {
 }
 
 /// 7.Convert Integer
+#[allow(dead_code)]
 pub fn reverse_int(x: i32) -> i32 {
     let mut x = x;
     let mut res = 0;
     while x != 0 {
-        if res < i32::MIN / 10 || res > i32::MAX / 10 {
+        if !(i32::MIN / 10..=i32::MAX / 10).contains(&res) {
             return 0;
         }
         let digit = x % 10;
@@ -94,6 +100,7 @@ pub fn reverse_int(x: i32) -> i32 {
 }
 
 /// 27.Remove Element
+#[allow(dead_code)]
 pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
     let mut left = 0;
     let n = nums.len();
@@ -107,6 +114,7 @@ pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
 }
 
 /// 172.Factorial Trailing Zeroes
+#[allow(dead_code)]
 pub fn trailing_zeroes(n: i32) -> i32 {
     let mut ans = 0;
     let mut n = n;
@@ -118,6 +126,7 @@ pub fn trailing_zeroes(n: i32) -> i32 {
 }
 
 /// 357.Count Numbers with Unique Digits
+#[allow(dead_code)]
 pub fn count_numbers_with_unique_digits(n: i32) -> i32 {
     if n == 0 {
         return 1;
@@ -135,6 +144,7 @@ pub fn count_numbers_with_unique_digits(n: i32) -> i32 {
 }
 
 /// 386.Lexicographical Numbers
+#[allow(dead_code)]
 pub fn lexical_order(n: i32) -> Vec<i32> {
     let mut ret: Vec<i32> = Vec::with_capacity(n as usize);
     let mut num = 1;
@@ -153,8 +163,9 @@ pub fn lexical_order(n: i32) -> Vec<i32> {
 }
 
 /// 498.Diagonal Traverse
+#[allow(dead_code)]
 pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {
-    if mat.len() == 0 {
+    if mat.is_empty() {
         return Vec::new();
     }
     let n = mat.len();
@@ -171,11 +182,11 @@ pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {
         let new_col = if direction == 1 { col + 1 } else { col - 1 };
         if new_row < 0 || new_row == n as i32 || new_col < 0 || new_col == m as i32 {
             if direction == 1 {
-                row += if col == m as i32 - 1 { 1 } else { 0 };
-                col += if col < m as i32 - 1 { 1 } else { 0 };
+                row += i32::from(col == m as i32 - 1);
+                col += i32::from(col < m as i32 - 1);
             } else {
-                col += if row == n as i32 - 1 { 1 } else { 0 };
-                row += if row < n as i32 - 1 { 1 } else { 0 };
+                col += i32::from(row == n as i32 - 1);
+                row += i32::from(row < n as i32 - 1);
             }
             direction = 1 - direction;
         } else {
@@ -187,6 +198,7 @@ pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {
 }
 
 /// 504.Base 7
+#[allow(dead_code)]
 pub fn convert_to_base7(num: i32) -> String {
     let mut num = num;
     if num == 0 {
@@ -200,12 +212,13 @@ pub fn convert_to_base7(num: i32) -> String {
         num /= 7;
     }
     if negative {
-        digits += &"-".to_string();
+        digits.push('-');
     }
     digits.chars().rev().collect()
 }
 
 /// 537.Complex Number Multiplication
+#[allow(dead_code)]
 pub fn complex_number_multiply(num1: String, num2: String) -> String {
     let &complex1 = &num1[..num1.len() - 1].split_once('+').unwrap();
     let &complex2 = &num2[..num2.len() - 1].split_once('+').unwrap();
@@ -219,6 +232,7 @@ pub fn complex_number_multiply(num1: String, num2: String) -> String {
 }
 
 /// 636.Exclusive Time of Functions
+#[allow(dead_code)]
 pub fn exclusive_time(n: i32, logs: Vec<String>) -> Vec<i32> {
     let mut stack: Vec<Vec<i32>> = Vec::new();
     let mut res: Vec<i32> = vec![0; n as usize];
@@ -246,6 +260,7 @@ pub fn exclusive_time(n: i32, logs: Vec<String>) -> Vec<i32> {
 }
 
 /// 646.Maximum Length of Pair Chain
+#[allow(dead_code)]
 pub fn find_longest_chain(mut pairs: Vec<Vec<i32>>) -> i32 {
     pairs.sort_by(|a, b| a[1].cmp(&b[1]));
     let mut curr = i32::MIN;
@@ -260,13 +275,14 @@ pub fn find_longest_chain(mut pairs: Vec<Vec<i32>>) -> i32 {
 }
 
 /// 658.Find K Closest Elements
+#[allow(dead_code)]
 pub fn find_closest_elements(arr: Vec<i32>, k: i32, x: i32) -> Vec<i32> {
     let mut right = match arr.binary_search(&x) {
         Ok(i) => i as i32,
         Err(i) => i as i32,
     };
     let n = arr.len() as i32;
-    let mut left = right as i32 - 1;
+    let mut left = right - 1;
     let mut k = k;
     while k > 0 {
         if left < 0 {
@@ -283,6 +299,7 @@ pub fn find_closest_elements(arr: Vec<i32>, k: i32, x: i32) -> Vec<i32> {
 }
 
 /// 662.Maximum Width of Binary Tree
+#[allow(dead_code)]
 pub fn width_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     let mut level_min: HashMap<usize, usize> = HashMap::new();
     fn dfs(
@@ -294,9 +311,7 @@ pub fn width_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
         if node.is_none() {
             return 0;
         }
-        if !level_min.contains_key(&depth) {
-            level_min.insert(depth, index);
-        }
+        level_min.entry(depth).or_insert(index);
         max(
             (index - level_min[&depth] + 1) as i32,
             max(
@@ -319,33 +334,41 @@ pub fn width_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 }
 
 /// 670.Maximum Swap
+#[allow(dead_code)]
 pub fn maximum_swap(num: i32) -> i32 {
-    let mut chars = num.to_string().chars().collect::<Vec<char>>();
+    let mut chars = num.to_string().bytes().collect::<Vec<u8>>();
     let n = chars.len();
-    let mut max_index = n - 1;
-    let mut index1 = 0;
-    let mut index2 = 0;
-    for i in (0..n).rev() {
-        if chars[i] > chars[max_index] {
-            max_index = i;
-        } else if chars[i] < chars[max_index] {
-            index1 = i;
-            index2 = max_index;
+    let (mut index1, mut index2) = (n, n);
+    let (mut max, mut max_index) = (b'0' - 1, n);
+    for (i, &ch) in chars.iter().enumerate().rev() {
+        match ch.cmp(&max) {
+            Ordering::Greater => {
+                max = ch;
+                max_index = i;
+            }
+            Ordering::Less => {
+                index1 = max_index;
+                index2 = i;
+            }
+            _ => {}
         }
     }
-    if index1 >= 0 {
+    if index1 != n && index2 != n {
         chars.swap(index1, index2);
-        return chars.iter().collect::<String>().parse::<i32>().unwrap();
+        String::from_utf8(chars).unwrap().parse::<i32>().unwrap()
+    } else {
+        num
     }
-    num
 }
 
 /// 672.Bulb Switcher II
+#[allow(dead_code)]
 pub fn flip_lights(n: i32, presses: i32) -> i32 {
     let mut seen: HashSet<i32> = HashSet::new();
+    let bits = vec![0, 1, 2, 3];
     for i in 0..16 {
         let mut press_array: Vec<i32> = vec![0; 4];
-        for j in 0..4 {
+        for &j in bits.iter() {
             press_array[j] = (i >> j) & 1;
         }
         let sum: i32 = press_array.iter().sum();
@@ -367,6 +390,7 @@ pub fn flip_lights(n: i32, presses: i32) -> i32 {
 }
 
 /// 682.Baseball Game
+#[allow(dead_code)]
 pub fn cal_points(ops: Vec<String>) -> i32 {
     ops.iter()
         .map(|x| x.as_str())
@@ -394,25 +418,28 @@ pub fn cal_points(ops: Vec<String>) -> i32 {
 }
 
 /// 693.Binary Number with Alternating bits
+#[allow(dead_code)]
 pub fn has_alternating_bits(n: i32) -> bool {
     let a = n ^ (n >> 1);
     a & (a + 1) == 0
 }
 
 /// 724.Find Pivot Index
+#[allow(dead_code)]
 pub fn pivot_index(nums: Vec<i32>) -> i32 {
     let total: i32 = nums.iter().sum();
     let mut sum: i32 = 0;
-    for i in 0..nums.len() {
-        if 2 * sum + nums[i] == total {
+    for (i, num) in nums.iter().enumerate() {
+        if 2 * sum + num == total {
             return i as i32;
         }
-        sum += nums[i];
+        sum += num;
     }
     -1
 }
 
 /// 728.Self Dividing Numbers
+#[allow(dead_code)]
 pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
     let mut ans = Vec::new();
     fn is_self_dividing(num: i32) -> bool {
@@ -436,6 +463,7 @@ pub fn self_dividing_numbers(left: i32, right: i32) -> Vec<i32> {
 }
 
 /// 744.Find Smallest Letter Greater Than Target
+#[allow(dead_code)]
 pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
     let len = letters.len();
     if target >= letters[len - 1] {
@@ -451,15 +479,17 @@ pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
             low = mid + 1;
         }
     }
-    return letters[low];
+    letters[low]
 }
 
 /// 762.Prime Number of Set Bits in Binary Representation
+#[allow(dead_code)]
 pub fn count_prime_set_bits(left: i32, right: i32) -> i32 {
     (left..=right).fold(0, |ret, i| ret + (665772 >> i.count_ones() & 1))
 }
 
 /// 769. Max Chunks To Make Sorted
+#[allow(dead_code)]
 pub fn max_chunks_to_sorted(arr: Vec<i32>) -> i32 {
     let (mut res, mut maximum) = (0, 0);
     for (i, v) in arr.iter().enumerate() {
@@ -472,7 +502,8 @@ pub fn max_chunks_to_sorted(arr: Vec<i32>) -> i32 {
 }
 
 /// 779. K-th Symbol in Grammar
-pub fn kth_grammar(n: i32, mut k: i32) -> i32 {
+#[allow(dead_code)]
+pub fn kth_grammar(_n: i32, mut k: i32) -> i32 {
     k -= 1;
     let mut res = 0;
     while k > 0 {
@@ -483,28 +514,23 @@ pub fn kth_grammar(n: i32, mut k: i32) -> i32 {
 }
 
 /// 784. Letter Case Permutation
+#[allow(dead_code)]
 pub fn letter_case_permutation(s: String) -> Vec<String> {
     let (mut m, mut res) = (0, Vec::<String>::new());
-    for ch in s.chars().into_iter() {
+    for ch in s.chars() {
         if ch.is_alphabetic() {
             m += 1;
         }
     }
     for mask in 0..1 << m {
         let (mut t, mut k) = (Vec::<String>::new(), 0);
-        for c in s.chars().into_iter() {
+        for c in s.chars() {
             if c.is_alphabetic() {
                 t.push(if mask >> k & 1 != 0 {
                     c.to_uppercase().to_string()
                 } else {
                     c.to_lowercase().to_string()
                 });
-
-                // if mask >> k & 1 != 0 {
-                //     t.push(c.to_uppercase().to_string());
-                // } else {
-                //     t.push(c.to_lowercase().to_string());
-                // }
                 k += 1;
             } else {
                 t.push(c.to_string());
@@ -516,6 +542,7 @@ pub fn letter_case_permutation(s: String) -> Vec<String> {
 }
 
 /// 793.Preimage Size of Factorial Zeroes Function
+#[allow(dead_code)]
 pub fn preimage_size_fzf(k: i32) -> i32 {
     fn zeta(mut n: i32) -> i32 {
         let mut res = 0;
@@ -537,13 +564,14 @@ pub fn preimage_size_fzf(k: i32) -> i32 {
                 right = mid - 1;
             }
         }
-        return (right + 1) as i32;
+        (right + 1) as i32
     }
 
     nx(k + 1) - nx(k)
 }
 
 /// 801.Minimum Swaps To Make Sequences Increasing
+#[allow(dead_code)]
 pub fn min_swap(nums1: Vec<i32>, nums2: Vec<i32>) -> i32 {
     let n = nums1.len();
     let (mut a, mut b) = (0, 1);
@@ -564,6 +592,7 @@ pub fn min_swap(nums1: Vec<i32>, nums2: Vec<i32>) -> i32 {
 }
 
 /// 804.Unique Morse Code Words
+#[allow(dead_code)]
 pub fn unique_morse_representations(words: Vec<String>) -> i32 {
     let morse = vec![
         ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--",
@@ -575,7 +604,7 @@ pub fn unique_morse_representations(words: Vec<String>) -> i32 {
         .fold(HashSet::new(), |mut unique, word| {
             let mut s = String::new();
             word.bytes()
-                .for_each(|ch| s = format!("{}{}", s, morse[(ch - 'a' as u8) as usize]));
+                .for_each(|ch| s = format!("{}{}", s, morse[(ch - b'a') as usize]));
             unique.insert(s);
             unique
         })
@@ -583,6 +612,7 @@ pub fn unique_morse_representations(words: Vec<String>) -> i32 {
 }
 
 /// 806.Number of Lines To Write String
+#[allow(dead_code)]
 pub fn number_of_lines(widths: Vec<i32>, s: String) -> Vec<i32> {
     let max_width = 100;
     let mut lines = 1;
@@ -599,19 +629,20 @@ pub fn number_of_lines(widths: Vec<i32>, s: String) -> Vec<i32> {
 }
 
 /// 811.Subdomain Visit Count
+#[allow(dead_code)]
 pub fn subdomain_visits(cpdomains: Vec<String>) -> Vec<String> {
     let mut map = HashMap::<&str, usize>::new();
     let mut count = 0;
     for cpdomain in &cpdomains {
         for (i, v) in cpdomain.as_bytes().iter().enumerate() {
-            if *v == ' ' as u8 {
+            if *v == b' ' {
                 count = cpdomain[..i].parse::<usize>().unwrap();
                 map.entry(&cpdomain[i + 1..])
                     .and_modify(|x| *x += count)
                     .or_insert(count);
                 continue;
             }
-            if *v == '.' as u8 {
+            if *v == b'.' {
                 map.entry(&cpdomain[i + 1..])
                     .and_modify(|x| *x += count)
                     .or_insert(count);
@@ -622,6 +653,7 @@ pub fn subdomain_visits(cpdomains: Vec<String>) -> Vec<String> {
 }
 
 /// 817.Linked List Components
+#[allow(dead_code)]
 pub fn num_components(head: Option<Box<ListNode>>, nums: Vec<i32>) -> i32 {
     let set = nums.iter().fold(HashSet::new(), |mut set, num| {
         set.insert(num);
@@ -645,6 +677,7 @@ pub fn num_components(head: Option<Box<ListNode>>, nums: Vec<i32>) -> i32 {
 }
 
 /// 821.Shortest Distance to a Character
+#[allow(dead_code)]
 pub fn shortest_to_char(s: String, c: char) -> Vec<i32> {
     let cmp = |initial: &mut i32, ch: char| {
         if ch == c {
@@ -663,13 +696,12 @@ pub fn shortest_to_char(s: String, c: char) -> Vec<i32> {
 }
 
 /// 828.Count Unique Characters of All Substrings of a Given String
+#[allow(dead_code)]
 pub fn unique_letter_string(s: String) -> i32 {
     let mut index: HashMap<char, Vec<i32>> = HashMap::new();
     for i in 0..s.len() {
         let c = s.as_bytes()[i] as char;
-        if !index.contains_key(&c) {
-            index.insert(c, vec![-1]);
-        }
+        index.entry(c).or_insert_with(|| vec![-1]);
         index.get_mut(&c).unwrap().push(i as i32);
     }
     let mut res = 0;
@@ -684,6 +716,7 @@ pub fn unique_letter_string(s: String) -> i32 {
 }
 
 /// 856.Score of Parentheses
+#[allow(dead_code)]
 pub fn score_of_parentheses(s: String) -> i32 {
     let chars = s.as_bytes();
     chars
@@ -704,11 +737,12 @@ pub fn score_of_parentheses(s: String) -> i32 {
 }
 
 /// 862. Shortest Subarray with Sum at Least K
+#[allow(dead_code)]
 pub fn shortest_subarray(nums: Vec<i32>, k: i32) -> i32 {
     let (mut ret, mut pre_sum, mut queue) = (i64::MAX, 0, VecDeque::new());
     queue.push_back((0, -1));
-    for i in 0..nums.len() {
-        pre_sum += nums[i] as i64;
+    for (i, &num) in nums.iter().enumerate() {
+        pre_sum += num as i64;
         while !queue.is_empty() && pre_sum <= queue[queue.len() - 1].0 {
             queue.pop_back();
         }
@@ -725,6 +759,7 @@ pub fn shortest_subarray(nums: Vec<i32>, k: i32) -> i32 {
 }
 
 ///  883.Projection Area of 3D Shapes
+#[allow(dead_code)]
 pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
     let max_row = grid
         .iter()
@@ -741,6 +776,7 @@ pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
 }
 
 /// 886. Possible Bipartition
+#[allow(dead_code)]
 pub fn possible_bipartition(n: i32, dislikes: Vec<Vec<i32>>) -> bool {
     let mut color = vec![0; (n + 1) as usize];
     let mut group = vec![vec![]; (n + 1) as usize];
@@ -762,7 +798,7 @@ pub fn possible_bipartition(n: i32, dislikes: Vec<Vec<i32>>) -> bool {
     }
 
     for i in 1..=n as usize {
-        if color[i as usize] == 0 && !dfs(i, 1, &mut color, &group) {
+        if color[i] == 0 && !dfs(i, 1, &mut color, &group) {
             return false;
         }
     }
@@ -770,6 +806,7 @@ pub fn possible_bipartition(n: i32, dislikes: Vec<Vec<i32>>) -> bool {
 }
 
 /// 905.Sort Array By Parity
+#[allow(dead_code)]
 pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
     let (mut left, mut right) = (0, nums.len() - 1);
     while left < right {
@@ -791,8 +828,9 @@ pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
 }
 
 /// 907. Sum of Subarray Minimums
+#[allow(dead_code)]
 pub fn sum_subarray_mins(arr: Vec<i32>) -> i32 {
-    let MOD = 1000000007;
+    let mod_number = 1000000007;
     let n = arr.len();
     let (mut mono_stack, mut dp, mut res) = (Vec::<usize>::new(), vec![0; n], 0);
     for (i, &v) in arr.iter().enumerate() {
@@ -809,19 +847,23 @@ pub fn sum_subarray_mins(arr: Vec<i32>) -> i32 {
         } else {
             k * (v as usize) + (dp[i - k])
         };
-        res = (res + dp[i]) % MOD;
+        res = (res + dp[i]) % mod_number;
         mono_stack.push(i);
     }
     res as i32
 }
 
 /// 915. Partition Array into Disjoint Intervals
+#[allow(dead_code)]
 pub fn partition_disjoint(nums: Vec<i32>) -> i32 {
-    let n = nums.len();
     let (mut curr_max, mut left_max) = (nums[0], nums[0]);
     let mut res = 0;
-    for i in 1..n - 1 {
-        curr_max = max(curr_max, nums[i]);
+    for (i, &num) in nums
+        .iter()
+        .enumerate()
+        .filter(|(i, _)| i > &0 && i < &(nums.len() - 1))
+    {
+        curr_max = max(curr_max, num);
         if nums[i] < left_max {
             left_max = curr_max;
             res = i as i32
@@ -831,18 +873,17 @@ pub fn partition_disjoint(nums: Vec<i32>) -> i32 {
 }
 
 /// 921.Minimum Add to Make Parentheses Valid
+#[allow(dead_code)]
 pub fn min_add_to_make_valid(s: String) -> i32 {
     let mut res = 0;
     let mut left_count = 0;
     for ch in s.chars() {
         if ch == '(' {
             left_count += 1;
+        } else if left_count > 0 {
+            left_count -= 1;
         } else {
-            if left_count > 0 {
-                left_count -= 1;
-            } else {
-                res += 1;
-            }
+            res += 1;
         }
     }
     res += left_count;
@@ -850,6 +891,7 @@ pub fn min_add_to_make_valid(s: String) -> i32 {
 }
 
 /// 927.Three Equal Parts
+#[allow(dead_code)]
 pub fn three_equal_parts(arr: Vec<i32>) -> Vec<i32> {
     let sum: i32 = arr.iter().sum();
     if sum % 3 != 0 {
@@ -887,12 +929,13 @@ pub fn three_equal_parts(arr: Vec<i32>) -> Vec<i32> {
 }
 
 /// 934. Shortest Bridge
+#[allow(dead_code)]
 pub fn shortest_bridge(mut grid: Vec<Vec<i32>>) -> i32 {
     let n = grid.len();
     let dirs = vec![vec![-1, 0], vec![1, 0], vec![0, 1], vec![0, -1]];
     let mut island = Vec::<(i32, i32)>::new();
     let mut queue = VecDeque::<(i32, i32)>::new();
-
+    let dir_loop: Vec<usize> = vec![0, 1, 2, 3];
     for i in 0..n {
         for j in 0..n {
             if grid[i][j] == 1 {
@@ -901,7 +944,7 @@ pub fn shortest_bridge(mut grid: Vec<Vec<i32>>) -> i32 {
                 while !queue.is_empty() {
                     let cell = queue.pop_front().unwrap();
                     island.push((cell.0, cell.1));
-                    for k in 0..4 {
+                    for &k in dir_loop.iter() {
                         let nx = cell.0 + dirs[k][0];
                         let ny = cell.1 + dirs[k][1];
                         if nx >= 0
@@ -920,7 +963,7 @@ pub fn shortest_bridge(mut grid: Vec<Vec<i32>>) -> i32 {
                 while !queue.is_empty() {
                     for _k in 0..queue.len() {
                         let cell = queue.pop_front().unwrap();
-                        for d in 0..4 {
+                        for &d in dir_loop.iter() {
                             let nx = cell.0 + dirs[d][0];
                             let ny = cell.1 + dirs[d][1];
                             if nx >= 0 && ny >= 0 && nx < n as i32 && ny < n as i32 {
@@ -942,20 +985,22 @@ pub fn shortest_bridge(mut grid: Vec<Vec<i32>>) -> i32 {
 }
 
 /// 940. Distinct Subsequences II
+#[allow(dead_code)]
 pub fn distinct_subseq_ii(s: String) -> i32 {
-    let MOD = 1000000007;
+    let mod_number = 1000000007;
     let mut alphas = vec![0; 26];
     let mut res = 0;
-    s.chars().for_each(|x| {
-        let index = ((x as u8) - b'a') as usize;
+    s.as_bytes().iter().for_each(|x| {
+        let index = (x - b'a') as usize;
         let prev = alphas[index];
-        alphas[index] = (res + 1) % MOD;
-        res = ((res + alphas[index] - prev) % MOD + MOD) % MOD;
+        alphas[index] = (res + 1) % mod_number;
+        res = ((res + alphas[index] - prev) % mod_number + mod_number) % mod_number;
     });
     res
 }
 
 /// 942.DI String Match
+#[allow(dead_code)]
 pub fn di_string_match(s: String) -> Vec<i32> {
     let n = s.len();
     let mut lo = 0;
@@ -975,6 +1020,7 @@ pub fn di_string_match(s: String) -> Vec<i32> {
 }
 
 /// 944.Delete Columns to Make Sorted
+#[allow(dead_code)]
 pub fn min_deletion_size(strs: Vec<String>) -> i32 {
     let strs_arr = strs
         .iter()
@@ -993,12 +1039,12 @@ pub fn min_deletion_size(strs: Vec<String>) -> i32 {
 }
 
 /// 946.Validate Stack Sequences
+#[allow(dead_code)]
 pub fn validate_stack_sequences(pushed: Vec<i32>, popped: Vec<i32>) -> bool {
     let mut stack: VecDeque<i32> = VecDeque::new();
-    let n = pushed.len();
     let mut j: usize = 0;
-    for i in 0..n {
-        stack.push_back(pushed[i]);
+    for (_, &v) in pushed.iter().enumerate() {
+        stack.push_back(v);
         while !stack.is_empty() && stack.back().cloned().unwrap() == popped[j] {
             stack.pop_back();
             j += 1;
@@ -1008,6 +1054,7 @@ pub fn validate_stack_sequences(pushed: Vec<i32>, popped: Vec<i32>) -> bool {
 }
 
 /// 998.Maximum Binary Tree II
+#[allow(dead_code)]
 pub fn insert_into_max_tree(
     root: Option<Rc<RefCell<TreeNode>>>,
     val: i32,
@@ -1019,25 +1066,26 @@ pub fn insert_into_max_tree(
     }
     while curr.as_ref().unwrap().borrow().right.is_some()
         && curr
-        .as_ref()
-        .unwrap()
-        .borrow()
-        .right
-        .as_ref()
-        .unwrap()
-        .borrow()
-        .val
-        > val
+            .as_ref()
+            .unwrap()
+            .borrow()
+            .right
+            .as_ref()
+            .unwrap()
+            .borrow()
+            .val
+            > val
     {
         let right = curr.as_ref().unwrap().borrow().right.clone();
         curr = right;
     }
     parent.borrow_mut().left = curr.as_ref().unwrap().borrow().right.clone();
-    curr.as_ref().unwrap().borrow_mut().right = Some(parent.clone());
+    curr.as_ref().unwrap().borrow_mut().right = Some(parent);
     root
 }
 
 /// 1403.Minimum Subsequence in Non-Increasing Order
+#[allow(dead_code)]
 pub fn min_subsequence(mut nums: Vec<i32>) -> Vec<i32> {
     let total: i32 = nums.iter().sum();
     nums.sort_by(|a, b| b.cmp(a));
@@ -1054,14 +1102,13 @@ pub fn min_subsequence(mut nums: Vec<i32>) -> Vec<i32> {
 }
 
 /// 1408.String Matching in an Array
+#[allow(dead_code)]
 pub fn string_matching(words: Vec<String>) -> Vec<String> {
     let mut res: Vec<String> = vec![];
-    for i in 0..words.len() {
-        let word: &String = &words[i];
-        for j in 0..words.len() {
-            let word2: &String = &words[j];
-            if i != j && word2.contains(word.as_str()) {
-                res.push(word.clone());
+    for (i, word1) in words.iter().enumerate() {
+        for (j, word2) in words.iter().enumerate() {
+            if i != j && word2.contains(word1.as_str()) {
+                res.push(word1.clone());
                 break;
             }
         }
@@ -1070,7 +1117,8 @@ pub fn string_matching(words: Vec<String>) -> Vec<String> {
 }
 
 /// 1441. Build an Array With Stack Operations
-pub fn build_array(target: Vec<i32>, n: i32) -> Vec<String> {
+#[allow(dead_code)]
+pub fn build_array(target: Vec<i32>, _n: i32) -> Vec<String> {
     let mut res = Vec::<String>::new();
     let mut prev = 0;
     target.iter().for_each(|&x| {
@@ -1085,6 +1133,7 @@ pub fn build_array(target: Vec<i32>, n: i32) -> Vec<String> {
 }
 
 /// 1450.Number of Students Doing Homework at a Given Time
+#[allow(dead_code)]
 pub fn busy_student(start_time: Vec<i32>, end_time: Vec<i32>, query_time: i32) -> i32 {
     let mut res = 0;
     for i in 0..start_time.len() {
@@ -1096,6 +1145,7 @@ pub fn busy_student(start_time: Vec<i32>, end_time: Vec<i32>, query_time: i32) -
 }
 
 /// 1455.Check If a Word Occurs As a Prefix of Any Word in a Sentence
+#[allow(dead_code)]
 pub fn is_prefix_of_word(sentence: String, search_word: String) -> i32 {
     let words = sentence.as_str().split_ascii_whitespace();
     let mut index = 1;
@@ -1109,6 +1159,7 @@ pub fn is_prefix_of_word(sentence: String, search_word: String) -> i32 {
 }
 
 /// 1460.Make Two Arrays Equal by Reversing Sub-arrays
+#[allow(dead_code)]
 pub fn can_be_equal(mut target: Vec<i32>, mut arr: Vec<i32>) -> bool {
     target.sort();
     arr.sort();
@@ -1116,26 +1167,26 @@ pub fn can_be_equal(mut target: Vec<i32>, mut arr: Vec<i32>) -> bool {
 }
 
 /// 1464.Maximum Product of Two Elements in an Array
+#[allow(dead_code)]
 pub fn max_product(nums: Vec<i32>) -> i32 {
     let mut a = nums[0];
     let mut b = nums[1];
     if a < b {
-        let temp = a;
-        a = b;
-        b = temp;
+        swap(&mut a, &mut b);
     }
-    for i in 2..nums.len() {
-        if a < nums[i] {
+    for &num in nums.iter().skip(2) {
+        if a < num {
             b = a;
-            a = nums[i];
-        } else if nums[i] > b {
-            b = nums[i];
+            a = num;
+        } else if num > b {
+            b = num;
         }
     }
     (a - 1) * (b - 1)
 }
 
 /// 1470.Shuffle the Array
+#[allow(dead_code)]
 pub fn shuffle(nums: Vec<i32>, n: i32) -> Vec<i32> {
     let mut res: Vec<i32> = vec![0; (n * 2) as usize];
     let n = n as usize;
@@ -1147,6 +1198,7 @@ pub fn shuffle(nums: Vec<i32>, n: i32) -> Vec<i32> {
 }
 
 /// 1475.Final Prices With a Special Discount in a Shop
+#[allow(dead_code)]
 pub fn final_prices(prices: Vec<i32>) -> Vec<i32> {
     let n = prices.len();
     let mut res: Vec<i32> = vec![0; n];
@@ -1165,6 +1217,7 @@ pub fn final_prices(prices: Vec<i32>) -> Vec<i32> {
 }
 
 /// 1582.Special Positions in a Binary Matrix
+#[allow(dead_code)]
 pub fn num_special(mut mat: Vec<Vec<i32>>) -> i32 {
     let m = mat.len();
     let n = mat[0].len();
@@ -1187,7 +1240,7 @@ pub fn num_special(mut mat: Vec<Vec<i32>>) -> i32 {
         }
     }
     let mut sum = 0;
-    for num in mat[0].to_vec() {
+    for num in mat[0].iter().copied() {
         if num == 1 {
             sum += 1;
         }
@@ -1196,6 +1249,7 @@ pub fn num_special(mut mat: Vec<Vec<i32>>) -> i32 {
 }
 
 /// 1608.Special Array With X Elements Greater Than or Equal X
+#[allow(dead_code)]
 pub fn special_array(mut nums: Vec<i32>) -> i32 {
     let n = nums.len();
     nums.sort_by(|a, b| b.cmp(a));
@@ -1208,6 +1262,7 @@ pub fn special_array(mut nums: Vec<i32>) -> i32 {
 }
 
 /// 1619.Mean of Array After Removing Some Elements
+#[allow(dead_code)]
 pub fn trim_mean(mut arr: Vec<i32>) -> f64 {
     let n = arr.len();
     arr.sort();
@@ -1215,12 +1270,13 @@ pub fn trim_mean(mut arr: Vec<i32>) -> f64 {
 }
 
 /// 1624.Largest Substring Between Two Equal Characters
+#[allow(dead_code)]
 pub fn max_length_between_equal_characters(s: String) -> i32 {
     let mut map: HashMap<char, usize> = HashMap::new();
     let mut res: i32 = -1;
     for (i, ch) in s.chars().enumerate() {
-        if !map.contains_key(&ch) {
-            map.insert(ch, i);
+        if let Vacant(e) = map.entry(ch) {
+            e.insert(i);
         } else {
             res = max(res, (i - map[&ch] - 1) as i32);
         }
@@ -1229,30 +1285,27 @@ pub fn max_length_between_equal_characters(s: String) -> i32 {
 }
 
 /// 1636.Sort Array by Increasing Frequency
+#[allow(dead_code)]
 pub fn frequency_sort(mut nums: Vec<i32>) -> Vec<i32> {
     let mut count = HashMap::<i32, i32>::new();
     nums.iter()
-        .for_each(|&num| *count.entry(num).or_default() += 1);
-    nums.sort_by(
-        |x, y| match count.get(x).unwrap().cmp(count.get(y).unwrap()) {
-            Ordering::Greater => Ordering::Greater,
-            Ordering::Less => Ordering::Less,
-            _ => y.cmp(x),
-        },
-    );
+        .for_each(|num| *count.entry(*num).or_insert(0) += 1);
+    nums.sort_by(|x, y| count[x].cmp(&count[y]).then(y.cmp(x)));
     nums
 }
 
 /// 1672.Richest Customer Wealth
+#[allow(dead_code)]
 pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
     accounts.iter().map(|x| x.iter().sum()).max().unwrap()
 }
 
 /// 1694.Reformat Phone Number
+#[allow(dead_code)]
 pub fn reformat_number(number: String) -> String {
     let mut digits = String::new();
     for ch in number.chars() {
-        if ch.is_digit(10) {
+        if ch.is_ascii_digit() {
             digits.push(ch);
         }
     }
@@ -1262,13 +1315,13 @@ pub fn reformat_number(number: String) -> String {
     while n > 0 {
         if n > 4 {
             res.push_str(&digits[pt..pt + 3]);
-            res.push_str("-");
+            res.push('-');
             pt += 3;
             n -= 3;
         } else {
             if n == 4 {
                 res.push_str(&digits[pt..pt + 2]);
-                res.push_str("-");
+                res.push('-');
                 res.push_str(&digits[pt + 2..pt + 4]);
             } else {
                 res.push_str(&digits[pt..pt + n]);
@@ -1280,6 +1333,7 @@ pub fn reformat_number(number: String) -> String {
 }
 
 /// 1700. Number of Students Unable to Eat Lunch
+#[allow(dead_code)]
 pub fn count_students(students: Vec<i32>, sandwiches: Vec<i32>) -> i32 {
     let mut square: i32 = students.iter().sum();
     let mut circular = students.len() as i32 - square;
@@ -1296,6 +1350,7 @@ pub fn count_students(students: Vec<i32>, sandwiches: Vec<i32>) -> i32 {
 }
 
 /// 1750. Minimum Length of String After Deleting Similar Ends
+#[allow(dead_code)]
 pub fn minimum_length(s: String) -> i32 {
     let (mut left, mut right, s) = (0, s.len() - 1, s.as_bytes());
     while left < right && s[left] == s[right] {
@@ -1311,6 +1366,7 @@ pub fn minimum_length(s: String) -> i32 {
 }
 
 /// 1768. Merge Strings Alternately
+#[allow(dead_code)]
 pub fn merge_alternately(word1: String, word2: String) -> String {
     let (mut word1_iter, mut word2_iter, mut res) = (
         word1.chars().peekable(),
@@ -1329,6 +1385,7 @@ pub fn merge_alternately(word1: String, word2: String) -> String {
 }
 
 /// 1773. Count Items Matching a Rule
+#[allow(dead_code)]
 pub fn count_matches(items: Vec<Vec<String>>, rule_key: String, rule_value: String) -> i32 {
     let mut rules = HashMap::<String, usize>::new();
     rules.insert(String::from("type"), 0);
@@ -1345,6 +1402,7 @@ pub fn count_matches(items: Vec<Vec<String>>, rule_key: String, rule_value: Stri
 }
 
 /// 1779. Find Nearest Point That Has the Same X or Y Coordinate
+#[allow(dead_code)]
 pub fn nearest_valid_point(x: i32, y: i32, points: Vec<Vec<i32>>) -> i32 {
     let (mut min, mut res) = (i32::MAX, -1);
     for (i, p) in points.iter().enumerate() {
@@ -1360,11 +1418,13 @@ pub fn nearest_valid_point(x: i32, y: i32, points: Vec<Vec<i32>>) -> i32 {
 }
 
 /// 1784.Check if Binary String Has at Most One Segment of Ones
+#[allow(dead_code)]
 pub fn check_ones_segment(s: String) -> bool {
     !s.contains("01")
 }
 
 /// 1790.Check if One String Swap Can Make Strings Equal
+#[allow(dead_code)]
 pub fn are_almost_equal(s1: String, s2: String) -> bool {
     let mut diff: Vec<usize> = vec![];
     let chars1 = s1.chars().collect::<Vec<char>>();
@@ -1389,6 +1449,7 @@ pub fn are_almost_equal(s1: String, s2: String) -> bool {
 }
 
 /// 1800.Maximum Ascending Subarray Sum
+#[allow(dead_code)]
 pub fn max_ascending_sum(nums: Vec<i32>) -> i32 {
     let (mut res, mut i) = (0, 0);
     let n = nums.len();
@@ -1405,6 +1466,7 @@ pub fn max_ascending_sum(nums: Vec<i32>) -> i32 {
 }
 
 /// 1822. Sign of the Product of an Array
+#[allow(dead_code)]
 pub fn array_sign(nums: Vec<i32>) -> i32 {
     let mut sign = 1;
     for num in nums {
@@ -1419,6 +1481,7 @@ pub fn array_sign(nums: Vec<i32>) -> i32 {
 }
 
 /// 1823.Find the Winner of the Circular Game
+#[allow(dead_code)]
 pub fn find_the_winner(n: i32, k: i32) -> i32 {
     let mut winner = 1;
     for i in 2..=n {
@@ -1428,26 +1491,33 @@ pub fn find_the_winner(n: i32, k: i32) -> i32 {
 }
 
 /// 1991.Find the Middle Index in Array
+#[allow(dead_code)]
 pub fn find_middle_index(nums: Vec<i32>) -> i32 {
     let total: i32 = nums.iter().sum();
     let mut sum: i32 = 0;
-    for i in 0..nums.len() {
-        if 2 * sum + nums[i] == total {
+    for (i, num) in nums.iter().enumerate() {
+        if 2 * sum + num == total {
             return i as i32;
         }
-        sum += nums[i];
+        sum += num;
     }
     -1
 }
 
 /// 2011. Final Value of Variable After Performing Operations
+#[allow(dead_code)]
 pub fn final_value_after_operations(operations: Vec<String>) -> i32 {
     operations.iter().fold(0, |acc, op| {
-        acc + if op.as_bytes()[1] as char == '+' { 1 } else { -1 }
+        acc + if op.as_bytes()[1] as char == '+' {
+            1
+        } else {
+            -1
+        }
     })
 }
 
 /// 2027. Minimum Moves to Convert String
+#[allow(dead_code)]
 pub fn minimum_moves(s: String) -> i32 {
     let (mut res, mut count) = (0, -1);
     for (i, ch) in s.chars().enumerate() {
@@ -1460,6 +1530,7 @@ pub fn minimum_moves(s: String) -> i32 {
 }
 
 /// 2032. Two Out of Three
+#[allow(dead_code)]
 pub fn two_out_of_three(nums1: Vec<i32>, nums2: Vec<i32>, nums3: Vec<i32>) -> Vec<i32> {
     let mut map = HashMap::<i32, i32>::new();
     for num in nums1 {
@@ -1481,15 +1552,20 @@ pub fn two_out_of_three(nums1: Vec<i32>, nums2: Vec<i32>, nums3: Vec<i32>) -> Ve
 }
 
 /// 2037. Minimum Number of Moves to Seat Everyone
+#[allow(dead_code)]
 pub fn min_moves_to_seat(mut seats: Vec<i32>, mut students: Vec<i32>) -> i32 {
     seats.sort();
     students.sort();
-    seats.iter().zip(students.iter()).fold(0, |res, (i, j)| res + (i - j).abs())
+    seats
+        .iter()
+        .zip(students.iter())
+        .fold(0, |res, (i, j)| res + (i - j).abs())
 }
 
 /// 2042. Check if Numbers Are Ascending in a Sentence
+#[allow(dead_code)]
 pub fn are_number_ascending(s: String) -> bool {
-    let (mut prev, mut pos, mut n) = (0, 0, s.len());
+    let (mut prev, mut pos, n) = (0, 0, s.len());
     let chars = s.as_bytes();
     while pos < n {
         if chars[pos].is_ascii_digit() {
@@ -1510,8 +1586,9 @@ pub fn are_number_ascending(s: String) -> bool {
 }
 
 /// 2180. Count Integers With Even Digit Sum
+#[allow(dead_code)]
 pub fn count_even(num: i32) -> i32 {
-    let (mut y, mut x) = (num / 10, num % 10);
+    let (mut y, x) = (num / 10, num % 10);
     let (mut res, mut y_sum) = (y * 5, 0);
     while y > 0 {
         y_sum += y % 10;
@@ -1526,6 +1603,7 @@ pub fn count_even(num: i32) -> i32 {
 }
 
 /// 2351. First Letter to Appear Twice
+#[allow(dead_code)]
 pub fn repeated_character(s: String) -> char {
     let mut seen = 0;
     for ch in s.chars() {
@@ -1587,12 +1665,12 @@ mod tests {
 
     #[test]
     fn test_reverse_int() {
-        assert_eq!(reverse_int(123), 321);
-        assert_eq!(reverse_int(-123), -321);
-        assert_eq!(reverse_int(120), 21);
-        assert_eq!(reverse_int(100), 1);
-        assert_eq!(reverse_int(2147483647), 0);
-        assert_eq!(reverse_int(-2147483648), 0);
+        assert_eq!(321, reverse_int(123));
+        assert_eq!(-321, reverse_int(-123),);
+        assert_eq!(21, reverse_int(120));
+        assert_eq!(1, reverse_int(100));
+        assert_eq!(0, reverse_int(2147483647));
+        assert_eq!(0, reverse_int(-2147483648));
     }
 
     #[test]
@@ -1764,9 +1842,9 @@ mod tests {
 
     #[test]
     fn test_has_alternating_bits() {
-        assert_eq!(has_alternating_bits(5), true);
-        assert_eq!(has_alternating_bits(7), false);
-        assert_eq!(has_alternating_bits(11), false);
+        assert!(has_alternating_bits(5));
+        assert!(!has_alternating_bits(7));
+        assert!(!has_alternating_bits(11));
     }
 
     #[test]
@@ -1898,9 +1976,12 @@ mod tests {
             "1 intel.mail.com",
             "951 com",
         ]);
-
-        assert_eq!(actual1.sort(), expected1.sort());
-        assert_eq!(actual2.sort(), expected2.sort());
+        actual1.sort();
+        expected1.sort();
+        actual2.sort();
+        expected2.sort();
+        assert_eq!(expected1, actual1);
+        assert_eq!(expected2, actual2);
     }
 
     #[test]
@@ -1957,21 +2038,18 @@ mod tests {
 
     #[test]
     fn test_possible_bipartiition() {
-        assert_eq!(
-            possible_bipartition(4, vec![vec![1, 2], vec![1, 3], vec![2, 4]]),
-            true
-        );
-        assert_eq!(
-            possible_bipartition(3, vec![vec![1, 2], vec![1, 3], vec![2, 3]]),
-            false
-        );
-        assert_eq!(
-            possible_bipartition(
-                5,
-                vec![vec![1, 2], vec![2, 3], vec![3, 4], vec![4, 5], vec![1, 5]],
-            ),
-            false
-        );
+        assert!(possible_bipartition(
+            4,
+            vec![vec![1, 2], vec![1, 3], vec![2, 4]]
+        ));
+        assert!(!possible_bipartition(
+            3,
+            vec![vec![1, 2], vec![1, 3], vec![2, 3]]
+        ));
+        assert!(!possible_bipartition(
+            5,
+            vec![vec![1, 2], vec![2, 3], vec![3, 4], vec![4, 5], vec![1, 5]]
+        ));
     }
 
     #[test]
@@ -2118,9 +2196,9 @@ mod tests {
 
     #[test]
     fn test_can_be_equal() {
-        assert_eq!(can_be_equal(vec![1, 2, 3, 4], vec![2, 1, 3, 4]), true);
-        assert_eq!(can_be_equal(vec![7], vec![7]), true);
-        assert_eq!(can_be_equal(vec![3, 7, 9], vec![3, 7, 11]), false);
+        assert!(can_be_equal(vec![1, 2, 3, 4], vec![2, 1, 3, 4]));
+        assert!(can_be_equal(vec![7], vec![7]));
+        assert!(!can_be_equal(vec![3, 7, 9], vec![3, 7, 11]));
     }
 
     #[test]
@@ -2168,27 +2246,24 @@ mod tests {
 
     #[test]
     fn test_trim_mean() {
-        assert_eq!(
+        assert!(
             (trim_mean(vec![
                 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
             ]) - 2.00000)
-                <= 0.00001,
-            true
+                <= 0.00001
         );
-        assert_eq!(
+        assert!(
             (trim_mean(vec![
                 6, 2, 7, 5, 1, 2, 0, 3, 10, 2, 5, 0, 5, 5, 0, 8, 7, 6, 8, 0,
             ]) - 4.00000)
-                <= 0.00001,
-            true
+                <= 0.00001
         );
-        assert_eq!(
+        assert!(
             (trim_mean(vec![
                 6, 0, 7, 0, 7, 5, 7, 8, 3, 4, 0, 7, 8, 1, 6, 8, 1, 1, 2, 4, 8, 1, 9, 5, 4, 3, 8, 5,
                 10, 8, 6, 6, 1, 0, 6, 10, 8, 2, 3, 4,
             ]) - 4.77778)
-                <= 0.00001,
-            true
+                <= 0.00001
         );
     }
 
@@ -2303,31 +2378,35 @@ mod tests {
 
     #[test]
     fn test_nearest_valid_point() {
-        assert_eq!(nearest_valid_point(3, 4, vec![vec![1, 2], vec![3, 1], vec![2, 4], vec![2, 3], vec![4, 4]]), 2);
+        assert_eq!(
+            nearest_valid_point(
+                3,
+                4,
+                vec![vec![1, 2], vec![3, 1], vec![2, 4], vec![2, 3], vec![4, 4]]
+            ),
+            2
+        );
         assert_eq!(nearest_valid_point(3, 4, vec![vec![3, 4]]), 0);
         assert_eq!(nearest_valid_point(3, 4, vec![vec![2, 3]]), -1);
     }
 
     #[test]
     fn test_check_ones_segment() {
-        assert_eq!(check_ones_segment(String::from("1001")), false);
-        assert_eq!(check_ones_segment(String::from("110")), true);
+        assert!(!check_ones_segment(String::from("1001")));
+        assert!(check_ones_segment(String::from("110")));
     }
 
     #[test]
     fn test_are_almost_equal() {
-        assert_eq!(
-            true,
-            are_almost_equal(String::from("bank"), String::from("kanb"))
-        );
-        assert_eq!(
-            false,
-            are_almost_equal(String::from("attack"), String::from("defend"))
-        );
-        assert_eq!(
-            true,
-            are_almost_equal(String::from("kelb"), String::from("kelbf"))
-        );
+        assert!(are_almost_equal(String::from("bank"), String::from("kanb")));
+        assert!(!are_almost_equal(
+            String::from("attack"),
+            String::from("defend")
+        ));
+        assert!(are_almost_equal(
+            String::from("kelb"),
+            String::from("kelbf")
+        ));
     }
 
     #[test]
@@ -2352,9 +2431,18 @@ mod tests {
 
     #[test]
     fn test_final_value_after_operations() {
-        assert_eq!(1, final_value_after_operations(generate_string_vec(vec!["--X", "X++", "X++"])));
-        assert_eq!(3, final_value_after_operations(generate_string_vec(vec!["++X", "++X", "X++"])));
-        assert_eq!(0, final_value_after_operations(generate_string_vec(vec!["X++", "++X", "--X", "X--"])));
+        assert_eq!(
+            1,
+            final_value_after_operations(generate_string_vec(vec!["--X", "X++", "X++"]))
+        );
+        assert_eq!(
+            3,
+            final_value_after_operations(generate_string_vec(vec!["++X", "++X", "X++"]))
+        );
+        assert_eq!(
+            0,
+            final_value_after_operations(generate_string_vec(vec!["X++", "++X", "--X", "X--"]))
+        );
     }
 
     #[test]
@@ -2366,9 +2454,19 @@ mod tests {
 
     #[test]
     fn test_two_out_of_three() {
-        assert_eq!(vec![3, 2].sort(), two_out_of_three(vec![1, 1, 3, 2], vec![2, 3], vec![3]).sort());
-        assert_eq!(vec![2, 3, 1].sort(), two_out_of_three(vec![3, 1], vec![2, 3], vec![1, 2]).sort());
-        assert_eq!(Vec::<i32>::new(), two_out_of_three(vec![1, 2, 2], vec![4, 3, 3], vec![5]));
+        let mut expected1 = vec![3, 2];
+        let mut expected2 = vec![2, 3, 1];
+        let expected3: Vec<i32> = vec![];
+        expected1.sort();
+        expected2.sort();
+        let mut actual1 = two_out_of_three(vec![1, 1, 3, 2], vec![2, 3], vec![3]);
+        let mut actual2 = two_out_of_three(vec![3, 1], vec![2, 3], vec![1, 2]);
+        let actual3 = two_out_of_three(vec![1, 2, 2], vec![4, 3, 3], vec![5]);
+        actual1.sort();
+        actual2.sort();
+        assert_eq!(expected1, actual1);
+        assert_eq!(expected2, actual2);
+        assert_eq!(expected3, actual3);
     }
 
     #[test]
@@ -2380,9 +2478,13 @@ mod tests {
 
     #[test]
     fn test_are_number_ascending() {
-        assert_eq!(true, are_number_ascending(String::from("1 box has 3 blue 4 red 6 green and 12 yellow marbles")));
-        assert_eq!(false, are_number_ascending(String::from("hello world 5 x 5")));
-        assert_eq!(false, are_number_ascending(String::from("sunset is at 7 51 pm overnight lows will be in the low 50 and 60 s")));
+        assert!(are_number_ascending(String::from(
+            "1 box has 3 blue 4 red 6 green and 12 yellow marbles"
+        )));
+        assert!(!are_number_ascending(String::from("hello world 5 x 5")));
+        assert!(!are_number_ascending(String::from(
+            "sunset is at 7 51 pm overnight lows will be in the low 50 and 60 s"
+        )));
     }
 
     #[test]
