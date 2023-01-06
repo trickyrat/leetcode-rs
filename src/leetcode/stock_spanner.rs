@@ -4,14 +4,14 @@ pub struct StockSpanner {
 }
 
 impl StockSpanner {
-    fn new() -> Self {
+    pub fn new() -> Self {
         StockSpanner {
             stack: vec![(-1, i32::MAX)],
             index: -1,
         }
     }
 
-    fn next(&mut self, price: i32) -> i32 {
+    pub fn next(&mut self, price: i32) -> i32 {
         self.index += 1;
         while price >= self.stack.last().unwrap().1 {
             self.stack.pop();
@@ -24,8 +24,9 @@ impl StockSpanner {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use crate::leetcode::StockSpanner;
 
+    #[test]
     fn test_stock_spanner() {
         let mut stock_spanner = StockSpanner::new();
         assert_eq!(1, stock_spanner.next(100));

@@ -18,3 +18,15 @@ impl TreeNode {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::leetcode::data_structures::TreeNode;
+
+    #[test]
+    fn test_tree_node_construct() {
+        let root = Some(TreeNode::new(1));
+        assert!(root.is_some());
+        assert_eq!(1, root.unwrap().val);
+    }
+}

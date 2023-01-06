@@ -1,3 +1,6 @@
+use std::fmt::{Display, Formatter};
+use std::mem;
+
 #[derive(PartialEq, Eq, Clone, Debug)]
 pub struct ListNode {
     pub val: i32,
@@ -10,6 +13,7 @@ impl ListNode {
         ListNode { next: None, val }
     }
 
+    #[allow(dead_code)]
     pub fn get_last_node(&mut self) -> &mut Self {
         if let Some(ref mut box_node) = self.next {
             box_node.get_last_node()
@@ -18,18 +22,77 @@ impl ListNode {
         }
     }
 
+    #[allow(dead_code)]
     pub fn append(&mut self, val: i32) {
         let new_node = ListNode::new(val);
         self.get_last_node().next = Some(Box::new(new_node));
     }
+}
 
-    pub fn to_string(&self) -> String {
-        let dummy = self.clone();
-        let mut res: Vec<String> = Vec::new();
-        while dummy.next != None {
-            let val = dummy.next.as_ref().unwrap().val.to_string();
-            res.push(val);
+enum ListNodeType {
+    Empty,
+    NonEmpty(ListNode),
+}
+
+impl ListNodeType {
+    fn new(val: i32, next: Option<Box<ListNode>>) -> Self {
+        ListNodeType::NonEmpty(ListNode { val, next })
+    }
+
+    fn take(&mut self) -> Self {
+        let mut curr_node = Self::Empty;
+        mem::swap(&mut curr_node, self);
+        curr_node
+    }
+}
+
+pub struct LinkedList {
+    length: usize,
+    pub head: Option<Box<ListNode>>,
+    pub tail: Option<Box<ListNode>>,
+}
+
+impl LinkedList {
+    pub fn new() -> Self {
+        Self {
+            length: 0,
+            head: None,
+            tail: None,
         }
-        res.join("->")
+    }
+    pub fn len(&self) -> usize {
+        self.length
+    }
+
+    pub fn insert_at_head(&mut self, val: i32) {
+        let curr_head = self.head.take();
+        let new_node = Some(Box::new(ListNode {
+            val,
+            next: curr_head,
+        }));
+        self.head = new_node;
+        self.length += 1;
+    }
+
+    pub fn insert_at_tail(&mut self, val: i32) {
+        let curr_head = self.tail.take();
+        let new_node = Some(Box::new(ListNode {
+            val,
+            next: curr_head,
+        }));
+        self.tail = new_node;
+        self.length += 1;
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::leetcode::data_structures::ListNode;
+
+    #[test]
+    fn test_list_node_construct() {
+        let head = Some(ListNode::new(1));
+        assert!(head.is_some());
+        assert_eq!(1, head.unwrap().val);
     }
 }

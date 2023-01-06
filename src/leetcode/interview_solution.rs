@@ -59,26 +59,17 @@ mod tests {
 
     #[test]
     fn test_check_permutation() {
-        assert_eq!(
-            check_permutation("abc".to_string(), "bca".to_string()),
-            true
-        );
-        assert_eq!(
-            check_permutation("abc".to_string(), "bad".to_string()),
-            false
-        );
+        assert!(check_permutation("abc".to_string(), "bca".to_string()));
+        assert!(!check_permutation("abc".to_string(), "bad".to_string()));
     }
 
     #[test]
     fn test_is_flipped_string() {
-        assert_eq!(
-            is_flipped_string("waterbottle".to_string(), "erbottlewat".to_string()),
-            true
-        );
-        assert_eq!(
-            is_flipped_string("aa".to_string(), "aba".to_string()),
-            false
-        );
+        assert!(is_flipped_string(
+            "waterbottle".to_string(),
+            "erbottlewat".to_string()
+        ));
+        assert!(!is_flipped_string("aa".to_string(), "aba".to_string()));
     }
 
     #[test]
