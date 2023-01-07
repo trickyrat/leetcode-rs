@@ -2425,9 +2425,9 @@ mod tests {
 
     #[test]
     fn test_array_sign() {
-        assert_eq!(1, array_sign(vec![-1, -2, -3, -4, 3, 2, 1]));
-        assert_eq!(0, array_sign(vec![1, 5, 0, 2, -3]));
-        assert_eq!(-1, array_sign(vec![-1, 1, -1, 1, -1]));
+        assert_eq!(array_sign(vec![-1, -2, -3, -4, 3, 2, 1]), 1);
+        assert_eq!(array_sign(vec![1, 5, 0, 2, -3]), 0);
+        assert_eq!(array_sign(vec![-1, 1, -1, 1, -1]), -1);
     }
 
     #[test]
@@ -2438,32 +2438,32 @@ mod tests {
 
     #[test]
     fn test_find_middle_index() {
-        assert_eq!(3, find_middle_index(vec! {2, 3, -1, 8, 4}));
-        assert_eq!(2, find_middle_index(vec! {1, -1, 4}));
-        assert_eq!(-1, find_middle_index(vec! {2, 5}));
+        assert_eq!(find_middle_index(vec! {2, 3, -1, 8, 4}), 3);
+        assert_eq!(find_middle_index(vec! {1, -1, 4}), 2);
+        assert_eq!(find_middle_index(vec! {2, 5}), -1);
     }
 
     #[test]
     fn test_final_value_after_operations() {
         assert_eq!(
-            1,
-            final_value_after_operations(generate_string_vec(vec!["--X", "X++", "X++"]))
+            final_value_after_operations(generate_string_vec(vec!["--X", "X++", "X++"])),
+            1
         );
         assert_eq!(
-            3,
-            final_value_after_operations(generate_string_vec(vec!["++X", "++X", "X++"]))
+            final_value_after_operations(generate_string_vec(vec!["++X", "++X", "X++"])),
+            3
         );
         assert_eq!(
-            0,
-            final_value_after_operations(generate_string_vec(vec!["X++", "++X", "--X", "X--"]))
+            final_value_after_operations(generate_string_vec(vec!["X++", "++X", "--X", "X--"])),
+            0
         );
     }
 
     #[test]
     fn test_minimum_moves() {
-        assert_eq!(1, minimum_moves(String::from("XXX")));
-        assert_eq!(2, minimum_moves(String::from("XXOX")));
-        assert_eq!(0, minimum_moves(String::from("OOOO")));
+        assert_eq!(minimum_moves(String::from("XXX")), 1);
+        assert_eq!(minimum_moves(String::from("XXOX")), 2);
+        assert_eq!(minimum_moves(String::from("OOOO")), 0);
     }
 
     #[test]
@@ -2485,9 +2485,9 @@ mod tests {
 
     #[test]
     fn test_min_moves_to_seat() {
-        assert_eq!(4, min_moves_to_seat(vec![3, 1, 5], vec![2, 7, 4]));
-        assert_eq!(7, min_moves_to_seat(vec![4, 1, 5, 9], vec![1, 3, 2, 6]));
-        assert_eq!(4, min_moves_to_seat(vec![2, 2, 6, 6], vec![1, 3, 2, 6]));
+        assert_eq!(min_moves_to_seat(vec![3, 1, 5], vec![2, 7, 4]), 4);
+        assert_eq!(min_moves_to_seat(vec![4, 1, 5, 9], vec![1, 3, 2, 6]), 7);
+        assert_eq!(min_moves_to_seat(vec![2, 2, 6, 6], vec![1, 3, 2, 6]), 4);
     }
 
     #[test]
@@ -2503,8 +2503,8 @@ mod tests {
 
     #[test]
     fn test_count_even() {
-        assert_eq!(2, count_even(4));
-        assert_eq!(14, count_even(30));
+        assert_eq!(count_even(4), 2);
+        assert_eq!(count_even(30), 14);
     }
 
     #[test]
@@ -2527,9 +2527,9 @@ mod tests {
 
     #[test]
     fn test_repeated_character() {
-        assert_eq!('c', repeated_character(String::from("abccbaacz")));
-        assert_eq!('d', repeated_character(String::from("abcdd")));
-        assert_eq!('a', repeated_character(String::from("aa")));
-        assert_eq!('z', repeated_character(String::from("zz")));
+        assert_eq!(repeated_character(String::from("abccbaacz")), 'c');
+        assert_eq!(repeated_character(String::from("abcdd")), 'd');
+        assert_eq!(repeated_character(String::from("aa")), 'a');
+        assert_eq!(repeated_character(String::from("zz")), 'z');
     }
 }
