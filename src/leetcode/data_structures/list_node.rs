@@ -1,4 +1,5 @@
-use std::fmt::{Display, Formatter};
+#![cfg_attr(debug_assertions, allow(dead_code))]
+
 use std::mem;
 
 #[derive(PartialEq, Eq, Clone, Debug)]
@@ -13,7 +14,6 @@ impl ListNode {
         ListNode { next: None, val }
     }
 
-    #[allow(dead_code)]
     pub fn get_last_node(&mut self) -> &mut Self {
         if let Some(ref mut box_node) = self.next {
             box_node.get_last_node()
@@ -22,7 +22,6 @@ impl ListNode {
         }
     }
 
-    #[allow(dead_code)]
     pub fn append(&mut self, val: i32) {
         let new_node = ListNode::new(val);
         self.get_last_node().next = Some(Box::new(new_node));

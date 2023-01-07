@@ -1,3 +1,5 @@
+#![cfg_attr(debug_assertions, allow(dead_code))]
+
 pub struct StockSpanner {
     stack: Vec<(i32, i32)>,
     index: i32,

@@ -1,3 +1,5 @@
+#![cfg_attr(debug_assertions, allow(dead_code))]
+
 use std::cmp::min;
 
 /// 01.02. Check Permutation LCCI
@@ -29,7 +31,7 @@ pub fn is_flipped_string(s1: String, s2: String) -> bool {
     if s2.is_empty() {
         return false;
     }
-    s1.repeat(2).find(&s2).is_some()
+    s1.repeat(2).contains(&s2)
 }
 
 /// 17.09. Get Kth Magic Number LCCI
