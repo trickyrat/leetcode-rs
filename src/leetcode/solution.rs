@@ -1590,6 +1590,14 @@ pub fn count_even(num: i32) -> i32 {
     res - 1
 }
 
+/// 2185. Counting Words With a Given Prefix
+pub fn prefix_count(words: Vec<String>, pref: String) -> i32 {
+    words
+        .into_iter()
+        .filter(|word| word.starts_with(&pref))
+        .count() as i32
+}
+
 /// 2351. First Letter to Appear Twice
 pub fn repeated_character(s: String) -> char {
     let mut seen = 0;
@@ -2497,6 +2505,24 @@ mod tests {
     fn test_count_even() {
         assert_eq!(2, count_even(4));
         assert_eq!(14, count_even(30));
+    }
+
+    #[test]
+    fn test_prefix_count() {
+        assert_eq!(
+            prefix_count(
+                generate_string_vec(vec!["pay", "attention", "practice", "attend"]),
+                String::from("at")
+            ),
+            2
+        );
+        assert_eq!(
+            prefix_count(
+                generate_string_vec(vec!["leetcode", "win", "loops", "success"]),
+                String::from("code")
+            ),
+            0
+        );
     }
 
     #[test]
