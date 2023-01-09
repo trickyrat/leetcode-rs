@@ -97,6 +97,27 @@ pub fn reverse_int(x: i32) -> i32 {
     res
 }
 
+/// 21.Merge Two Sorted List
+pub fn merge_two_sorted_lists(
+    mut list1: Option<Box<ListNode>>,
+    mut list2: Option<Box<ListNode>>,
+) -> Option<Box<ListNode>> {
+    let mut dummy_head = ListNode::new(-1);
+    let mut p = &mut dummy_head;
+    while let (Some(p1), Some(p2)) = (list1.as_ref(), list2.as_ref()) {
+        let curr = if p1.val < p2.val {
+            &mut list1
+        } else {
+            &mut list2
+        };
+        p.next = curr.take();
+        p = p.next.as_mut().unwrap();
+        *curr = p.next.take();
+    }
+    p.next = list1.or(list2);
+    dummy_head.next
+}
+
 /// 27.Remove Element
 pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
     let mut left = 0;
@@ -1659,6 +1680,22 @@ mod tests {
         assert_eq!(length_of_longest_substring(String::from("abcabcbb")), 3);
         assert_eq!(length_of_longest_substring(String::from("bbbbb")), 1);
         assert_eq!(length_of_longest_substring(String::from("pwwkew")), 3);
+    }
+
+    #[test]
+    fn test_merge_two_sorted_lists() {
+        assert_eq!(
+            merge_two_sorted_lists(
+                generate_linked_list_node(vec![1, 2, 4]),
+                generate_linked_list_node(vec![1, 3, 4])
+            ),
+            generate_linked_list_node(vec![1, 1, 2, 3, 4, 4])
+        );
+        assert_eq!(merge_two_sorted_lists(None, None), None);
+        assert_eq!(
+            merge_two_sorted_lists(None, generate_linked_list_node(vec![0])),
+            generate_linked_list_node(vec![0])
+        );
     }
 
     #[test]
