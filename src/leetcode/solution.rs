@@ -131,6 +131,25 @@ pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
     left as i32
 }
 
+/// 86.Partition List
+pub fn partition(mut head: Option<Box<ListNode>>, x: i32) -> Option<Box<ListNode>> {
+    let (mut dummy_head1, mut dummy_head2) = (ListNode::new(-1), ListNode::new(-1));
+    let (mut p1, mut p2) = (&mut dummy_head1, &mut dummy_head2);
+    while let Some(mut p) = head {
+        head = p.next.take();
+
+        if p.val >= x {
+            p2.next = Some(p);
+            p2 = p2.next.as_mut().unwrap();
+        } else {
+            p1.next = Some(p);
+            p1 = p1.next.as_mut().unwrap();
+        }
+    }
+    p1.next = dummy_head2.next;
+    dummy_head1.next
+}
+
 /// 172.Factorial Trailing Zeroes
 pub fn trailing_zeroes(n: i32) -> i32 {
     let mut ans = 0;
@@ -1712,6 +1731,18 @@ mod tests {
     fn test_remove_element() {
         assert_eq!(remove_element(&mut vec![3, 2, 2, 3], 3), 2);
         assert_eq!(remove_element(&mut vec![0, 1, 2, 2, 3, 0, 4, 2], 2), 5);
+    }
+
+    #[test]
+    fn test_partition() {
+        assert_eq!(
+            partition(generate_linked_list_node(vec![1, 4, 3, 2, 5, 2]), 3),
+            generate_linked_list_node(vec![1, 2, 2, 4, 3, 5])
+        );
+        assert_eq!(
+            partition(generate_linked_list_node(vec![2, 1]), 2),
+            generate_linked_list_node(vec![1, 2])
+        );
     }
 
     #[test]
