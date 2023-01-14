@@ -1,4 +1,4 @@
-#![cfg_attr(debug_assertions, allow(dead_code))]
+#![cfg_attr(debug_assertions, allow(unused))]
 
 use crate::leetcode::data_structures::ListNode;
 use crate::leetcode::TreeNode;
@@ -95,6 +95,24 @@ pub fn reverse_int(x: i32) -> i32 {
         res = res * 10 + digit;
     }
     res
+}
+
+/// 19. Remove Nth Node From End of List
+pub fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {
+    let mut dummy = Box::new(ListNode { val: -1, next: head });
+    let mut fast = &mut dummy.clone();
+    let mut slow = &mut dummy;
+    let n = n as usize;
+    for _ in 0..n {
+        fast = fast.next.as_mut().unwrap();
+    }
+
+    while fast.next.is_some() {
+        fast = fast.next.as_mut().unwrap();
+        slow = slow.next.as_mut().unwrap();
+    }
+    slow.next = slow.next.take().unwrap().next.clone();
+    dummy.next
 }
 
 /// 21.Merge Two Sorted List
@@ -1091,15 +1109,15 @@ pub fn insert_into_max_tree(
     }
     while curr.as_ref().unwrap().borrow().right.is_some()
         && curr
-            .as_ref()
-            .unwrap()
-            .borrow()
-            .right
-            .as_ref()
-            .unwrap()
-            .borrow()
-            .val
-            > val
+        .as_ref()
+        .unwrap()
+        .borrow()
+        .right
+        .as_ref()
+        .unwrap()
+        .borrow()
+        .val
+        > val
     {
         let right = curr.as_ref().unwrap().borrow().right.clone();
         curr = right;
@@ -1713,7 +1731,7 @@ mod tests {
         assert_eq!(
             add_two_numbers(
                 generate_linked_list_node(vec![0]),
-                generate_linked_list_node(vec![0])
+                generate_linked_list_node(vec![0]),
             ),
             generate_linked_list_node(vec![0])
         );
@@ -1738,7 +1756,7 @@ mod tests {
         assert_eq!(
             merge_two_sorted_lists(
                 generate_linked_list_node(vec![1, 2, 4]),
-                generate_linked_list_node(vec![1, 3, 4])
+                generate_linked_list_node(vec![1, 3, 4]),
             ),
             generate_linked_list_node(vec![1, 1, 2, 3, 4, 4])
         );
@@ -1770,6 +1788,16 @@ mod tests {
         assert_eq!(reverse_int(100), 1);
         assert_eq!(reverse_int(2147483647), 0);
         assert_eq!(reverse_int(-2147483648), 0);
+    }
+
+    #[test]
+    fn test_remove_nth_from_end() {
+        assert_eq!(remove_nth_from_end(generate_linked_list_node(vec![1, 2, 3, 4, 5]), 2),
+                   generate_linked_list_node(vec![1, 2, 3, 5]));
+        assert_eq!(remove_nth_from_end(generate_linked_list_node(vec![1]), 1),
+                   None);
+        assert_eq!(remove_nth_from_end(generate_linked_list_node(vec![1, 2]), 1),
+                   generate_linked_list_node(vec![1]));
     }
 
     #[test]
@@ -2104,7 +2132,7 @@ mod tests {
         assert_eq!(
             num_components(
                 generate_linked_list_node(vec![0, 1, 2, 3, 4]),
-                vec![0, 3, 1, 4]
+                vec![0, 3, 1, 4],
             ),
             2
         );
@@ -2154,15 +2182,15 @@ mod tests {
     fn test_possible_bipartiition() {
         assert!(possible_bipartition(
             4,
-            vec![vec![1, 2], vec![1, 3], vec![2, 4]]
+            vec![vec![1, 2], vec![1, 3], vec![2, 4]],
         ));
         assert!(!possible_bipartition(
             3,
-            vec![vec![1, 2], vec![1, 3], vec![2, 3]]
+            vec![vec![1, 2], vec![1, 3], vec![2, 3]],
         ));
         assert!(!possible_bipartition(
             5,
-            vec![vec![1, 2], vec![2, 3], vec![3, 4], vec![4, 5], vec![1, 5]]
+            vec![vec![1, 2], vec![2, 3], vec![3, 4], vec![4, 5], vec![1, 5]],
         ));
     }
 
@@ -2503,7 +2531,7 @@ mod tests {
             nearest_valid_point(
                 3,
                 4,
-                vec![vec![1, 2], vec![3, 1], vec![2, 4], vec![2, 3], vec![4, 4]]
+                vec![vec![1, 2], vec![3, 1], vec![2, 4], vec![2, 3], vec![4, 4]],
             ),
             2
         );
@@ -2522,11 +2550,11 @@ mod tests {
         assert!(are_almost_equal(String::from("bank"), String::from("kanb")));
         assert!(!are_almost_equal(
             String::from("attack"),
-            String::from("defend")
+            String::from("defend"),
         ));
         assert!(are_almost_equal(
             String::from("kelb"),
-            String::from("kelbf")
+            String::from("kelbf"),
         ));
     }
 
@@ -2625,14 +2653,14 @@ mod tests {
         assert_eq!(
             prefix_count(
                 generate_string_vec(vec!["pay", "attention", "practice", "attend"]),
-                String::from("at")
+                String::from("at"),
             ),
             2
         );
         assert_eq!(
             prefix_count(
                 generate_string_vec(vec!["leetcode", "win", "loops", "success"]),
-                String::from("code")
+                String::from("code"),
             ),
             0
         );
