@@ -5,7 +5,7 @@ use crate::leetcode::TreeNode;
 use std::cell::RefCell;
 use std::cmp::{max, min, Ordering};
 use std::collections::hash_map::Entry::Vacant;
-use std::collections::{HashMap, HashSet, VecDeque};
+use std::collections::{BinaryHeap, HashMap, HashSet, VecDeque};
 use std::mem::swap;
 use std::rc::Rc;
 
@@ -116,6 +116,38 @@ pub fn merge_two_sorted_lists(
     }
     p.next = list1.or(list2);
     dummy_head.next
+}
+
+/// 23.Merge K Sorted Lists
+pub fn merge_k_lists(lists: Vec<Option<Box<ListNode>>>) -> Option<Box<ListNode>> {
+    if lists.is_empty() {
+        return None;
+    }
+    let mut dummy = ListNode::new(-1);
+    let mut p = &mut dummy;
+    let mut pq = BinaryHeap::with_capacity(lists.len());
+    for head in lists {
+        match head {
+            Some(v) => pq.push(v),
+            None => {}
+        }
+    }
+
+    while !pq.is_empty() {
+        let mut node = pq.pop().unwrap();
+        if pq.is_empty() {
+            p.next = Some(node);
+            break;
+        }
+        let next = node.next.take();
+        if next.is_some() {
+            pq.push(next.unwrap());
+        }
+        p.next = Some(node);
+        p = p.next.as_mut().unwrap();
+    }
+
+    dummy.next
 }
 
 /// 27.Remove Element
@@ -1714,6 +1746,19 @@ mod tests {
         assert_eq!(
             merge_two_sorted_lists(None, generate_linked_list_node(vec![0])),
             generate_linked_list_node(vec![0])
+        );
+    }
+
+    #[test]
+    fn test_merge_k_sorted_lists() {
+        let lists = vec![
+            generate_linked_list_node(vec![1, 4, 5]),
+            generate_linked_list_node(vec![1, 3, 4]),
+            generate_linked_list_node(vec![2, 6]),
+        ];
+        assert_eq!(
+            merge_k_lists(lists),
+            generate_linked_list_node(vec![1, 1, 2, 3, 4, 4, 5, 6])
         );
     }
 
