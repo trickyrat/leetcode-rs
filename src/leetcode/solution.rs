@@ -99,7 +99,10 @@ pub fn reverse_int(x: i32) -> i32 {
 
 /// 19. Remove Nth Node From End of List
 pub fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {
-    let mut dummy = Box::new(ListNode { val: -1, next: head });
+    let mut dummy = Box::new(ListNode {
+        val: -1,
+        next: head,
+    });
     let mut fast = &mut dummy.clone();
     let mut slow = &mut dummy;
     let n = n as usize;
@@ -166,6 +169,18 @@ pub fn merge_k_lists(lists: Vec<Option<Box<ListNode>>>) -> Option<Box<ListNode>>
     }
 
     dummy.next
+}
+
+/// 26. Remove Duplicates from Sorted Array
+pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
+    let mut slow = 1;
+    for fast in (1..nums.len()) {
+        if nums[fast] != nums[fast - 1] {
+            nums[slow] = nums[fast];
+            slow += 1;
+        }
+    }
+    slow as i32
 }
 
 /// 27.Remove Element
@@ -1109,15 +1124,15 @@ pub fn insert_into_max_tree(
     }
     while curr.as_ref().unwrap().borrow().right.is_some()
         && curr
-        .as_ref()
-        .unwrap()
-        .borrow()
-        .right
-        .as_ref()
-        .unwrap()
-        .borrow()
-        .val
-        > val
+            .as_ref()
+            .unwrap()
+            .borrow()
+            .right
+            .as_ref()
+            .unwrap()
+            .borrow()
+            .val
+            > val
     {
         let right = curr.as_ref().unwrap().borrow().right.clone();
         curr = right;
@@ -1781,6 +1796,15 @@ mod tests {
     }
 
     #[test]
+    fn test_remove_duplicates() {
+        assert_eq!(remove_duplicates(&mut vec![1, 1, 2]), 2);
+        assert_eq!(
+            remove_duplicates(&mut vec![0, 0, 1, 1, 1, 2, 2, 3, 3, 4]),
+            5
+        );
+    }
+
+    #[test]
     fn test_reverse_int() {
         assert_eq!(reverse_int(123), 321);
         assert_eq!(reverse_int(-123), -321);
@@ -1792,12 +1816,18 @@ mod tests {
 
     #[test]
     fn test_remove_nth_from_end() {
-        assert_eq!(remove_nth_from_end(generate_linked_list_node(vec![1, 2, 3, 4, 5]), 2),
-                   generate_linked_list_node(vec![1, 2, 3, 5]));
-        assert_eq!(remove_nth_from_end(generate_linked_list_node(vec![1]), 1),
-                   None);
-        assert_eq!(remove_nth_from_end(generate_linked_list_node(vec![1, 2]), 1),
-                   generate_linked_list_node(vec![1]));
+        assert_eq!(
+            remove_nth_from_end(generate_linked_list_node(vec![1, 2, 3, 4, 5]), 2),
+            generate_linked_list_node(vec![1, 2, 3, 5])
+        );
+        assert_eq!(
+            remove_nth_from_end(generate_linked_list_node(vec![1]), 1),
+            None
+        );
+        assert_eq!(
+            remove_nth_from_end(generate_linked_list_node(vec![1, 2]), 1),
+            generate_linked_list_node(vec![1])
+        );
     }
 
     #[test]
