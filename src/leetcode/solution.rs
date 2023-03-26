@@ -196,6 +196,22 @@ pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
     left as i32
 }
 
+/// 35. Search Insert Position
+pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
+    let n = nums.len();
+    let (mut left, mut right, mut res) = (0, n - 1, n);
+    while left <= right {
+        let mid = left + (right - left) / 2;
+        if nums[mid] >= target {
+            res = mid;
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    res as i32
+}
+
 /// 86.Partition List
 pub fn partition(mut head: Option<Box<ListNode>>, x: i32) -> Option<Box<ListNode>> {
     let (mut dummy_head1, mut dummy_head2) = (ListNode::new(-1), ListNode::new(-1));
@@ -1834,6 +1850,13 @@ mod tests {
     fn test_remove_element() {
         assert_eq!(remove_element(&mut vec![3, 2, 2, 3], 3), 2);
         assert_eq!(remove_element(&mut vec![0, 1, 2, 2, 3, 0, 4, 2], 2), 5);
+    }
+
+    #[test]
+    fn test_search_insert() {
+        assert_eq!(search_insert(vec![1, 3, 5, 6], 5), 2);
+        assert_eq!(search_insert(vec![1, 3, 5, 6], 2), 1);
+        assert_eq!(search_insert(vec![1, 3, 5, 6], 7), 4);
     }
 
     #[test]
