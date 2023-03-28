@@ -196,6 +196,42 @@ pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
     left as i32
 }
 
+/// 33. Search in Rotated Sorted Array
+pub fn search(nums: Vec<i32>, target: i32) -> i32 {
+    let n = nums.len();
+    if n == 0 {
+        return -1;
+    }
+    if n == 1 {
+        if nums[0] == target {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+    let (mut l, mut r) = (0, (n - 1) as i32);
+    while l <= r {
+        let mid = (l + r) / 2;
+        if nums[mid as usize] == target {
+            return mid;
+        }
+        if (nums[0] <= nums[mid as usize]) {
+            if (nums[0] <= target && target < nums[mid as usize]) {
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        } else {
+            if (nums[mid as usize] < target && target <= nums[n - 1]) {
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+    }
+    -1
+}
+
 /// 35. Search Insert Position
 pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
     let n = nums.len() as i32;
@@ -1850,6 +1886,13 @@ mod tests {
     fn test_remove_element() {
         assert_eq!(remove_element(&mut vec![3, 2, 2, 3], 3), 2);
         assert_eq!(remove_element(&mut vec![0, 1, 2, 2, 3, 0, 4, 2], 2), 5);
+    }
+
+    #[test]
+    fn test_search() {
+        assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 0), 4);
+        assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 3), -1);
+        assert_eq!(search(vec![1], 0), -1);
     }
 
     #[test]
