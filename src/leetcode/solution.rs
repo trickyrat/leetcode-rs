@@ -313,6 +313,16 @@ pub fn lexical_order(n: i32) -> Vec<i32> {
     ret
 }
 
+/// 453. Minimum Moves to Equal Array Elements
+pub fn min_moves(nums: Vec<i32>) -> i32 {
+    let min_num = nums.iter().min().unwrap();
+    let mut res = 0;
+    for num in nums.iter() {
+        res += num - min_num;
+    }
+    res
+}
+
 /// 498.Diagonal Traverse
 pub fn find_diagonal_order(mat: Vec<Vec<i32>>) -> Vec<i32> {
     if mat.is_empty() {
@@ -1935,6 +1945,12 @@ mod tests {
             vec![1, 10, 11, 12, 13, 2, 3, 4, 5, 6, 7, 8, 9]
         );
         assert_eq!(lexical_order(2), vec![1, 2]);
+    }
+
+    #[test]
+    fn test_min_moves() {
+        assert_eq!(min_moves(vec![1, 2, 3]), 3);
+        assert_eq!(min_moves(vec![1, 1, 1]), 0);
     }
 
     #[test]
