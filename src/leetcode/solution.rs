@@ -487,6 +487,25 @@ pub fn width_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     dfs(&root, 1, 1, &mut level_min)
 }
 
+/// 665. Non-decreasing Array
+pub fn check_possibility(mut nums: Vec<i32>) -> bool {
+    let mut count = 0;
+    let n = nums.len();
+    for i in 0..n - 1 {
+        let (x, y) = (nums[i], nums[i + 1]);
+        if x > y {
+            count += 1;
+            if count > 1 {
+                return false;
+            }
+            if i > 0 && y < nums[i - 1] {
+                nums[i + 1] = x;
+            }
+        }
+    }
+    true
+}
+
 /// 670.Maximum Swap
 pub fn maximum_swap(num: i32) -> i32 {
     let mut chars = num.to_string().bytes().collect::<Vec<u8>>();
@@ -2062,6 +2081,12 @@ mod tests {
             find_closest_elements(vec![1, 2, 3, 4, 5], 4, -1),
             vec![1, 2, 3, 4]
         );
+    }
+
+    #[test]
+    fn test_check_possibility() {
+        assert_eq!(true, check_possibility(vec![4, 2, 3]));
+        assert_eq!(false, check_possibility(vec![4, 2, 1]));
     }
 
     #[test]
