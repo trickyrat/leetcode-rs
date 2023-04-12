@@ -278,6 +278,19 @@ pub fn trailing_zeroes(n: i32) -> i32 {
     ans
 }
 
+/// 283. Move Zeroes
+pub fn move_zeroes(nums: &mut Vec<i32>) {
+    let n = nums.len();
+    let (mut left, mut right) = (0, 0);
+    while right < n {
+        if nums[right] != 0 {
+            nums.swap(left, right);
+            left += 1;
+        }
+        right += 1;
+    }
+}
+
 /// 357.Count Numbers with Unique Digits
 pub fn count_numbers_with_unique_digits(n: i32) -> i32 {
     if n == 0 {
@@ -1949,6 +1962,16 @@ mod tests {
         assert_eq!(trailing_zeroes(3), 0);
         assert_eq!(trailing_zeroes(5), 1);
         assert_eq!(trailing_zeroes(0), 0);
+    }
+
+    #[test]
+    fn test_move_zeroes() {
+        let mut nums1 = vec![0, 1, 0, 3, 12];
+        let mut nums2 = vec![0];
+        move_zeroes(&mut nums1);
+        move_zeroes(&mut nums2);
+        assert_eq!(nums1, vec![1, 3, 12, 0, 0]);
+        assert_eq!(nums2, vec![0]);
     }
 
     #[test]
