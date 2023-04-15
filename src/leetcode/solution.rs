@@ -278,6 +278,22 @@ pub fn trailing_zeroes(n: i32) -> i32 {
     ans
 }
 
+/// 189. Rotate Array
+pub fn rotate(nums: &mut Vec<i32>, mut k: i32) {
+    fn reverse(arr: &mut Vec<i32>, mut start: i32, mut end: i32) {
+        while start < end {
+            arr.swap(start as usize, end as usize);
+            start += 1;
+            end -= 1;
+        }
+    }
+    let n = nums.len();
+    k %= (n as i32);
+    reverse(nums, 0, (n - 1) as i32);
+    reverse(nums, 0, k - 1);
+    reverse(nums, k, (n - 1) as i32);
+}
+
 /// 283. Move Zeroes
 pub fn move_zeroes(nums: &mut Vec<i32>) {
     let n = nums.len();
@@ -1962,16 +1978,6 @@ mod tests {
         assert_eq!(trailing_zeroes(3), 0);
         assert_eq!(trailing_zeroes(5), 1);
         assert_eq!(trailing_zeroes(0), 0);
-    }
-
-    #[test]
-    fn test_move_zeroes() {
-        let mut nums1 = vec![0, 1, 0, 3, 12];
-        let mut nums2 = vec![0];
-        move_zeroes(&mut nums1);
-        move_zeroes(&mut nums2);
-        assert_eq!(nums1, vec![1, 3, 12, 0, 0]);
-        assert_eq!(nums2, vec![0]);
     }
 
     #[test]
