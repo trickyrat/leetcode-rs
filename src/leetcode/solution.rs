@@ -342,6 +342,21 @@ pub fn lexical_order(n: i32) -> Vec<i32> {
     ret
 }
 
+/// 396. Rotate Function
+pub fn max_rotate_function(nums: Vec<i32>) -> i32 {
+    let (mut f, mut n) = (0, nums.len());
+    let nums_sum: i32 = nums.iter().sum();
+    for i in 0..n {
+        f += (i as i32) * nums[i];
+    }
+    let mut res = f;
+    for i in (0..n).rev() {
+        f += nums_sum - (n as i32) * nums[i];
+        res = max(res, f);
+    }
+    res
+}
+
 /// 453. Minimum Moves to Equal Array Elements
 pub fn min_moves(nums: Vec<i32>) -> i32 {
     let min_num = nums.iter().min().unwrap();
@@ -1993,6 +2008,12 @@ mod tests {
             vec![1, 10, 11, 12, 13, 2, 3, 4, 5, 6, 7, 8, 9]
         );
         assert_eq!(lexical_order(2), vec![1, 2]);
+    }
+
+    #[test]
+    fn test_max_rotate_function() {
+        assert_eq!(max_rotate_function(vec![4, 3, 2, 6]), 26);
+        assert_eq!(max_rotate_function(vec![100]), 0);
     }
 
     #[test]
