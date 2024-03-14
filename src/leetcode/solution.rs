@@ -262,6 +262,18 @@ pub fn partition(mut head: Option<Box<ListNode>>, x: i32) -> Option<Box<ListNode
     dummy_head1.next
 }
 
+// 118.Pascal's Triangle
+pub fn generate(num_rows: i32) -> Vec<Vec<i32>> {
+    let mut res = vec![];
+    for i in 0..num_rows as usize {
+        res.push(vec![1; i + 1]);
+        for j in 1..i {
+            res[i][j] = res[i - 1][j - 1] + res[i - 1][j];
+        }
+    }
+    res
+}
+
 /// 172.Factorial Trailing Zeroes
 pub fn trailing_zeroes(n: i32) -> i32 {
     let mut ans = 0;
@@ -2393,6 +2405,21 @@ mod tests {
     fn test_partition_disjoint() {
         assert_eq!(3, partition_disjoint(vec![5, 0, 3, 8, 6]));
         assert_eq!(4, partition_disjoint(vec![1, 1, 1, 0, 6, 12]));
+    }
+
+    #[test]
+    fn test_generate() {
+        assert_eq!(generate(1), vec![vec![1]]);
+        assert_eq!(
+            generate(5),
+            vec![
+                vec![1],
+                vec![1, 1],
+                vec![1, 2, 1],
+                vec![1, 3, 3, 1],
+                vec![1, 4, 6, 4, 1]
+            ]
+        );
     }
 
     #[test]
