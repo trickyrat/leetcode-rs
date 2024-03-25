@@ -427,6 +427,18 @@ pub fn convert_to_base7(num: i32) -> String {
     digits.chars().rev().collect()
 }
 
+/// 518.Coin Change II
+pub fn change(amount: i32, coins: Vec<i32>) -> i32 {
+    let mut dp = vec![0; amount as usize + 1];
+    dp[0] = 1;
+    coins.iter().for_each(|&coin| {
+        for i in coin..=amount {
+            dp[i as usize] += dp[(i - coin) as usize];
+        }
+    });
+    dp[amount as usize]
+}
+
 /// 537.Complex Number Multiplication
 pub fn complex_number_multiply(num1: String, num2: String) -> String {
     let &complex1 = &num1[..num1.len() - 1].split_once('+').unwrap();
@@ -2045,6 +2057,13 @@ mod tests {
     fn test_convert_to_base7() {
         assert_eq!(convert_to_base7(100), String::from("202"));
         assert_eq!(convert_to_base7(-7), String::from("-10"));
+    }
+
+    #[test]
+    fn test_change() {
+        assert_eq!(change(5, vec![1, 2, 5]), 4);
+        assert_eq!(change(3, vec![32]), 0);
+        assert_eq!(change(10, vec![10]), 1);
     }
 
     #[test]
