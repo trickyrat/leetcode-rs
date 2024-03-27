@@ -1860,6 +1860,28 @@ pub fn repeated_character(s: String) -> char {
     ' '
 }
 
+/// 2580. Count Ways to Group Overlapping Ranges
+pub fn count_ways(ranges: Vec<Vec<i32>>) -> i32 {
+    let mut ranges = ranges;
+    const MOD: i64 = 1_000_000_007;
+    ranges.sort_by(|a, b| a[0].cmp(&b[0]));
+
+    let n = ranges.len();
+    let mut res: i64 = 1;
+    let mut i = 0;
+    while i < n {
+        let (mut r, mut j) = (ranges[i][1], i + 1);
+        while j < n && ranges[j][0] <= r {
+            r = r.max(ranges[j][1]);
+            j += 1;
+        }
+
+        res = (res * 2) % MOD;
+        i = j;
+    }
+    res as i32
+}
+
 #[cfg(test)]
 mod tests {
     use crate::leetcode::solution::*;
@@ -2901,5 +2923,14 @@ mod tests {
         assert_eq!(repeated_character(String::from("abcdd")), 'd');
         assert_eq!(repeated_character(String::from("aa")), 'a');
         assert_eq!(repeated_character(String::from("zz")), 'z');
+    }
+
+    #[test]
+    fn test_count_ways() {
+        assert_eq!(count_ways(vec![vec![6, 10], vec![5, 15]]), 2);
+        assert_eq!(
+            count_ways(vec![vec![1, 3], vec![10, 20], vec![2, 5], vec![4, 8]]),
+            4
+        );
     }
 }
