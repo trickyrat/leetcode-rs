@@ -1747,6 +1747,23 @@ pub fn find_middle_index(nums: Vec<i32>) -> i32 {
     -1
 }
 
+/// 1997.First Day Where You Have Been in All the Rooms
+pub fn first_day_been_in_all_rooms(next_visit: Vec<i32>) -> i32 {
+    const MOD: i32 = 1_000_000_007;
+    let n = next_visit.len();
+    let mut dp: Vec<i32> = vec![0; n];
+    dp[0] = 2;
+    for i in 1..n {
+        let to = next_visit[i] as usize;
+        dp[i] = 2 + dp[i - 1];
+        if to != 0 {
+            dp[i] = (dp[i] - dp[to - 1] + MOD) % MOD;
+        }
+        dp[i] = dp[i] + dp[i - 1] % MOD;
+    }
+    dp[n - 2]
+}
+
 /// 2011. Final Value of Variable After Performing Operations
 pub fn final_value_after_operations(operations: Vec<String>) -> i32 {
     operations.iter().fold(0, |acc, op| {
@@ -2833,6 +2850,13 @@ mod tests {
         assert_eq!(find_middle_index(vec! {2, 3, -1, 8, 4}), 3);
         assert_eq!(find_middle_index(vec! {1, -1, 4}), 2);
         assert_eq!(find_middle_index(vec! {2, 5}), -1);
+    }
+
+    #[test]
+    fn test_first_day_been_in_all_rooms() {
+        assert_eq!(first_day_been_in_all_rooms(vec![0, 0]), 2);
+        assert_eq!(first_day_been_in_all_rooms(vec![0, 0, 2]), 6);
+        assert_eq!(first_day_been_in_all_rooms(vec![0, 1, 2, 0]), 6);
     }
 
     #[test]
