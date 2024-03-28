@@ -48,7 +48,8 @@ impl RandomizedSet {
 
 #[cfg(test)]
 mod tests {
-    use crate::leetcode::RandomizedSet;
+    use crate::leetcode::randomized_set::RandomizedSet;
+
 
     #[test]
     fn test_randomize_set() {
