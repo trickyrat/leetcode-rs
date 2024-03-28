@@ -26,7 +26,7 @@ impl StockSpanner {
 
 #[cfg(test)]
 mod tests {
-    use crate::leetcode::StockSpanner;
+    use crate::leetcode::stock_spanner::StockSpanner;
 
     #[test]
     fn test_stock_spanner() {
