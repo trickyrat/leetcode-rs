@@ -50,7 +50,7 @@ pub fn add_two_numbers(
     dummy.next
 }
 
-/// 3. Longest Substring Without Repeating Characters
+/// 3.Longest Substring Without Repeating Characters
 pub fn length_of_longest_substring(s: String) -> i32 {
     let (n, mut res) = (s.len(), 0);
     // let mut map = HashMap::<u8, i32>::new();
@@ -92,7 +92,7 @@ pub fn reverse_int(x: i32) -> i32 {
     res
 }
 
-/// 19. Remove Nth Node From End of List
+/// 19.Remove Nth Node From End of List
 pub fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {
     let mut dummy = Box::new(ListNode {
         val: -1,
@@ -166,7 +166,7 @@ pub fn merge_k_lists(lists: Vec<Option<Box<ListNode>>>) -> Option<Box<ListNode>>
     dummy.next
 }
 
-/// 26. Remove Duplicates from Sorted Array
+/// 26.Remove Duplicates from Sorted Array
 pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
     let mut slow = 1;
     for fast in (1..nums.len()) {
@@ -191,7 +191,7 @@ pub fn remove_element(nums: &mut Vec<i32>, val: i32) -> i32 {
     left as i32
 }
 
-/// 33. Search in Rotated Sorted Array
+/// 33.Search in Rotated Sorted Array
 pub fn search(nums: Vec<i32>, target: i32) -> i32 {
     let n = nums.len();
     if n == 0 {
@@ -227,7 +227,7 @@ pub fn search(nums: Vec<i32>, target: i32) -> i32 {
     -1
 }
 
-/// 35. Search Insert Position
+/// 35.Search Insert Position
 pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
     let n = nums.len() as i32;
     let (mut left, mut right, mut res) = (0, n - 1, n);
@@ -285,7 +285,7 @@ pub fn trailing_zeroes(n: i32) -> i32 {
     ans
 }
 
-/// 189. Rotate Array
+/// 189.Rotate Array
 pub fn rotate(nums: &mut Vec<i32>, mut k: i32) {
     fn reverse(arr: &mut Vec<i32>, mut start: i32, mut end: i32) {
         while start < end {
@@ -301,7 +301,7 @@ pub fn rotate(nums: &mut Vec<i32>, mut k: i32) {
     reverse(nums, k, (n - 1) as i32);
 }
 
-/// 283. Move Zeroes
+/// 283.Move Zeroes
 pub fn move_zeroes(nums: &mut Vec<i32>) {
     let n = nums.len();
     let (mut left, mut right) = (0, 0);
@@ -349,7 +349,7 @@ pub fn lexical_order(n: i32) -> Vec<i32> {
     ret
 }
 
-/// 396. Rotate Function
+/// 396.Rotate Function
 pub fn max_rotate_function(nums: Vec<i32>) -> i32 {
     let (mut f, mut n) = (0, nums.len());
     let nums_sum: i32 = nums.iter().sum();
@@ -364,7 +364,7 @@ pub fn max_rotate_function(nums: Vec<i32>) -> i32 {
     res
 }
 
-/// 453. Minimum Moves to Equal Array Elements
+/// 453.Minimum Moves to Equal Array Elements
 pub fn min_moves(nums: Vec<i32>) -> i32 {
     let min_num = nums.iter().min().unwrap();
     let mut res = 0;
@@ -550,7 +550,7 @@ pub fn width_of_binary_tree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     dfs(&root, 1, 1, &mut level_min)
 }
 
-/// 665. Non-decreasing Array
+/// 665.Non-decreasing Array
 pub fn check_possibility(mut nums: Vec<i32>) -> bool {
     let mut count = 0;
     let n = nums.len();
@@ -716,7 +716,7 @@ pub fn count_prime_set_bits(left: i32, right: i32) -> i32 {
     (left..=right).fold(0, |ret, i| ret + (665772 >> i.count_ones() & 1))
 }
 
-/// 769. Max Chunks To Make Sorted
+/// 769.Max Chunks To Make Sorted
 pub fn max_chunks_to_sorted(arr: Vec<i32>) -> i32 {
     let (mut res, mut maximum) = (0, 0);
     for (i, v) in arr.iter().enumerate() {
@@ -728,7 +728,7 @@ pub fn max_chunks_to_sorted(arr: Vec<i32>) -> i32 {
     res
 }
 
-/// 779. K-th Symbol in Grammar
+/// 779.K-th Symbol in Grammar
 pub fn kth_grammar(_n: i32, mut k: i32) -> i32 {
     k -= 1;
     let mut res = 0;
@@ -739,7 +739,7 @@ pub fn kth_grammar(_n: i32, mut k: i32) -> i32 {
     res
 }
 
-/// 784. Letter Case Permutation
+/// 784.Letter Case Permutation
 pub fn letter_case_permutation(s: String) -> Vec<String> {
     let (mut m, mut res) = (0, Vec::<String>::new());
     for ch in s.chars() {
@@ -952,7 +952,7 @@ pub fn score_of_parentheses(s: String) -> i32 {
         .1
 }
 
-/// 862. Shortest Subarray with Sum at Least K
+/// 862.Shortest Subarray with Sum at Least K
 pub fn shortest_subarray(nums: Vec<i32>, k: i32) -> i32 {
     let (mut ret, mut pre_sum, mut queue) = (i64::MAX, 0, VecDeque::new());
     queue.push_back((0, -1));
@@ -989,7 +989,7 @@ pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
         + max_col
 }
 
-/// 886. Possible Bipartition
+/// 886.Possible Bipartition
 pub fn possible_bipartition(n: i32, dislikes: Vec<Vec<i32>>) -> bool {
     let mut color = vec![0; (n + 1) as usize];
     let mut group = vec![vec![]; (n + 1) as usize];
@@ -1039,7 +1039,7 @@ pub fn sort_array_by_parity(mut nums: Vec<i32>) -> Vec<i32> {
     nums
 }
 
-/// 907. Sum of Subarray Minimums
+/// 907.Sum of Subarray Minimums
 pub fn sum_subarray_mins(arr: Vec<i32>) -> i32 {
     let mod_number = 1000000007;
     let n = arr.len();
@@ -1064,7 +1064,7 @@ pub fn sum_subarray_mins(arr: Vec<i32>) -> i32 {
     res as i32
 }
 
-/// 915. Partition Array into Disjoint Intervals
+/// 915.Partition Array into Disjoint Intervals
 pub fn partition_disjoint(nums: Vec<i32>) -> i32 {
     let (mut curr_max, mut left_max) = (nums[0], nums[0]);
     let mut res = 0;
@@ -1136,7 +1136,7 @@ pub fn three_equal_parts(arr: Vec<i32>) -> Vec<i32> {
     vec![-1, -1]
 }
 
-/// 934. Shortest Bridge
+/// 934.Shortest Bridge
 pub fn shortest_bridge(mut grid: Vec<Vec<i32>>) -> i32 {
     let n = grid.len();
     let dirs = vec![vec![-1, 0], vec![1, 0], vec![0, 1], vec![0, -1]];
@@ -1191,7 +1191,7 @@ pub fn shortest_bridge(mut grid: Vec<Vec<i32>>) -> i32 {
     0
 }
 
-/// 940. Distinct Subsequences II
+/// 940.Distinct Subsequences II
 pub fn distinct_subseq_ii(s: String) -> i32 {
     let mod_number = 1000000007;
     let mut alphas = vec![0; 26];
@@ -1316,7 +1316,7 @@ pub fn string_matching(words: Vec<String>) -> Vec<String> {
     res
 }
 
-/// 1441. Build an Array With Stack Operations
+/// 1441.Build an Array With Stack Operations
 pub fn build_array(target: Vec<i32>, _n: i32) -> Vec<String> {
     let mut res = Vec::<String>::new();
     let mut prev = 0;
@@ -1482,7 +1482,7 @@ pub fn frequency_sort(mut nums: Vec<i32>) -> Vec<i32> {
     nums
 }
 
-/// 1658. Minimum Operations to Reduce X to Zero
+/// 1658.Minimum Operations to Reduce X to Zero
 pub fn min_operations(nums: Vec<i32>, x: i32) -> i32 {
     let n = nums.len();
     let sum = nums.iter().sum::<i32>();
@@ -1546,7 +1546,7 @@ pub fn reformat_number(number: String) -> String {
     res.to_string()
 }
 
-/// 1700. Number of Students Unable to Eat Lunch
+/// 1700.Number of Students Unable to Eat Lunch
 pub fn count_students(students: Vec<i32>, sandwiches: Vec<i32>) -> i32 {
     let mut square: i32 = students.iter().sum();
     let mut circular = students.len() as i32 - square;
@@ -1562,7 +1562,7 @@ pub fn count_students(students: Vec<i32>, sandwiches: Vec<i32>) -> i32 {
     square + circular
 }
 
-/// 1750. Minimum Length of String After Deleting Similar Ends
+/// 1750.Minimum Length of String After Deleting Similar Ends
 pub fn minimum_length(s: String) -> i32 {
     let (mut left, mut right, s) = (0, s.len() - 1, s.as_bytes());
     while left < right && s[left] == s[right] {
@@ -1577,7 +1577,7 @@ pub fn minimum_length(s: String) -> i32 {
     (right + 1 - left) as i32
 }
 
-/// 1768. Merge Strings Alternately
+/// 1768.Merge Strings Alternately
 pub fn merge_alternately(word1: String, word2: String) -> String {
     let (mut word1_iter, mut word2_iter, mut res) = (
         word1.chars().peekable(),
@@ -1595,7 +1595,7 @@ pub fn merge_alternately(word1: String, word2: String) -> String {
     res
 }
 
-/// 1773. Count Items Matching a Rule
+/// 1773.Count Items Matching a Rule
 pub fn count_matches(items: Vec<Vec<String>>, rule_key: String, rule_value: String) -> i32 {
     let mut rules = HashMap::<String, usize>::new();
     rules.insert(String::from("type"), 0);
@@ -1611,7 +1611,7 @@ pub fn count_matches(items: Vec<Vec<String>>, rule_key: String, rule_value: Stri
     res
 }
 
-/// 1779. Find Nearest Point That Has the Same X or Y Coordinate
+/// 1779.Find Nearest Point That Has the Same X or Y Coordinate
 pub fn nearest_valid_point(x: i32, y: i32, points: Vec<Vec<i32>>) -> i32 {
     let (mut min, mut res) = (i32::MAX, -1);
     for (i, p) in points.iter().enumerate() {
@@ -1671,7 +1671,7 @@ pub fn max_ascending_sum(nums: Vec<i32>) -> i32 {
     res
 }
 
-/// 1802. Maximum Value at a Given Index in a Bounded Array
+/// 1802.Maximum Value at a Given Index in a Bounded Array
 pub fn max_value(n: i32, index: i32, max_sum: i32) -> i32 {
     let (mut left, mut right) = (index as f64, (n - index - 1) as f64);
     let max_sum = max_sum as f64;
@@ -1711,7 +1711,7 @@ pub fn max_value(n: i32, index: i32, max_sum: i32) -> i32 {
     }
 }
 
-/// 1822. Sign of the Product of an Array
+/// 1822.Sign of the Product of an Array
 pub fn array_sign(nums: Vec<i32>) -> i32 {
     let mut sign = 1;
     for num in nums {
@@ -1764,7 +1764,7 @@ pub fn first_day_been_in_all_rooms(next_visit: Vec<i32>) -> i32 {
     dp[n - 2]
 }
 
-/// 2011. Final Value of Variable After Performing Operations
+/// 2011.Final Value of Variable After Performing Operations
 pub fn final_value_after_operations(operations: Vec<String>) -> i32 {
     operations.iter().fold(0, |acc, op| {
         acc + if op.as_bytes()[1] as char == '+' {
@@ -1775,7 +1775,7 @@ pub fn final_value_after_operations(operations: Vec<String>) -> i32 {
     })
 }
 
-/// 2027. Minimum Moves to Convert String
+/// 2027.Minimum Moves to Convert String
 pub fn minimum_moves(s: String) -> i32 {
     let (mut res, mut count) = (0, -1);
     for (i, ch) in s.chars().enumerate() {
@@ -1787,7 +1787,7 @@ pub fn minimum_moves(s: String) -> i32 {
     res
 }
 
-/// 2032. Two Out of Three
+/// 2032.Two Out of Three
 pub fn two_out_of_three(nums1: Vec<i32>, nums2: Vec<i32>, nums3: Vec<i32>) -> Vec<i32> {
     let mut map = HashMap::<i32, i32>::new();
     for num in nums1 {
@@ -1808,7 +1808,7 @@ pub fn two_out_of_three(nums1: Vec<i32>, nums2: Vec<i32>, nums3: Vec<i32>) -> Ve
     res
 }
 
-/// 2037. Minimum Number of Moves to Seat Everyone
+/// 2037.Minimum Number of Moves to Seat Everyone
 pub fn min_moves_to_seat(mut seats: Vec<i32>, mut students: Vec<i32>) -> i32 {
     seats.sort();
     students.sort();
@@ -1818,7 +1818,7 @@ pub fn min_moves_to_seat(mut seats: Vec<i32>, mut students: Vec<i32>) -> i32 {
         .fold(0, |res, (i, j)| res + (i - j).abs())
 }
 
-/// 2042. Check if Numbers Are Ascending in a Sentence
+/// 2042.Check if Numbers Are Ascending in a Sentence
 pub fn are_number_ascending(s: String) -> bool {
     let (mut prev, mut pos, n) = (0, 0, s.len());
     let chars = s.as_bytes();
@@ -1840,7 +1840,7 @@ pub fn are_number_ascending(s: String) -> bool {
     true
 }
 
-/// 2180. Count Integers With Even Digit Sum
+/// 2180.Count Integers With Even Digit Sum
 pub fn count_even(num: i32) -> i32 {
     let (mut y, x) = (num / 10, num % 10);
     let (mut res, mut y_sum) = (y * 5, 0);
@@ -1856,7 +1856,7 @@ pub fn count_even(num: i32) -> i32 {
     res - 1
 }
 
-/// 2185. Counting Words With a Given Prefix
+/// 2185.Counting Words With a Given Prefix
 pub fn prefix_count(words: Vec<String>, pref: String) -> i32 {
     words
         .into_iter()
@@ -1864,7 +1864,7 @@ pub fn prefix_count(words: Vec<String>, pref: String) -> i32 {
         .count() as i32
 }
 
-/// 2351. First Letter to Appear Twice
+/// 2351.First Letter to Appear Twice
 pub fn repeated_character(s: String) -> char {
     let mut seen = 0;
     for ch in s.chars() {
@@ -1877,7 +1877,7 @@ pub fn repeated_character(s: String) -> char {
     ' '
 }
 
-/// 2580. Count Ways to Group Overlapping Ranges
+/// 2580.Count Ways to Group Overlapping Ranges
 pub fn count_ways(ranges: Vec<Vec<i32>>) -> i32 {
     let mut ranges = ranges;
     const MOD: i64 = 1_000_000_007;
