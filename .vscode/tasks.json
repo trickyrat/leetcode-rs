@@ -21,7 +21,8 @@
       "command": "cargo",
       "type": "shell",
       "args": [
-        "test"
+        "test",
+        "--no-run"
       ],
       "problemMatcher": [
         
