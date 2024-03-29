@@ -1899,6 +1899,28 @@ pub fn count_ways(ranges: Vec<Vec<i32>>) -> i32 {
     res as i32
 }
 
+/// 2908.Minimum Sum of Mountain Triplets I
+pub fn minimum_sum(nums: Vec<i32>) -> i32 {
+    let n = nums.len();
+    let (mut res, mut mini) = (1000, 1000);
+    let (mut left, mut right) = (vec![0; n], nums[n - 1]);
+    for i in 1..n {
+        mini = nums[i - 1].min(mini);
+        left[i] = mini;
+    }
+    for i in (1..n - 1).rev() {
+        if left[i] < nums[i] && nums[i] > right {
+            res = res.min(left[i] + nums[i] + right);
+        }
+        right = right.min(nums[i]);
+    }
+    if res < 1000 {
+        res
+    } else {
+        -1
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::leetcode::solution::*;
@@ -2956,5 +2978,12 @@ mod tests {
             count_ways(vec![vec![1, 3], vec![10, 20], vec![2, 5], vec![4, 8]]),
             4
         );
+    }
+
+    #[test]
+    fn test_minimum_sum() {
+        assert_eq!(9, minimum_sum(vec![8, 6, 1, 5, 3]));
+        assert_eq!(13, minimum_sum(vec![5, 4, 8, 7, 10, 2]));
+        assert_eq!(-1, minimum_sum(vec![6, 5, 4, 3, 4, 5]));
     }
 }
