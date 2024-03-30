@@ -1921,6 +1921,26 @@ pub fn minimum_sum(nums: Vec<i32>) -> i32 {
     }
 }
 
+/// 2952.Minimum Number of Coins to be Added
+pub fn minimum_added_coins(coins: Vec<i32>, target: i32) -> i32 {
+    let mut coins = coins;
+    coins.sort_by(|a, b| a.cmp(b));
+    let mut res = 0;
+    let mut x = 1;
+    let n = coins.len();
+    let mut index = 0;
+    while x <= target {
+        if index < n && coins[index] <= x {
+            x += coins[index];
+            index += 1;
+        } else {
+            x *= 2;
+            res += 1;
+        }
+    }
+    res
+}
+
 #[cfg(test)]
 mod tests {
     use crate::leetcode::solution::*;
@@ -2985,5 +3005,12 @@ mod tests {
         assert_eq!(9, minimum_sum(vec![8, 6, 1, 5, 3]));
         assert_eq!(13, minimum_sum(vec![5, 4, 8, 7, 10, 2]));
         assert_eq!(-1, minimum_sum(vec![6, 5, 4, 3, 4, 5]));
+    }
+
+    #[test]
+    fn test_minimum_added_coins() {
+        assert_eq!(2, minimum_added_coins(vec![1, 4, 10], 19));
+        assert_eq!(1, minimum_added_coins(vec![1, 4, 10, 5, 7, 19], 19));
+        assert_eq!(3, minimum_added_coins(vec![1, 1, 1], 20));
     }
 }
