@@ -314,6 +314,30 @@ pub fn move_zeroes(nums: &mut Vec<i32>) {
     }
 }
 
+/// 331.Verify Preorder Serialization of a Binary Tree
+pub fn is_valid_serialization(preorder: String) -> bool {
+    let n = preorder.len();
+    let (mut i, mut slots) = (0, 1);
+
+    for ch in preorder.chars().into_iter() {
+        if slots == 0 {
+            return false;
+        }
+        if ch == ',' {
+            i += 1;
+        } else if ch == '#' {
+            slots -= 1;
+            i += 1;
+        } else {
+            while i < n && ch != ',' {
+                i += 1;
+            }
+            slots += 1;
+        }
+    }
+    slots == 0
+}
+
 /// 357.Count Numbers with Unique Digits
 pub fn count_numbers_with_unique_digits(n: i32) -> i32 {
     if n == 0 {
@@ -2093,6 +2117,16 @@ mod tests {
         assert_eq!(trailing_zeroes(3), 0);
         assert_eq!(trailing_zeroes(5), 1);
         assert_eq!(trailing_zeroes(0), 0);
+    }
+
+    #[test]
+    fn test_is_valid_serialization() {
+        assert_eq!(
+            is_valid_serialization(String::from("9,3,4,#,#,1,#,#,2,#,6,#,#")),
+            true
+        );
+        assert_eq!(is_valid_serialization(String::from("1,#")), false);
+        assert_eq!(is_valid_serialization(String::from("9,#,#,1")), false);
     }
 
     #[test]
