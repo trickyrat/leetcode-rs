@@ -1,5 +1,6 @@
-use std::collections::{HashMap, HashSet};
+#![cfg_attr(debug_assertions, allow(unused))]
 
+use std::collections::{HashMap, HashSet};
 
 pub struct ThroneInheritance {
     graph: HashMap<String, Vec<String>>,
