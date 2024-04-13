@@ -1586,6 +1586,27 @@ pub fn count_students(students: Vec<i32>, sandwiches: Vec<i32>) -> i32 {
     square + circular
 }
 
+/// 1702.Maximum Binary String After Change
+pub fn maximum_binary_string(binary: String) -> String {
+    let n = binary.len();
+    let mut res: Vec<char> = binary.chars().collect();
+    let (mut zero_index, mut zero_count) = (n, 0);
+    for i in 0..n {
+        if res[i] == '0' {
+            if (zero_index == n) {
+                zero_index = i;
+            }
+            zero_count += 1;
+        }
+        res[i] = '1';
+    }
+    if zero_count == 0 {
+        return binary;
+    }
+    res[zero_index as usize + zero_count - 1] = '0';
+    res.iter().collect()
+}
+
 /// 1750.Minimum Length of String After Deleting Similar Ends
 pub fn minimum_length(s: String) -> i32 {
     let (mut left, mut right, s) = (0, s.len() - 1, s.as_bytes());
@@ -2816,6 +2837,14 @@ mod tests {
             count_students(vec![1, 1, 1, 0, 0, 1], vec![1, 0, 0, 0, 1, 1]),
             3
         );
+    }
+
+    #[test]
+    fn test_maximum_binary_string() {
+        assert_eq!(maximum_binary_string("000110".to_string()), String::from("111011"));
+        assert_eq!(maximum_binary_string("01".to_string()), String::from("01"));
+        assert_eq!(maximum_binary_string("11".to_string()), String::from("11"));
+        assert_eq!(maximum_binary_string("1000".to_string()), String::from("1110"));
     }
 
     #[test]
