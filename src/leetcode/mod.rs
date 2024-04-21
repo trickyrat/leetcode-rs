@@ -3,7 +3,7 @@ mod interview_solution;
 mod randomized_set;
 mod solution;
 mod stock_spanner;
-mod util;
 mod throne_inheritance;
+mod util;
 
 pub use self::data_structures::*;

@@ -45,7 +45,7 @@ mod tests {
     use crate::leetcode::throne_inheritance::ThroneInheritance;
 
     #[test]
-    fn test () {
+    fn test() {
         let mut obj = ThroneInheritance::new("king".to_string());
         obj.birth("king".to_string(), "andy".to_string());
         obj.birth("king".to_string(), "bob".to_string());
@@ -53,8 +53,22 @@ mod tests {
         obj.birth("andy".to_string(), "matthew".to_string());
         obj.birth("bob".to_string(), "alex".to_string());
         obj.birth("bob".to_string(), "asha".to_string());
-        assert_eq!(obj.get_inheritance_order(), vec!["king", "andy", "matthew", "bob", "alex", "asha", "catherine"]);
+        assert_eq!(
+            obj.get_inheritance_order(),
+            vec![
+                "king",
+                "andy",
+                "matthew",
+                "bob",
+                "alex",
+                "asha",
+                "catherine"
+            ]
+        );
         obj.death("bob".to_string());
-        assert_eq!(obj.get_inheritance_order(), vec!["king", "andy", "matthew", "alex", "asha", "catherine"]);
+        assert_eq!(
+            obj.get_inheritance_order(),
+            vec!["king", "andy", "matthew", "alex", "asha", "catherine"]
+        );
     }
 }
