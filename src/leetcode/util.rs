@@ -13,13 +13,13 @@ pub fn generate_linked_list_node(nums: Vec<i32>) -> Option<Box<ListNode>> {
 }
 
 pub fn generate_string_vec(strs: Vec<&str>) -> Vec<String> {
-    strs.iter()
-        .map(|&x| String::from(x))
+    strs.into_iter()
+        .map(|s| String::from(s))
         .collect::<Vec<String>>()
 }
 
 pub fn generate_string_matrix(strs: Vec<Vec<&str>>) -> Vec<Vec<String>> {
-    strs.iter()
+    strs.into_iter()
         .map(|x| generate_string_vec(x.to_vec()))
         .collect::<Vec<Vec<String>>>()
 }

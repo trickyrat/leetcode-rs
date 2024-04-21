@@ -50,7 +50,6 @@ impl RandomizedSet {
 mod tests {
     use crate::leetcode::randomized_set::RandomizedSet;
 
-
     #[test]
     fn test_randomize_set() {
         let mut randomized_set = RandomizedSet::new();
