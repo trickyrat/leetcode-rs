@@ -243,6 +243,41 @@ pub fn search_insert(nums: Vec<i32>, target: i32) -> i32 {
     res
 }
 
+/// 39.Combination Sum
+pub fn combination_sum(candidates: &Vec<i32>, target: i32) -> Vec<Vec<i32>> {
+    fn dfs(
+        _candidates: &Vec<i32>,
+        _target: i32,
+        _ans: &mut Vec<Vec<i32>>,
+        _combine: &mut Vec<i32>,
+        start_index: usize,
+    ) {
+        if start_index == _candidates.len() {
+            return;
+        }
+        if _target == 0 {
+            _ans.push(_combine.clone());
+            return;
+        }
+        dfs(_candidates, _target, _ans, _combine, start_index + 1);
+        if _target - _candidates[start_index] >= 0 {
+            _combine.push(_candidates[start_index]);
+            dfs(
+                _candidates,
+                _target - _candidates[start_index],
+                _ans,
+                _combine,
+                start_index,
+            );
+            _combine.pop();
+        }
+    };
+    let mut ans: Vec<Vec<i32>> = vec![];
+    let mut combine: Vec<i32> = vec![];
+    dfs(&candidates, target, &mut ans, &mut combine, 0);
+    ans
+}
+
 /// 86.Partition List
 pub fn partition(mut head: Option<Box<ListNode>>, x: i32) -> Option<Box<ListNode>> {
     let (mut dummy_head1, mut dummy_head2) = (ListNode::new(-1), ListNode::new(-1));
@@ -2121,6 +2156,26 @@ mod tests {
         assert_eq!(search_insert(vec![1, 3, 5, 6], 7), 4);
     }
 
+    macro_rules! combinaion_sum_tests {
+        ($($name:ident: $value:expr,)*) => {
+            $(
+                #[test]
+                fn $name() {
+                    let (candidates, target, mut expected) = $value;
+                    let mut actual = combination_sum(&candidates, target);
+                    actual.sort_by(|a, b| a.iter().collect::<Vec<_>>().cmp(&b.iter().collect::<Vec<_>>()));
+                    expected.sort_by(|a: &Vec<i32>, b: &Vec<i32>| a.iter().collect::<Vec<_>>().cmp(&b.iter().collect::<Vec<_>>()));
+                    assert_eq!(actual, expected);
+                }
+            )*
+        };
+    }
+    combinaion_sum_tests! {
+        combinaion_sum_case0: (vec![2, 3, 6, 7], 7, vec![vec![2, 2, 3], vec![7]]),
+        combinaion_sum_case1: (vec![2, 3, 5], 8, vec![vec![2, 2, 2, 2], vec![2, 3, 3], vec![3, 5]]),
+        combinaion_sum_case2: (vec![2], 1, vec![]),
+    }
+
     #[test]
     fn test_partition() {
         assert_eq!(
@@ -2841,10 +2896,16 @@ mod tests {
 
     #[test]
     fn test_maximum_binary_string() {
-        assert_eq!(maximum_binary_string("000110".to_string()), String::from("111011"));
+        assert_eq!(
+            maximum_binary_string("000110".to_string()),
+            String::from("111011")
+        );
         assert_eq!(maximum_binary_string("01".to_string()), String::from("01"));
         assert_eq!(maximum_binary_string("11".to_string()), String::from("11"));
-        assert_eq!(maximum_binary_string("1000".to_string()), String::from("1110"));
+        assert_eq!(
+            maximum_binary_string("1000".to_string()),
+            String::from("1110")
+        );
     }
 
     #[test]
