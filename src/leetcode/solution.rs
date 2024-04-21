@@ -6,6 +6,8 @@ use std::cell::RefCell;
 use std::cmp::{max, min, Ordering};
 use std::collections::hash_map::Entry::Vacant;
 use std::collections::{BinaryHeap, HashMap, HashSet, VecDeque};
+use std::env::temp_dir;
+use std::iter::Sum;
 use std::mem::swap;
 use std::rc::Rc;
 
@@ -334,6 +336,31 @@ pub fn rotate(nums: &mut Vec<i32>, mut k: i32) {
     reverse(nums, 0, (n - 1) as i32);
     reverse(nums, 0, k - 1);
     reverse(nums, k, (n - 1) as i32);
+}
+
+/// 216. Combination Sum III
+pub fn combination_sum3(k: i32, n: i32) -> Vec<Vec<i32>> {
+    let mut temp: Vec<i32> = vec![];
+    let mut ans: Vec<Vec<i32>> = vec![];
+
+    fn dfs(curr: i32, n: i32, k: i32, sum: i32, _temp: &mut Vec<i32>, _ans: &mut Vec<Vec<i32>>) {
+        let length = _temp.len() as i32;
+        if length + (n - curr + 1) < k || length > k {
+            return;
+        }
+
+        if length == k && _temp.iter().sum::<i32>() == sum {
+            _ans.push(_temp.clone());
+            return;
+        }
+
+        _temp.push(curr);
+        dfs(curr + 1, n, k, sum, _temp, _ans);
+        _temp.pop();
+        dfs(curr + 1, n, k, sum, _temp, _ans);
+    }
+    dfs(1, 9, k, n, &mut temp, &mut ans);
+    ans
 }
 
 /// 283.Move Zeroes
@@ -2193,6 +2220,16 @@ mod tests {
         assert_eq!(trailing_zeroes(3), 0);
         assert_eq!(trailing_zeroes(5), 1);
         assert_eq!(trailing_zeroes(0), 0);
+    }
+
+    #[test]
+    fn test_combination_sum3() {
+        assert_eq!(combination_sum3(3, 7), vec![[1, 2, 4]]);
+        assert_eq!(
+            combination_sum3(3, 9),
+            vec![[1, 2, 6], [1, 3, 5], [2, 3, 4]]
+        );
+        assert_eq!(combination_sum3(4, 1), Vec::<Vec<i32>>::new());
     }
 
     #[test]
