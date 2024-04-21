@@ -2156,7 +2156,7 @@ mod tests {
         assert_eq!(search_insert(vec![1, 3, 5, 6], 7), 4);
     }
 
-    macro_rules! combinaion_sum_tests {
+    macro_rules! combination_sum_tests {
         ($($name:ident: $value:expr,)*) => {
             $(
                 #[test]
@@ -2170,10 +2170,10 @@ mod tests {
             )*
         };
     }
-    combinaion_sum_tests! {
-        combinaion_sum_case0: (vec![2, 3, 6, 7], 7, vec![vec![2, 2, 3], vec![7]]),
-        combinaion_sum_case1: (vec![2, 3, 5], 8, vec![vec![2, 2, 2, 2], vec![2, 3, 3], vec![3, 5]]),
-        combinaion_sum_case2: (vec![2], 1, vec![]),
+    combination_sum_tests! {
+        test_combination_sum_case0: (vec![2, 3, 6, 7], 7, vec![vec![2, 2, 3], vec![7]]),
+        test_combination_sum_case1: (vec![2, 3, 5], 8, vec![vec![2, 2, 2, 2], vec![2, 3, 3], vec![3, 5]]),
+        test_combination_sum_case2: (vec![2], 1, vec![]),
     }
 
     #[test]
@@ -2435,14 +2435,25 @@ mod tests {
         assert_eq!(1, kth_grammar(2, 2));
     }
 
-    #[test]
-    fn test_letter_case_permutation() {
-        let expected1 = generate_string_vec(vec!["a1b2", "a1B2", "A1b2", "A1B2"]);
-        let expected2 = generate_string_vec(vec!["3z4", "3Z4"]);
-        let actual1 = letter_case_permutation(String::from("a1b2"));
-        let actual2 = letter_case_permutation(String::from("3z4"));
-        test_string_vec_equal_base(expected1, actual1);
-        test_string_vec_equal_base(expected2, actual2);
+    macro_rules! letter_case_permutation_tests {
+        ($($name:ident: $value:expr,)*) => {
+            $(
+                #[test]
+                fn $name() {
+                    let (mut s, mut expected) = $value;
+                    let mut actual = letter_case_permutation(s);
+                    actual.sort();
+                    let mut expected_strings = generate_string_vec(expected);
+                    expected_strings.sort();
+                    assert_eq!(actual, expected_strings);
+                }
+            )*
+        };
+    }
+
+    letter_case_permutation_tests! {
+        test_letter_case_permutation_case0: (String::from("a1b2"), vec!["a1b2", "a1B2", "A1b2", "A1B2"]),
+        test_letter_case_permutation_case1: (String::from("3z4"), vec!["3z4", "3Z4"]),
     }
 
     #[test]
@@ -2494,38 +2505,38 @@ mod tests {
         );
     }
 
-    #[test]
-    fn test_subdomain_visits() {
-        let cpdomains1 = generate_string_vec(vec!["9001 discuss.leetcode.com"]);
-        let cpdomains2 = generate_string_vec(vec![
-            "900 google.mail.com",
-            "50 yahoo.com",
-            "1 intel.mail.com",
-            "5 wiki.org",
-        ]);
-        let mut actual1 = subdomain_visits(cpdomains1);
-        let mut actual2 = subdomain_visits(cpdomains2);
+    macro_rules! subdomain_visits_tests {
+        ($($name:ident: $value:expr,)*) => {
+            $(
+                #[test]
+                fn $name() {
+                    let (mut domains, mut expected) = $value;
+                    let cpdomains = generate_string_vec(domains);
+                    let mut actual = subdomain_visits(cpdomains);
+                    actual.sort();
+                    let mut expected_strings = generate_string_vec(expected);
+                    expected_strings.sort();
+                    assert_eq!(actual, expected_strings);
+                }
+            )*
+        };
+    }
 
-        let mut expected1 = generate_string_vec(vec![
-            "9001 discuss.leetcode.com",
-            "9001 com",
-            "9001 leetcode.com",
-        ]);
-        let mut expected2 = generate_string_vec(vec![
-            "901 mail.com",
-            "50 yahoo.com",
+    subdomain_visits_tests! {
+        test_subdomain_visits_case0: (vec!["9001 discuss.leetcode.com"], vec!["9001 discuss.leetcode.com", "9001 com", "9001 leetcode.com"]),
+        test_subdomain_visits_case1: (vec![
             "900 google.mail.com",
-            "5 wiki.org",
-            "5 org",
+            "50 yahoo.com",
             "1 intel.mail.com",
-            "951 com",
-        ]);
-        actual1.sort();
-        expected1.sort();
-        actual2.sort();
-        expected2.sort();
-        assert_eq!(expected1, actual1);
-        assert_eq!(expected2, actual2);
+            "5 wiki.org"],
+            vec![
+                "901 mail.com",
+                "50 yahoo.com",
+                "900 google.mail.com",
+                "5 wiki.org",
+                "5 org",
+                "1 intel.mail.com",
+                "951 com"]),
     }
 
     #[test]
@@ -3048,21 +3059,25 @@ mod tests {
         assert_eq!(minimum_moves(String::from("OOOO")), 0);
     }
 
-    #[test]
-    fn test_two_out_of_three() {
-        let mut expected1 = vec![3, 2];
-        let mut expected2 = vec![2, 3, 1];
-        let expected3: Vec<i32> = vec![];
-        expected1.sort();
-        expected2.sort();
-        let mut actual1 = two_out_of_three(vec![1, 1, 3, 2], vec![2, 3], vec![3]);
-        let mut actual2 = two_out_of_three(vec![3, 1], vec![2, 3], vec![1, 2]);
-        let actual3 = two_out_of_three(vec![1, 2, 2], vec![4, 3, 3], vec![5]);
-        actual1.sort();
-        actual2.sort();
-        assert_eq!(expected1, actual1);
-        assert_eq!(expected2, actual2);
-        assert_eq!(expected3, actual3);
+    macro_rules! two_out_of_three_tests {
+        ($($name:ident: $value:expr,)*) => {
+            $(
+                #[test]
+                fn $name() {
+                    let (nums1, nums2, nums3, mut expected) = $value;
+                    let mut actual = two_out_of_three(nums1, nums2, nums3);
+                    actual.sort();
+                    expected.sort_by(|a: &i32, b: &i32| a.cmp(b));
+                    assert_eq!(actual, expected);
+                }
+            )*
+        };
+    }
+
+    two_out_of_three_tests! {
+        test_two_out_of_three_case0: (vec![1, 1, 3, 2], vec![2, 3], vec![3], vec![3, 2]),
+        test_two_out_of_three_case1: (vec![3, 1], vec![2, 3], vec![1, 2], vec![2, 3, 1]),
+        test_two_out_of_three_case2: (vec![1, 2, 2], vec![4, 3, 3], vec![5], vec![]),
     }
 
     #[test]
