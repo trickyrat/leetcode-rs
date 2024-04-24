@@ -1386,6 +1386,30 @@ pub fn insert_into_max_tree(
     root
 }
 
+/// 1052. Grumpy Bookstore Owner
+pub fn max_satisfied(customers: Vec<i32>, grumpy: Vec<i32>, minutes: i32) -> i32 {
+    let mut total = 0;
+    let n = customers.len();
+    for i in 0..n {
+        if grumpy[i] == 0 {
+            total += customers[i];
+        }
+    }
+    let mut increase = 0;
+    for i in 0..minutes as usize {
+        increase = increase + customers[i] * grumpy[i];
+    }
+
+    let mut max_increase = increase;
+    for i in minutes as usize..n {
+        increase = increase + customers[i] * grumpy[i]
+            - customers[i - minutes as usize] * grumpy[i - minutes as usize];
+        max_increase = max_increase.max(increase);
+    }
+
+    total + max_increase
+}
+
 /// 1403.Minimum Subsequence in Non-Increasing Order
 pub fn min_subsequence(mut nums: Vec<i32>) -> Vec<i32> {
     let total: i32 = nums.iter().sum();
@@ -2757,6 +2781,19 @@ mod tests {
             min_deletion_size(generate_string_vec(vec!["zyx", "wvu", "tsr"])),
             3
         );
+    }
+
+    #[test]
+    fn test_max_satisfied() {
+        assert_eq!(
+            max_satisfied(
+                vec![1, 0, 1, 2, 1, 1, 7, 5],
+                vec![0, 1, 0, 1, 0, 1, 0, 1],
+                3
+            ),
+            16
+        );
+        assert_eq!(max_satisfied(vec![1], vec![0], 1), 1);
     }
 
     #[test]
