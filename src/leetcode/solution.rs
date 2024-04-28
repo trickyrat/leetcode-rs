@@ -1386,6 +1386,21 @@ pub fn insert_into_max_tree(
     root
 }
 
+/// 1017. Convert to Base -2
+pub fn base_neg2(n: i32) -> String {
+    let mut val = 0x55555555 ^ (0x55555555 - n);
+    if val == 0 {
+        return "0".to_string();
+    }
+    let mut res: Vec<String> = Vec::new();
+    while val != 0 {
+        res.push((val & 1).to_string());
+        val >>= 1;
+    }
+    res.reverse();
+    res.join("")
+}
+
 /// 1052. Grumpy Bookstore Owner
 pub fn max_satisfied(customers: Vec<i32>, grumpy: Vec<i32>, minutes: i32) -> i32 {
     let mut total = 0;
@@ -2781,6 +2796,13 @@ mod tests {
             min_deletion_size(generate_string_vec(vec!["zyx", "wvu", "tsr"])),
             3
         );
+    }
+
+    #[test]
+    fn test_base_neg2() {
+        assert_eq!(base_neg2(2), "110".to_string());
+        assert_eq!(base_neg2(3), "111".to_string());
+        assert_eq!(base_neg2(4), "100".to_string());
     }
 
     #[test]
