@@ -200,11 +200,7 @@ pub fn search(nums: Vec<i32>, target: i32) -> i32 {
         return -1;
     }
     if n == 1 {
-        if nums[0] == target {
-            return 0;
-        } else {
-            return -1;
-        }
+        return if nums[0] == target { 0 } else { -1 };
     }
     let (mut l, mut r) = (0, (n - 1) as i32);
     while l <= r {
@@ -273,7 +269,7 @@ pub fn combination_sum(candidates: &Vec<i32>, target: i32) -> Vec<Vec<i32>> {
             );
             _combine.pop();
         }
-    };
+    }
     let mut ans: Vec<Vec<i32>> = vec![];
     let mut combine: Vec<i32> = vec![];
     dfs(&candidates, target, &mut ans, &mut combine, 0);
@@ -1718,7 +1714,7 @@ pub fn maximum_binary_string(binary: String) -> String {
     if zero_count == 0 {
         return binary;
     }
-    res[zero_index as usize + zero_count - 1] = '0';
+    res[zero_index + zero_count - 1] = '0';
     res.iter().collect()
 }
 
@@ -2035,6 +2031,27 @@ pub fn repeated_character(s: String) -> char {
         seen |= 1 << x;
     }
     ' '
+}
+
+/// 2391.Minimum Amount of Time to Collect Garbage
+pub fn garbage_collection(garbage: Vec<String>, travel: Vec<i32>) -> i32 {
+    let mut distance = HashMap::<String, i32>::new();
+    let mut res = 0;
+    let mut current_distance = 0;
+    for i in 0..garbage.len() {
+        res += garbage[i].len() as i32;
+        if (i > 0) {
+            current_distance += travel[i - 1];
+        }
+
+        for c in garbage[i].chars() {
+            distance.insert(c.to_string(), current_distance);
+        }
+    }
+    for (k, v) in distance.iter() {
+        res += *v;
+    }
+    res
 }
 
 /// 2580.Count Ways to Group Overlapping Ranges
@@ -3244,6 +3261,18 @@ mod tests {
         assert_eq!(repeated_character(String::from("abcdd")), 'd');
         assert_eq!(repeated_character(String::from("aa")), 'a');
         assert_eq!(repeated_character(String::from("zz")), 'z');
+    }
+
+    #[test]
+    fn test_garbage_collection() {
+        assert_eq!(
+            garbage_collection(generate_string_vec(vec!["G", "P", "GP", "GG"]), vec![2, 4, 3]),
+            21
+        );
+        assert_eq!(
+            garbage_collection(generate_string_vec(vec!["MMM", "PGM", "GP"]), vec![3, 10]),
+            37
+        );
     }
 
     #[test]
