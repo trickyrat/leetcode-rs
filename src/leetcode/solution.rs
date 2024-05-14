@@ -2020,6 +2020,25 @@ pub fn prefix_count(words: Vec<String>, pref: String) -> i32 {
         .count() as i32
 }
 
+/// 2244.Minimum Rounds to Complete All Tasks
+pub fn minimum_rounds(tasks: Vec<i32>) -> i32 {
+    let mut counts = HashMap::<i32, i32>::new();
+    for &task in tasks.iter() {
+        *counts.entry(task).or_insert(0) += 1;
+    }
+    let mut res = 0;
+    for (_, count) in counts {
+        if count == 1 {
+            return -1;
+        } else if count % 3 == 0 {
+            res += count / 3;
+        } else {
+            res += count / 3 + 1;
+        }
+    }
+    res
+}
+
 /// 2351.First Letter to Appear Twice
 pub fn repeated_character(s: String) -> char {
     let mut seen = 0;
@@ -3256,6 +3275,12 @@ mod tests {
     }
 
     #[test]
+    fn test_minimum_rounds() {
+        assert_eq!(minimum_rounds(vec![2, 2, 3, 3, 2, 4, 4, 4, 4, 4]), 4);
+        assert_eq!(minimum_rounds(vec![2, 3, 3]), -1);
+    }
+
+    #[test]
     fn test_repeated_character() {
         assert_eq!(repeated_character(String::from("abccbaacz")), 'c');
         assert_eq!(repeated_character(String::from("abcdd")), 'd');
@@ -3266,7 +3291,10 @@ mod tests {
     #[test]
     fn test_garbage_collection() {
         assert_eq!(
-            garbage_collection(generate_string_vec(vec!["G", "P", "GP", "GG"]), vec![2, 4, 3]),
+            garbage_collection(
+                generate_string_vec(vec!["G", "P", "GP", "GG"]),
+                vec![2, 4, 3]
+            ),
             21
         );
         assert_eq!(
