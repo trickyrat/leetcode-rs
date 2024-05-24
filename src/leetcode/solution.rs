@@ -1650,6 +1650,20 @@ pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
     accounts.iter().map(|x| x.iter().sum()).max().unwrap()
 }
 
+/// 1673.Find the Most Competitive Subsequence
+pub fn most_competitive(nums: Vec<i32>, k: i32) -> Vec<i32> {
+    let mut res: Vec<i32> = vec![];
+    let n = nums.len();
+    for i in 0..n {
+        while res.len() > 0 && (n - i + res.len()) as i32 > k && *res.last().unwrap() > nums[i] {
+            res.pop();
+        }
+        res.push(nums[i]);
+    }
+    res.truncate(k as usize);
+    res
+}
+
 /// 1694.Reformat Phone Number
 pub fn reformat_number(number: String) -> String {
     let mut digits = String::new();
@@ -3030,6 +3044,12 @@ mod tests {
             maximum_wealth(vec![vec![2, 8, 7], vec![7, 1, 3], vec![1, 9, 5]]),
             17
         );
+    }
+
+    #[test]
+    fn test_most_competitive() {
+        assert_eq!(most_competitive(vec![3, 5, 2, 6], 2), vec![2, 6]);
+        assert_eq!(most_competitive(vec![2, 4, 3, 3, 5, 4, 9, 6], 4), vec![2, 3, 3, 4]);
     }
 
     #[test]
