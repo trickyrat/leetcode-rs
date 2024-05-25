@@ -2109,6 +2109,29 @@ pub fn count_ways(ranges: Vec<Vec<i32>>) -> i32 {
     res as i32
 }
 
+/// 2903.Find Indices With Index and Value Difference I
+pub fn find_indices(nums: Vec<i32>, index_difference: i32, value_difference: i32) ->  Vec<i32> {
+    let (mut min_index, mut max_index) = (0, 0);
+    for j in (index_difference as usize)..nums.len() {
+        let i = j - index_difference as usize;
+        if nums[i] < nums[min_index] {
+            min_index = i;
+        }
+        if nums[j] - nums[min_index] >= value_difference {
+            return vec![min_index as i32, j as i32];
+        }
+
+        if nums[i] > nums[max_index] {
+            max_index = i;
+        }
+
+        if nums[max_index] - nums[j] >= value_difference {
+            return vec![max_index as i32, j as i32];
+        }
+    }
+    vec![-1, -1]
+}
+
 /// 2908.Minimum Sum of Mountain Triplets I
 pub fn minimum_sum(nums: Vec<i32>) -> i32 {
     let n = nums.len();
@@ -3330,6 +3353,13 @@ mod tests {
             count_ways(vec![vec![1, 3], vec![10, 20], vec![2, 5], vec![4, 8]]),
             4
         );
+    }
+
+    #[test]
+    fn test_find_indices() {
+        assert_eq!(find_indices(vec![5, 1, 4, 1], 2, 4), vec![0, 3]);
+        assert_eq!(find_indices(vec![2, 1], 0, 0), vec![0, 0]);
+        assert_eq!(find_indices(vec![1, 2, 3], 2, 4), vec![-1, -1]);
     }
 
     #[test]
