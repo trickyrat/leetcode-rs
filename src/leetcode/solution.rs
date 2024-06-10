@@ -2204,9 +2204,9 @@ mod tests {
 
     #[test]
     fn test_two_sum() {
-        assert_eq!(vec![0, 1], two_sum(vec![2, 7, 11, 15], 9));
-        assert_eq!(vec![1, 2], two_sum(vec![3, 2, 4], 6));
-        assert_eq!(vec![0, 1], two_sum(vec![3, 3], 6));
+        assert_eq!(two_sum(vec![2, 7, 11, 15], 9), vec![0, 1]);
+        assert_eq!(two_sum(vec![3, 2, 4], 6), vec![1, 2]);
+        assert_eq!(two_sum(vec![3, 3], 6), vec![0, 1]);
     }
 
     #[test]
@@ -2458,14 +2458,13 @@ mod tests {
     #[test]
     fn test_exclusive_time() {
         assert_eq!(
-            vec![3, 4],
             exclusive_time(
                 2,
                 generate_string_vec(vec!["0:start:0", "1:start:2", "1:end:5", "0:end:6"]),
-            )
+            ),
+            vec![3, 4]
         );
         assert_eq!(
-            vec![8],
             exclusive_time(
                 1,
                 generate_string_vec(vec![
@@ -2476,10 +2475,10 @@ mod tests {
                     "0:end:6",
                     "0:end:7",
                 ]),
-            )
+            ),
+            vec![8]
         );
         assert_eq!(
-            vec![7, 1],
             exclusive_time(
                 2,
                 generate_string_vec(vec![
@@ -2490,10 +2489,10 @@ mod tests {
                     "1:end:6",
                     "0:end:7",
                 ]),
-            )
+            ),
+            vec![7, 1]
         );
         assert_eq!(
-            vec![8, 1],
             exclusive_time(
                 2,
                 generate_string_vec(vec![
@@ -2504,11 +2503,12 @@ mod tests {
                     "1:end:7",
                     "0:end:8",
                 ]),
-            )
+            ),
+            vec![8, 1]
         );
         assert_eq!(
-            vec![1],
-            exclusive_time(1, generate_string_vec(vec!["0:start:0", "0:end:0"]))
+            exclusive_time(1, generate_string_vec(vec!["0:start:0", "0:end:0"])),
+            vec![1]
         );
     }
 
@@ -2538,21 +2538,21 @@ mod tests {
 
     #[test]
     fn test_check_possibility() {
-        assert_eq!(true, check_possibility(vec![4, 2, 3]));
-        assert_eq!(false, check_possibility(vec![4, 2, 1]));
+        assert_eq!(check_possibility(vec![4, 2, 3]), true);
+        assert_eq!(check_possibility(vec![4, 2, 1]), false);
     }
 
     #[test]
     fn test_maximum_swap() {
-        assert_eq!(7236, maximum_swap(2736));
-        assert_eq!(9973, maximum_swap(9973));
+        assert_eq!(maximum_swap(2736), 7236);
+        assert_eq!(maximum_swap(9973), 9973);
     }
 
     #[test]
     fn test_flip_lights() {
-        assert_eq!(2, flip_lights(1, 1));
-        assert_eq!(3, flip_lights(2, 1));
-        assert_eq!(4, flip_lights(3, 1));
+        assert_eq!(flip_lights(1, 1), 2);
+        assert_eq!(flip_lights(2, 1), 3);
+        assert_eq!(flip_lights(3, 1), 4);
     }
 
     #[test]
@@ -2572,9 +2572,9 @@ mod tests {
 
     #[test]
     fn test_has_alternating_bits() {
-        assert!(has_alternating_bits(5));
-        assert!(!has_alternating_bits(7));
-        assert!(!has_alternating_bits(11));
+        assert_eq!(has_alternating_bits(5), true);
+        assert_eq!(has_alternating_bits(7), false);
+        assert_eq!(has_alternating_bits(11), false);
     }
 
     #[test]
@@ -2610,15 +2610,15 @@ mod tests {
 
     #[test]
     fn test_max_chunks_to_sorted() {
-        assert_eq!(1, max_chunks_to_sorted(vec![4, 3, 2, 1, 0]));
-        assert_eq!(4, max_chunks_to_sorted(vec![1, 0, 2, 3, 4]));
+        assert_eq!(max_chunks_to_sorted(vec![4, 3, 2, 1, 0]), 1);
+        assert_eq!(max_chunks_to_sorted(vec![1, 0, 2, 3, 4]), 4);
     }
 
     #[test]
     fn test_kth_grammar() {
-        assert_eq!(0, kth_grammar(1, 1));
-        assert_eq!(0, kth_grammar(2, 1));
-        assert_eq!(1, kth_grammar(2, 2));
+        assert_eq!(kth_grammar(1, 1), 0);
+        assert_eq!(kth_grammar(2, 1), 0);
+        assert_eq!(kth_grammar(2, 2), 1);
     }
 
     macro_rules! letter_case_permutation_tests {
@@ -2651,8 +2651,8 @@ mod tests {
 
     #[test]
     fn test_min_swap() {
-        assert_eq!(1, min_swap(vec![1, 3, 5, 4], vec![1, 2, 3, 7]));
-        assert_eq!(1, min_swap(vec![0, 3, 5, 8, 9], vec![2, 1, 4, 6, 9]));
+        assert_eq!(min_swap(vec![1, 3, 5, 4], vec![1, 2, 3, 7]), 1);
+        assert_eq!(min_swap(vec![0, 3, 5, 8, 9], vec![2, 1, 4, 6, 9]), 1);
     }
 
     #[test]
@@ -2761,9 +2761,9 @@ mod tests {
 
     #[test]
     fn test_score_of_parentheses() {
-        assert_eq!(1, score_of_parentheses(String::from("()")));
-        assert_eq!(2, score_of_parentheses(String::from("(())")));
-        assert_eq!(2, score_of_parentheses(String::from("()()")));
+        assert_eq!(score_of_parentheses(String::from("()")), 1);
+        assert_eq!(score_of_parentheses(String::from("(())")), 2);
+        assert_eq!(score_of_parentheses(String::from("()()")), 2);
     }
 
     #[test]
@@ -2775,8 +2775,8 @@ mod tests {
 
     #[test]
     fn test_num_rescue_boats() {
-        // assert_eq!(num_rescue_boats(vec![1, 2], 3), 1);
-        // assert_eq!(num_rescue_boats(vec![3, 2, 2, 1], 3), 3);
+        assert_eq!(num_rescue_boats(vec![1, 2], 3), 1);
+        assert_eq!(num_rescue_boats(vec![3, 2, 2, 1], 3), 3);
         assert_eq!(num_rescue_boats(vec![3, 5, 3, 4], 5), 4);
     }
 
@@ -2789,18 +2789,21 @@ mod tests {
 
     #[test]
     fn test_possible_bipartiition() {
-        assert!(possible_bipartition(
-            4,
-            vec![vec![1, 2], vec![1, 3], vec![2, 4]],
-        ));
-        assert!(!possible_bipartition(
-            3,
-            vec![vec![1, 2], vec![1, 3], vec![2, 3]],
-        ));
-        assert!(!possible_bipartition(
-            5,
-            vec![vec![1, 2], vec![2, 3], vec![3, 4], vec![4, 5], vec![1, 5]],
-        ));
+        assert_eq!(
+            possible_bipartition(4, vec![vec![1, 2], vec![1, 3], vec![2, 4]],),
+            true
+        );
+        assert_eq!(
+            possible_bipartition(3, vec![vec![1, 2], vec![1, 3], vec![2, 3]],),
+            false
+        );
+        assert_eq!(
+            possible_bipartition(
+                5,
+                vec![vec![1, 2], vec![2, 3], vec![3, 4], vec![4, 5], vec![1, 5]],
+            ),
+            false
+        );
     }
 
     #[test]
@@ -2817,8 +2820,8 @@ mod tests {
 
     #[test]
     fn test_partition_disjoint() {
-        assert_eq!(3, partition_disjoint(vec![5, 0, 3, 8, 6]));
-        assert_eq!(4, partition_disjoint(vec![1, 1, 1, 0, 6, 12]));
+        assert_eq!(partition_disjoint(vec![5, 0, 3, 8, 6]), 3);
+        assert_eq!(partition_disjoint(vec![1, 1, 1, 0, 6, 12]), 4);
     }
 
     #[test]
@@ -2851,20 +2854,20 @@ mod tests {
 
     #[test]
     fn test_shortest_bridge() {
-        assert_eq!(1, shortest_bridge(vec![vec![0, 1], vec![1, 0]]));
+        assert_eq!(shortest_bridge(vec![vec![0, 1], vec![1, 0]]), 1);
         assert_eq!(
-            2,
-            shortest_bridge(vec![vec![0, 1, 0], vec![0, 0, 0], vec![0, 0, 1]])
+            shortest_bridge(vec![vec![0, 1, 0], vec![0, 0, 0], vec![0, 0, 1]]),
+            2
         );
         assert_eq!(
-            1,
             shortest_bridge(vec![
                 vec![1, 1, 1, 1, 1],
                 vec![1, 0, 0, 0, 1],
                 vec![1, 0, 1, 0, 1],
                 vec![1, 0, 0, 0, 1],
                 vec![1, 1, 1, 1, 1],
-            ])
+            ]),
+            1
         );
     }
 
@@ -2982,9 +2985,9 @@ mod tests {
 
     #[test]
     fn test_can_be_equal() {
-        assert!(can_be_equal(vec![1, 2, 3, 4], vec![2, 1, 3, 4]));
-        assert!(can_be_equal(vec![7], vec![7]));
-        assert!(!can_be_equal(vec![3, 7, 9], vec![3, 7, 11]));
+        assert_eq!(can_be_equal(vec![1, 2, 3, 4], vec![2, 1, 3, 4]), true);
+        assert_eq!(can_be_equal(vec![7], vec![7]), true);
+        assert_eq!(can_be_equal(vec![3, 7, 9], vec![3, 7, 11]), false);
     }
 
     #[test]
@@ -3006,9 +3009,9 @@ mod tests {
 
     #[test]
     fn test_final_prices() {
-        assert_eq!(vec![4, 2, 4, 2, 3], final_prices(vec![8, 4, 6, 2, 3]));
-        assert_eq!(vec![1, 2, 3, 4, 5], final_prices(vec![1, 2, 3, 4, 5]));
-        assert_eq!(vec![9, 0, 1, 6], final_prices(vec![10, 1, 1, 6]));
+        assert_eq!(final_prices(vec![8, 4, 6, 2, 3]), vec![4, 2, 4, 2, 3]);
+        assert_eq!(final_prices(vec![1, 2, 3, 4, 5]), vec![1, 2, 3, 4, 5]);
+        assert_eq!(final_prices(vec![10, 1, 1, 6]), vec![9, 0, 1, 6]);
     }
 
     #[test]
@@ -3032,47 +3035,50 @@ mod tests {
 
     #[test]
     fn test_trim_mean() {
-        assert!(
+        assert_eq!(
             (trim_mean(vec![
                 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
             ]) - 2.00000)
-                <= 0.00001
+                <= 0.00001,
+            true
         );
-        assert!(
+        assert_eq!(
             (trim_mean(vec![
                 6, 2, 7, 5, 1, 2, 0, 3, 10, 2, 5, 0, 5, 5, 0, 8, 7, 6, 8, 0,
             ]) - 4.00000)
-                <= 0.00001
+                <= 0.00001,
+            true
         );
-        assert!(
+        assert_eq!(
             (trim_mean(vec![
                 6, 0, 7, 0, 7, 5, 7, 8, 3, 4, 0, 7, 8, 1, 6, 8, 1, 1, 2, 4, 8, 1, 9, 5, 4, 3, 8, 5,
                 10, 8, 6, 6, 1, 0, 6, 10, 8, 2, 3, 4,
             ]) - 4.77778)
-                <= 0.00001
+                <= 0.00001,
+            true
         );
     }
 
     #[test]
     fn test_max_length_between_equal_characters() {
-        assert_eq!(0, max_length_between_equal_characters(String::from("aa")));
-        assert_eq!(2, max_length_between_equal_characters(String::from("abca")));
+        assert_eq!(max_length_between_equal_characters(String::from("aa")), 0);
+        assert_eq!(max_length_between_equal_characters(String::from("abca")), 2);
         assert_eq!(
-            -1,
-            max_length_between_equal_characters(String::from("cbzyx"))
+            max_length_between_equal_characters(String::from("cbzyx")),
+            -1
         );
     }
 
     #[test]
     fn test_frequency_sort() {
         assert_eq!(
-            vec![3, 1, 1, 2, 2, 2],
-            frequency_sort(vec![1, 1, 2, 2, 2, 3])
+            frequency_sort(vec![1, 1, 2, 2, 2, 3]),
+            vec![3, 1, 1, 2, 2, 2]
         );
-        assert_eq!(vec![1, 3, 3, 2, 2], frequency_sort(vec![2, 3, 1, 3, 2]));
+        assert_eq!(frequency_sort(vec![2, 3, 1, 3, 2]), vec![1, 3, 3, 2, 2]);
         assert_eq!(
+            frequency_sort(vec![-1, 1, -6, 4, 5, -6, 1, 4, 1]),
             vec![5, -1, 4, 4, -6, -6, 1, 1, 1],
-            frequency_sort(vec![-1, 1, -6, 4, 5, -6, 1, 4, 1])
         );
     }
 
@@ -3143,31 +3149,30 @@ mod tests {
 
     #[test]
     fn test_minimum_length() {
-        assert_eq!(2, minimum_length(String::from("ca")));
-        assert_eq!(0, minimum_length(String::from("cabaabac")));
-        assert_eq!(3, minimum_length(String::from("aabccabba")));
+        assert_eq!(minimum_length(String::from("ca")), 2);
+        assert_eq!(minimum_length(String::from("cabaabac")), 0);
+        assert_eq!(minimum_length(String::from("aabccabba")), 3);
     }
 
     #[test]
     fn test_merge_alternately() {
         assert_eq!(
-            String::from("apbqcr"),
-            merge_alternately(String::from("abc"), String::from("pqr"))
+            merge_alternately(String::from("abc"), String::from("pqr")),
+            String::from("apbqcr")
         );
         assert_eq!(
-            String::from("apbqrs"),
-            merge_alternately(String::from("ab"), String::from("pqrs"))
+            merge_alternately(String::from("ab"), String::from("pqrs")),
+            String::from("apbqrs")
         );
         assert_eq!(
-            String::from("apbqcd"),
-            merge_alternately(String::from("abcd"), String::from("pq"))
+            merge_alternately(String::from("abcd"), String::from("pq")),
+            String::from("apbqcd")
         );
     }
 
     #[test]
     fn test_count_matches() {
         assert_eq!(
-            1,
             count_matches(
                 generate_string_matrix(vec![
                     vec!["phone", "blue", "pixel"],
@@ -3176,10 +3181,10 @@ mod tests {
                 ]),
                 String::from("color"),
                 String::from("silver"),
-            )
+            ),
+            1
         );
         assert_eq!(
-            2,
             count_matches(
                 generate_string_matrix(vec![
                     vec!["phone", "blue", "pixel"],
@@ -3188,7 +3193,8 @@ mod tests {
                 ]),
                 String::from("type"),
                 String::from("phone"),
-            )
+            ),
+            2
         );
     }
 
@@ -3208,27 +3214,30 @@ mod tests {
 
     #[test]
     fn test_check_ones_segment() {
-        assert!(!check_ones_segment(String::from("1001")));
-        assert!(check_ones_segment(String::from("110")));
+        assert_eq!(check_ones_segment(String::from("1001")), false);
+        assert_eq!(check_ones_segment(String::from("110")), true);
     }
 
     #[test]
     fn test_are_almost_equal() {
-        assert!(are_almost_equal(String::from("bank"), String::from("kanb")));
-        assert!(!are_almost_equal(
-            String::from("attack"),
-            String::from("defend"),
-        ));
-        assert!(are_almost_equal(
-            String::from("kelb"),
-            String::from("kelbf"),
-        ));
+        assert_eq!(
+            are_almost_equal(String::from("bank"), String::from("kanb")),
+            true
+        );
+        assert_eq!(
+            are_almost_equal(String::from("attack"), String::from("defend"),),
+            false
+        );
+        assert_eq!(
+            are_almost_equal(String::from("kelb"), String::from("kelbf"),),
+            true
+        );
     }
 
     #[test]
     fn test_max_value() {
-        assert_eq!(2, max_value(4, 2, 6));
-        assert_eq!(3, max_value(6, 1, 10));
+        assert_eq!(max_value(4, 2, 6), 2);
+        assert_eq!(max_value(6, 1, 10), 3);
     }
 
     #[test]
@@ -3311,13 +3320,22 @@ mod tests {
 
     #[test]
     fn test_are_number_ascending() {
-        assert!(are_number_ascending(String::from(
-            "1 box has 3 blue 4 red 6 green and 12 yellow marbles"
-        )));
-        assert!(!are_number_ascending(String::from("hello world 5 x 5")));
-        assert!(!are_number_ascending(String::from(
-            "sunset is at 7 51 pm overnight lows will be in the low 50 and 60 s"
-        )));
+        assert_eq!(
+            are_number_ascending(String::from(
+                "1 box has 3 blue 4 red 6 green and 12 yellow marbles"
+            )),
+            true
+        );
+        assert_eq!(
+            are_number_ascending(String::from("hello world 5 x 5")),
+            false
+        );
+        assert_eq!(
+            are_number_ascending(String::from(
+                "sunset is at 7 51 pm overnight lows will be in the low 50 and 60 s"
+            )),
+            false
+        );
     }
 
     #[test]
@@ -3391,15 +3409,15 @@ mod tests {
 
     #[test]
     fn test_minimum_sum() {
-        assert_eq!(9, minimum_sum(vec![8, 6, 1, 5, 3]));
-        assert_eq!(13, minimum_sum(vec![5, 4, 8, 7, 10, 2]));
-        assert_eq!(-1, minimum_sum(vec![6, 5, 4, 3, 4, 5]));
+        assert_eq!(minimum_sum(vec![8, 6, 1, 5, 3]), 9);
+        assert_eq!(minimum_sum(vec![5, 4, 8, 7, 10, 2]), 13);
+        assert_eq!(minimum_sum(vec![6, 5, 4, 3, 4, 5]), -1);
     }
 
     #[test]
     fn test_minimum_added_coins() {
-        assert_eq!(2, minimum_added_coins(vec![1, 4, 10], 19));
-        assert_eq!(1, minimum_added_coins(vec![1, 4, 10, 5, 7, 19], 19));
-        assert_eq!(3, minimum_added_coins(vec![1, 1, 1], 20));
+        assert_eq!(minimum_added_coins(vec![1, 4, 10], 19), 2);
+        assert_eq!(minimum_added_coins(vec![1, 4, 10, 5, 7, 19], 19), 1);
+        assert_eq!(minimum_added_coins(vec![1, 1, 1], 20), 3);
     }
 }
