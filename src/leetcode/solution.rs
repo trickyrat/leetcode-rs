@@ -1069,6 +1069,23 @@ pub fn shortest_subarray(nums: Vec<i32>, k: i32) -> i32 {
     }
 }
 
+/// 881.Boats to Save People
+pub fn num_rescue_boats(mut people: Vec<i32>, limit: i32) -> i32 {
+    people.sort();
+    let mut res = 0;
+    let (mut left, mut right) = (0, people.len() as i32 - 1);
+    while left <= right {
+        if people[left as usize] + people[right as usize] <= limit {
+            left += 1;
+            right -= 1;
+        } else {
+            right -= 1;
+        }
+        res += 1;
+    }
+    res
+}
+
 ///  883.Projection Area of 3D Shapes
 pub fn projection_area(grid: Vec<Vec<i32>>) -> i32 {
     let max_row = grid
@@ -2110,7 +2127,7 @@ pub fn count_ways(ranges: Vec<Vec<i32>>) -> i32 {
 }
 
 /// 2903.Find Indices With Index and Value Difference I
-pub fn find_indices(nums: Vec<i32>, index_difference: i32, value_difference: i32) ->  Vec<i32> {
+pub fn find_indices(nums: Vec<i32>, index_difference: i32, value_difference: i32) -> Vec<i32> {
     let (mut min_index, mut max_index) = (0, 0);
     for j in (index_difference as usize)..nums.len() {
         let i = j - index_difference as usize;
@@ -2751,9 +2768,16 @@ mod tests {
 
     #[test]
     fn test_shortest_subarray() {
-        assert_eq!(1, shortest_subarray(vec![1], 1));
-        assert_eq!(-1, shortest_subarray(vec![1, 2], 4));
-        assert_eq!(3, shortest_subarray(vec![2, -1, 2], 3));
+        assert_eq!(shortest_subarray(vec![1], 1), 1);
+        assert_eq!(shortest_subarray(vec![1, 2], 4), -1);
+        assert_eq!(shortest_subarray(vec![2, -1, 2], 3), 3);
+    }
+
+    #[test]
+    fn test_num_rescue_boats() {
+        // assert_eq!(num_rescue_boats(vec![1, 2], 3), 1);
+        // assert_eq!(num_rescue_boats(vec![3, 2, 2, 1], 3), 3);
+        assert_eq!(num_rescue_boats(vec![3, 5, 3, 4], 5), 4);
     }
 
     #[test]
@@ -3072,7 +3096,10 @@ mod tests {
     #[test]
     fn test_most_competitive() {
         assert_eq!(most_competitive(vec![3, 5, 2, 6], 2), vec![2, 6]);
-        assert_eq!(most_competitive(vec![2, 4, 3, 3, 5, 4, 9, 6], 4), vec![2, 3, 3, 4]);
+        assert_eq!(
+            most_competitive(vec![2, 4, 3, 3, 5, 4, 9, 6], 4),
+            vec![2, 3, 3, 4]
+        );
     }
 
     #[test]
