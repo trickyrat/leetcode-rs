@@ -2083,6 +2083,19 @@ pub fn repeated_character(s: String) -> char {
     ' '
 }
 
+/// 2390.Removing Stars From a String
+pub fn remove_stars(s: String) -> String {
+    let mut res = String::new();
+    for ch in s.chars() {
+        if ch != '*' {
+            res.push(ch)
+        } else {
+            res.pop();
+        }
+    }
+    res
+}
+
 /// 2391.Minimum Amount of Time to Collect Garbage
 pub fn garbage_collection(garbage: Vec<String>, travel: Vec<i32>) -> i32 {
     let mut distance = HashMap::<String, i32>::new();
@@ -3374,6 +3387,12 @@ mod tests {
         assert_eq!(repeated_character(String::from("abcdd")), 'd');
         assert_eq!(repeated_character(String::from("aa")), 'a');
         assert_eq!(repeated_character(String::from("zz")), 'z');
+    }
+
+    #[test]
+    fn test_remove_stars() {
+        assert_eq!(remove_stars(String::from("leet**cod*e")), "lecoe");
+        assert_eq!(remove_stars(String::from("erase*****")), "");
     }
 
     #[test]
