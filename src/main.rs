@@ -1,4 +1,4 @@
-mod leetcode;
+pub mod leetcode;
 
 fn main() {
     println!("Hello, world!");
