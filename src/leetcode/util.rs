@@ -1,7 +1,8 @@
 #![cfg_attr(debug_assertions, allow(dead_code))]
 
-use crate::leetcode::data_structures::ListNode;
 use std::borrow::BorrowMut;
+
+use crate::leetcode::data_structures::list_node::ListNode;
 
 pub fn generate_linked_list_node(nums: Vec<i32>) -> Option<Box<ListNode>> {
     let mut head = ListNode::new(nums[0]);

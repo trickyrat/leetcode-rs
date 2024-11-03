@@ -23,7 +23,7 @@ impl TreeNode {
 
 #[cfg(test)]
 mod tests {
-    use crate::leetcode::data_structures::TreeNode;
+    use crate::leetcode::data_structures::tree_node::TreeNode;
 
     #[test]
     fn test_tree_node_construct() {

@@ -1,7 +1,7 @@
 #![cfg_attr(debug_assertions, allow(unused))]
 
-use crate::leetcode::data_structures::ListNode;
-use crate::leetcode::TreeNode;
+use crate::leetcode::data_structures::list_node::ListNode;
+use crate::leetcode::data_structures::tree_node::TreeNode;
 use std::cell::RefCell;
 use std::cmp::{max, min, Ordering};
 use std::collections::hash_map::Entry::Vacant;

@@ -99,7 +99,7 @@ impl LinkedList {
 
 #[cfg(test)]
 mod tests {
-    use crate::leetcode::data_structures::ListNode;
+    use crate::leetcode::data_structures::list_node::ListNode;
 
     #[test]
     fn test_list_node_construct() {
