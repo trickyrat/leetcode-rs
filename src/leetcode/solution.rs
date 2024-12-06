@@ -1,7 +1,6 @@
 #![cfg_attr(debug_assertions, allow(unused))]
 
-use crate::leetcode::data_structures::list_node::ListNode;
-use crate::leetcode::data_structures::tree_node::TreeNode;
+use crate::leetcode::data_structures::{ListNode,TreeNode};
 use std::cell::RefCell;
 use std::cmp::{max, min, Ordering};
 use std::collections::hash_map::Entry::Vacant;
@@ -2207,7 +2206,7 @@ pub fn minimum_added_coins(coins: Vec<i32>, target: i32) -> i32 {
 #[cfg(test)]
 mod tests {
     use crate::leetcode::solution::*;
-    use crate::leetcode::util::*;
+    use crate::leetcode::utils::*;
 
     fn test_string_vec_equal_base(mut expected: Vec<String>, mut actual: Vec<String>) {
         expected.sort();
