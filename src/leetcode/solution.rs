@@ -2208,6 +2208,10 @@ mod tests {
     use crate::leetcode::solution::*;
     use crate::leetcode::utils::*;
 
+    fn setup_binary_tree_serializer() -> BTSerializer {
+        BTSerializer {}
+    }
+
     fn test_string_vec_equal_base(mut expected: Vec<String>, mut actual: Vec<String>) {
         expected.sort();
         actual.sort();
@@ -2549,6 +2553,14 @@ mod tests {
     }
 
     #[test]
+    fn test_width_of_binary_tree() {
+        let bt_serializer = setup_binary_tree_serializer();
+        assert_eq!(width_of_binary_tree(bt_serializer.deserialize("1,3,2,5,3,null,9".to_string())), 4);
+        assert_eq!(width_of_binary_tree(bt_serializer.deserialize("1,3,2,5,null,null,9,6,null,7".to_string())), 7);
+        assert_eq!(width_of_binary_tree(bt_serializer.deserialize("1,3,2,5".to_string())), 2);
+    }
+
+    #[test]
     fn test_check_possibility() {
         assert_eq!(check_possibility(vec![4, 2, 3]), true);
         assert_eq!(check_possibility(vec![4, 2, 1]), false);
@@ -2633,25 +2645,17 @@ mod tests {
         assert_eq!(kth_grammar(2, 2), 1);
     }
 
-    macro_rules! letter_case_permutation_tests {
-        ($($name:ident: $value:expr,)*) => {
-            $(
-                #[test]
-                fn $name() {
-                    let (mut s, mut expected) = $value;
-                    let mut actual = letter_case_permutation(s);
-                    actual.sort();
-                    let mut expected_strings = generate_string_vec(expected);
-                    expected_strings.sort();
-                    assert_eq!(actual, expected_strings);
-                }
-            )*
-        };
+    fn setup_letter_case_permutation(input: String, expected: Vec<&str>) {
+        let mut actual = letter_case_permutation(input);
+        actual.sort();
+        let mut expected_strings = generate_string_vec(expected);
+        expected_strings.sort();
+        assert_eq!(actual, expected_strings);
     }
 
-    letter_case_permutation_tests! {
-        test_letter_case_permutation_case0: (String::from("a1b2"), vec!["a1b2", "a1B2", "A1b2", "A1B2"]),
-        test_letter_case_permutation_case1: (String::from("3z4"), vec!["3z4", "3Z4"]),
+    fn test_letter_case_permutation() {
+        setup_letter_case_permutation(String::from("a1b2"), vec!["a1b2", "a1B2", "A1b2", "A1B2"]);
+        setup_letter_case_permutation(String::from("3z4"), vec!["3z4", "3Z4"]);
     }
 
     #[test]
@@ -2703,26 +2707,18 @@ mod tests {
         );
     }
 
-    macro_rules! subdomain_visits_tests {
-        ($($name:ident: $value:expr,)*) => {
-            $(
-                #[test]
-                fn $name() {
-                    let (mut domains, mut expected) = $value;
-                    let cpdomains = generate_string_vec(domains);
-                    let mut actual = subdomain_visits(cpdomains);
-                    actual.sort();
-                    let mut expected_strings = generate_string_vec(expected);
-                    expected_strings.sort();
-                    assert_eq!(actual, expected_strings);
-                }
-            )*
-        };
+    fn setup_subdomain_visits(input: Vec<&str>, expected: Vec<&str>) {
+        let cpdomains = generate_string_vec(input);
+        let mut actual = subdomain_visits(cpdomains);
+        actual.sort();
+        let mut expected_strings = generate_string_vec(expected);
+        expected_strings.sort();
+        assert_eq!(actual, expected_strings);
     }
 
-    subdomain_visits_tests! {
-        test_subdomain_visits_case0: (vec!["9001 discuss.leetcode.com"], vec!["9001 discuss.leetcode.com", "9001 com", "9001 leetcode.com"]),
-        test_subdomain_visits_case1: (vec![
+    fn test_subdomain_visits() {
+        setup_subdomain_visits(vec!["9001 discuss.leetcode.com"], vec!["9001 discuss.leetcode.com", "9001 com", "9001 leetcode.com"]);
+        setup_subdomain_visits(vec![
             "900 google.mail.com",
             "50 yahoo.com",
             "1 intel.mail.com",
@@ -2734,7 +2730,7 @@ mod tests {
                 "5 wiki.org",
                 "5 org",
                 "1 intel.mail.com",
-                "951 com"]),
+                "951 com"]);
     }
 
     #[test]
@@ -3302,25 +3298,18 @@ mod tests {
         assert_eq!(minimum_moves(String::from("OOOO")), 0);
     }
 
-    macro_rules! two_out_of_three_tests {
-        ($($name:ident: $value:expr,)*) => {
-            $(
-                #[test]
-                fn $name() {
-                    let (nums1, nums2, nums3, mut expected) = $value;
-                    let mut actual = two_out_of_three(nums1, nums2, nums3);
-                    actual.sort();
-                    expected.sort_by(|a: &i32, b: &i32| a.cmp(b));
-                    assert_eq!(actual, expected);
-                }
-            )*
-        };
+    fn setup_two_out_of_three(input: (Vec<i32>, Vec<i32>, Vec<i32>), mut expected: Vec<i32>) {
+        let (nums1, nums2, nums3) = input;
+        let mut actual = two_out_of_three(nums1, nums2, nums3);
+        actual.sort();
+        expected.sort_by(|a: &i32, b: &i32| a.cmp(b));
+        assert_eq!(actual, expected);
     }
 
-    two_out_of_three_tests! {
-        test_two_out_of_three_case0: (vec![1, 1, 3, 2], vec![2, 3], vec![3], vec![3, 2]),
-        test_two_out_of_three_case1: (vec![3, 1], vec![2, 3], vec![1, 2], vec![2, 3, 1]),
-        test_two_out_of_three_case2: (vec![1, 2, 2], vec![4, 3, 3], vec![5], vec![]),
+    fn test_two_out_of_three() {
+        setup_two_out_of_three((vec![1, 1, 3, 2], vec![2, 3], vec![3]), vec![3, 2]);
+        setup_two_out_of_three((vec![3, 1], vec![2, 3], vec![1, 2]), vec![2, 3, 1]);
+        setup_two_out_of_three((vec![1, 2, 2], vec![4, 3, 3], vec![5]), vec![]);
     }
 
     #[test]
