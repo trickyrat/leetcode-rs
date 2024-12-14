@@ -1,6 +1,6 @@
 #![cfg_attr(debug_assertions, allow(unused))]
 
-use crate::leetcode::data_structures::{ListNode,TreeNode};
+use crate::leetcode::data_structures::{ListNode, TreeNode};
 use std::cell::RefCell;
 use std::cmp::{max, min, Ordering};
 use std::collections::hash_map::Entry::Vacant;
@@ -2203,6 +2203,49 @@ pub fn minimum_added_coins(coins: Vec<i32>, target: i32) -> i32 {
     res
 }
 
+#[derive(Clone, Copy, PartialEq, Eq)]
+struct Pair {
+    element: i32,
+    index: usize,
+}
+
+impl PartialOrd for Pair {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+impl Ord for Pair {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        self.element
+            .cmp(&other.element)
+            .then_with(|| self.index.cmp(&other.index))
+            .reverse()
+    }
+}
+
+/// 3079.Final State After Performing Operations
+pub fn get_final_state(nums: Vec<i32>, k: i32, multiplier: i32) -> Vec<i32> {
+    let mut pq: BinaryHeap<Pair> = std::collections::BinaryHeap::new();
+    nums.iter().enumerate().for_each(|(i, &x)| {
+        pq.push(Pair {
+            element: x,
+            index: i,
+        });
+    });
+
+    for _ in 0..k {
+        if let Some(mut pair) = pq.pop() {
+            pair.element *= multiplier;
+            pq.push(pair);
+        }
+    }
+
+    let mut res = pq.into_vec();
+    res.sort_by_key(|f| f.index);
+    res.iter().map(|x| x.element).collect()
+}
+
 #[cfg(test)]
 mod tests {
     use crate::leetcode::solution::*;
@@ -2555,9 +2598,20 @@ mod tests {
     #[test]
     fn test_width_of_binary_tree() {
         let bt_serializer = setup_binary_tree_serializer();
-        assert_eq!(width_of_binary_tree(bt_serializer.deserialize("1,3,2,5,3,null,9".to_string())), 4);
-        assert_eq!(width_of_binary_tree(bt_serializer.deserialize("1,3,2,5,null,null,9,6,null,7".to_string())), 7);
-        assert_eq!(width_of_binary_tree(bt_serializer.deserialize("1,3,2,5".to_string())), 2);
+        assert_eq!(
+            width_of_binary_tree(bt_serializer.deserialize("1,3,2,5,3,null,9".to_string())),
+            4
+        );
+        assert_eq!(
+            width_of_binary_tree(
+                bt_serializer.deserialize("1,3,2,5,null,null,9,6,null,7".to_string())
+            ),
+            7
+        );
+        assert_eq!(
+            width_of_binary_tree(bt_serializer.deserialize("1,3,2,5".to_string())),
+            2
+        );
     }
 
     #[test]
@@ -2717,12 +2771,17 @@ mod tests {
     }
 
     fn test_subdomain_visits() {
-        setup_subdomain_visits(vec!["9001 discuss.leetcode.com"], vec!["9001 discuss.leetcode.com", "9001 com", "9001 leetcode.com"]);
-        setup_subdomain_visits(vec![
-            "900 google.mail.com",
-            "50 yahoo.com",
-            "1 intel.mail.com",
-            "5 wiki.org"],
+        setup_subdomain_visits(
+            vec!["9001 discuss.leetcode.com"],
+            vec!["9001 discuss.leetcode.com", "9001 com", "9001 leetcode.com"],
+        );
+        setup_subdomain_visits(
+            vec![
+                "900 google.mail.com",
+                "50 yahoo.com",
+                "1 intel.mail.com",
+                "5 wiki.org",
+            ],
             vec![
                 "901 mail.com",
                 "50 yahoo.com",
@@ -2730,7 +2789,9 @@ mod tests {
                 "5 wiki.org",
                 "5 org",
                 "1 intel.mail.com",
-                "951 com"]);
+                "951 com",
+            ],
+        );
     }
 
     #[test]
@@ -3426,5 +3487,16 @@ mod tests {
         assert_eq!(minimum_added_coins(vec![1, 4, 10], 19), 2);
         assert_eq!(minimum_added_coins(vec![1, 4, 10, 5, 7, 19], 19), 1);
         assert_eq!(minimum_added_coins(vec![1, 1, 1], 20), 3);
+    }
+
+    #[test]
+    fn test_get_final_state() {
+        assert_eq!(
+            get_final_state(vec![2, 1, 3, 5, 6], 5, 2),
+            vec![8, 4, 6, 5, 6]
+        );
+        assert_eq!(get_final_state(vec![1, 2], 3, 4), vec![16, 8]);
+        assert_eq!(get_final_state(vec![1], 1, 4), vec![4]);
+        assert_eq!(get_final_state(vec![1, 3, 5], 5, 3), vec![27, 9, 15]);
     }
 }
