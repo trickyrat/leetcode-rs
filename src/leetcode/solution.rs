@@ -1437,6 +1437,28 @@ pub fn max_satisfied(customers: Vec<i32>, grumpy: Vec<i32>, minutes: i32) -> i32
     total + max_increase
 }
 
+/// 1338. Reduce Array Size to The Half
+pub fn min_set_size(arr: Vec<i32>) -> i32 {
+    let n = arr.len();
+    let half_size = n / 2;
+    let mut total = n;
+    let mut frequency = HashMap::<i32, i32>::new();
+    for &num in arr.iter() {
+        *frequency.entry(num).or_insert(0) += 1;
+    }
+    let mut sorted_freq: Vec<_> = frequency.iter().collect();
+    sorted_freq.sort_by(|a, b| b.1.cmp(a.1));
+    let mut ans = 0;
+    for (_, &freq) in sorted_freq.iter() {
+        total -= (freq as usize);
+        ans += 1;
+        if total <= half_size {
+            break;
+        }
+    }
+    ans
+}
+
 /// 1403.Minimum Subsequence in Non-Increasing Order
 pub fn min_subsequence(mut nums: Vec<i32>) -> Vec<i32> {
     let total: i32 = nums.iter().sum();
@@ -2985,6 +3007,12 @@ mod tests {
             16
         );
         assert_eq!(max_satisfied(vec![1], vec![0], 1), 1);
+    }
+
+    #[test]
+    fn test_min_set_size() {
+        assert_eq!(min_set_size(vec![3, 3, 3, 3, 5, 5, 5, 2, 2, 7]), 2);
+        assert_eq!(min_set_size(vec![7, 7, 7, 7, 7, 7]), 1);
     }
 
     #[test]
