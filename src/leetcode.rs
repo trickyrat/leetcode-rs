@@ -5,3 +5,4 @@ pub mod stock_spanner;
 pub mod throne_inheritance;
 pub mod utils;
 pub mod data_structures;
+pub mod atm;

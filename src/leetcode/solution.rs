@@ -5,8 +5,6 @@ use std::cell::RefCell;
 use std::cmp::{max, min, Ordering};
 use std::collections::hash_map::Entry::Vacant;
 use std::collections::{BinaryHeap, HashMap, HashSet, VecDeque};
-use std::env::temp_dir;
-use std::iter::Sum;
 use std::mem::swap;
 use std::rc::Rc;
 
@@ -2268,6 +2266,20 @@ pub fn get_final_state(nums: Vec<i32>, k: i32, multiplier: i32) -> Vec<i32> {
     res.iter().map(|x| x.element).collect()
 }
 
+/// 3289.The Two Sneaky Numbers of Digitville
+pub fn get_sneaky_numbers(nums: Vec<i32>) -> Vec<i32> {
+    let n = nums.len() as i32 - 2;
+    let mut a = -n * (n - 1) / 2;
+    let mut b = -n * (n - 1) * (n * 2 - 1) / 6;
+    for x in nums {
+        a += x;
+        b += x * x;
+    }
+    let d = ((b as f64) * 2.0f64 - (a as f64) * (a as f64)).sqrt();
+    let x = (a - (d as i32)) / 2;
+    vec![x, a - x]
+}
+
 #[cfg(test)]
 mod tests {
     use crate::leetcode::solution::*;
@@ -3526,5 +3538,15 @@ mod tests {
         assert_eq!(get_final_state(vec![1, 2], 3, 4), vec![16, 8]);
         assert_eq!(get_final_state(vec![1], 1, 4), vec![4]);
         assert_eq!(get_final_state(vec![1, 3, 5], 5, 3), vec![27, 9, 15]);
+    }
+
+    #[test]
+    fn test_get_sneaky_numbers() {
+        assert_eq!(get_sneaky_numbers(vec![0, 1, 1, 0]), vec![0, 1]);
+        assert_eq!(get_sneaky_numbers(vec![0, 3, 2, 1, 3, 2]), vec![2, 3]);
+        assert_eq!(
+            get_sneaky_numbers(vec![7, 1, 5, 4, 3, 4, 6, 0, 9, 5, 8, 2]),
+            vec![4, 5]
+        );
     }
 }
