@@ -1,6 +1,6 @@
 #![cfg_attr(debug_assertions, allow(dead_code))]
 
-use rand::{thread_rng, Rng};
+use rand::Rng;
 use std::collections::HashMap;
 
 pub struct RandomizedSet {
@@ -41,8 +41,8 @@ impl RandomizedSet {
     }
 
     pub fn get_random(&self) -> i32 {
-        let mut rng = thread_rng();
-        self.nums[rng.gen_range(0..self.nums.len())]
+        let mut rng = rand::rng();
+        self.nums[rng.random_range(0..self.nums.len())]
     }
 }
 
