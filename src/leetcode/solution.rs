@@ -2,7 +2,7 @@
 
 use crate::leetcode::data_structures::{ListNode, TreeNode};
 use std::cell::RefCell;
-use std::cmp::{max, min, Ordering};
+use std::cmp::{Ordering, max, min};
 use std::collections::hash_map::Entry::Vacant;
 use std::collections::{BinaryHeap, HashMap, HashSet, VecDeque};
 use std::mem::swap;
@@ -168,7 +168,7 @@ pub fn merge_k_lists(lists: Vec<Option<Box<ListNode>>>) -> Option<Box<ListNode>>
 /// 26.Remove Duplicates from Sorted Array
 pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
     let mut slow = 1;
-    for fast in (1..nums.len()) {
+    for fast in 1..nums.len() {
         if nums[fast] != nums[fast - 1] {
             nums[slow] = nums[fast];
             slow += 1;
@@ -205,14 +205,14 @@ pub fn search(nums: Vec<i32>, target: i32) -> i32 {
         if nums[mid as usize] == target {
             return mid;
         }
-        if (nums[0] <= nums[mid as usize]) {
-            if (nums[0] <= target && target < nums[mid as usize]) {
+        if nums[0] <= nums[mid as usize] {
+            if nums[0] <= target && target < nums[mid as usize] {
                 r = mid - 1;
             } else {
                 l = mid + 1;
             }
         } else {
-            if (nums[mid as usize] < target && target <= nums[n - 1]) {
+            if nums[mid as usize] < target && target <= nums[n - 1] {
                 l = mid + 1;
             } else {
                 r = mid - 1;
@@ -325,7 +325,7 @@ pub fn rotate(nums: &mut Vec<i32>, mut k: i32) {
         }
     }
     let n = nums.len();
-    k %= (n as i32);
+    k %= n as i32;
     reverse(nums, 0, (n - 1) as i32);
     reverse(nums, 0, k - 1);
     reverse(nums, k, (n - 1) as i32);
@@ -444,7 +444,7 @@ pub fn lexical_order(n: i32) -> Vec<i32> {
 
 /// 396.Rotate Function
 pub fn max_rotate_function(nums: Vec<i32>) -> i32 {
-    let (mut f, mut n) = (0, nums.len());
+    let (mut f, n) = (0, nums.len());
     let nums_sum: i32 = nums.iter().sum();
     for i in 0..n {
         f += (i as i32) * nums[i];
@@ -1059,11 +1059,7 @@ pub fn shortest_subarray(nums: Vec<i32>, k: i32) -> i32 {
         }
         queue.push_back((pre_sum, i as i32));
     }
-    if ret == i64::MAX {
-        -1
-    } else {
-        ret as i32
-    }
+    if ret == i64::MAX { -1 } else { ret as i32 }
 }
 
 /// 881.Boats to Save People
@@ -1447,8 +1443,8 @@ pub fn min_set_size(arr: Vec<i32>) -> i32 {
     let mut sorted_freq: Vec<_> = frequency.iter().collect();
     sorted_freq.sort_by(|a, b| b.1.cmp(a.1));
     let mut ans = 0;
-    for (_, &freq) in sorted_freq.iter() {
-        total -= (freq as usize);
+    for &(_, &freq) in sorted_freq.iter() {
+        total -= freq as usize;
         ans += 1;
         if total <= half_size {
             break;
@@ -1674,11 +1670,7 @@ pub fn min_operations(nums: Vec<i32>, x: i32) -> i32 {
         }
         left += 1;
     }
-    if res > n as i32 {
-        -1
-    } else {
-        res
-    }
+    if res > n as i32 { -1 } else { res }
 }
 
 /// 1672.Richest Customer Wealth
@@ -1754,7 +1746,7 @@ pub fn maximum_binary_string(binary: String) -> String {
     let (mut zero_index, mut zero_count) = (n, 0);
     for i in 0..n {
         if res[i] == '0' {
-            if (zero_index == n) {
+            if zero_index == n {
                 zero_index = i;
             }
             zero_count += 1;
@@ -2122,7 +2114,7 @@ pub fn garbage_collection(garbage: Vec<String>, travel: Vec<i32>) -> i32 {
     let mut current_distance = 0;
     for i in 0..garbage.len() {
         res += garbage[i].len() as i32;
-        if (i > 0) {
+        if i > 0 {
             current_distance += travel[i - 1];
         }
 
@@ -2130,7 +2122,7 @@ pub fn garbage_collection(garbage: Vec<String>, travel: Vec<i32>) -> i32 {
             distance.insert(c.to_string(), current_distance);
         }
     }
-    for (k, v) in distance.iter() {
+    for (_, v) in distance.iter() {
         res += *v;
     }
     res
@@ -2196,11 +2188,7 @@ pub fn minimum_sum(nums: Vec<i32>) -> i32 {
         }
         right = right.min(nums[i]);
     }
-    if res < 1000 {
-        res
-    } else {
-        -1
-    }
+    if res < 1000 { res } else { -1 }
 }
 
 /// 2952.Minimum Number of Coins to be Added
